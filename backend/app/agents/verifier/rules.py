@@ -75,6 +75,17 @@ class RuleConstraintVerifier:
         out: list[Flag] = []
         window = c.date_range.value
 
+        # Defence in depth for the HTTP boundary's blank-text check (schemas.py):
+        # the orchestrator is also callable directly, and a request with no words in
+        # it produces a full set of defaults that look exactly like a real answer.
+        if not c.request_text.strip():
+            out.append(
+                Flag(
+                    code="NO_REQUEST_TEXT",
+                    message="There is nothing here to look up — what did the patient ask for?",
+                )
+            )
+
         if window.end < now.date():
             out.append(
                 Flag(

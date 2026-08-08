@@ -30,6 +30,7 @@ make test          # the full suite, offline
 make check         # lint + types + structural guards
 make eval          # golden-set scorecard, with an exit code
 make release       # 3 cold starts with the network blocked (see below)
+make audit         # known-CVE scan over both dependency trees
 make fixtures      # re-record LLM fixtures. Online, deliberate, once.
 ```
 
@@ -129,7 +130,8 @@ the socket layer** — the server, the harness, the CLI. "Works offline" is enfo
 the harness, not asserted by the author, and the guard itself is verified to bite.
 See [`docs/release-verification.md`](docs/release-verification.md).
 
-121 tests · lint and types clean · determinism checked on every eval run.
+134 tests · lint and types clean · zero known CVEs in either dependency tree
+(`make audit`) · determinism checked on every eval run.
 
 ---
 
@@ -145,6 +147,7 @@ See [`docs/release-verification.md`](docs/release-verification.md).
 | [`docs/product-direction.md`](docs/product-direction.md) | The decisions taken before the PRD, and why |
 | [`docs/development-plan.md`](docs/development-plan.md) | The ten build stages and their exit criteria |
 | [`docs/release-verification.md`](docs/release-verification.md) | What "it works" means here |
+| [`docs/security-review.md`](docs/security-review.md) | Findings, what was fixed, and what is accepted |
 
 A non-goal without a reason is an oversight; a non-goal with a reason is a design
 decision. `known-limitations.md` exists so the difference is checkable.

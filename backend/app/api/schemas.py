@@ -9,14 +9,32 @@ from __future__ import annotations
 
 from typing import Any
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, field_validator
 
 from app.domain.decision import DecisionRecord
 
+#: Long enough for any real request, short enough that a paste accident or a
+#: deliberate flood cannot make the extractor the slow part of someone else's day.
+MAX_REQUEST_CHARS = 2000
+
 
 class SubmitRequest(BaseModel):
-    text: str
+    text: str = Field(max_length=MAX_REQUEST_CHARS)
     patient_id: str | None = None
+
+    @field_validator("text")
+    @classmethod
+    def _not_blank(cls, v: str) -> str:
+        """A blank request is not a request.
+
+        Without this the pipeline answers it: every field falls back to a default --
+        14-day horizon, routine, adult cleaning, any time -- and three confident
+        offers come back for a question nobody asked. An operator who fat-fingers
+        Enter on an empty box should get an error, not a plausible answer.
+        """
+        if not v.strip():
+            raise ValueError("a request needs some text")
+        return v
 
 
 class AnswerRequest(BaseModel):

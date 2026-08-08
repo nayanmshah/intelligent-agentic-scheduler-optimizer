@@ -1,4 +1,4 @@
-.PHONY: demo dev test eval fit seed check preflight install frontend fixtures release clean
+.PHONY: demo dev test eval fit seed check audit preflight install frontend fixtures release clean
 
 UV      ?= uv
 PY      ?= $(UV) run python
@@ -47,6 +47,11 @@ seed: install
 ## preflight --- readiness report (NFR-12)
 preflight: install
 	$(PY) -m app.cli.preflight
+
+## audit --- known-CVE scan over both dependency trees
+audit: install
+	$(UV) run --with pip-audit python -m pip_audit
+	cd frontend && npm audit
 
 ## fixtures --- record LLM fixtures. ONLINE, DELIBERATE, ONCE. Never on the demo path.
 fixtures: install
