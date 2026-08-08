@@ -1,0 +1,61 @@
+{
+  "appointment_type": {
+    "confidence": 0.75,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 24,
+      "start": 17,
+      "text": "filling"
+    },
+    "value": "filling_1s"
+  },
+  "date_range": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "No date stated; default reference date through +14 days",
+    "span": null,
+    "value": {
+      "end": "2026-08-24",
+      "start": "2026-08-10"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.9,
+    "derived": true,
+    "derived_rule": "No weekday exclusions stated",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.9,
+    "derived": true,
+    "derived_rule": "No provider mentioned",
+    "span": null,
+    "value": null
+  },
+  "request_text": "I think I need a filling, there's a hole",
+  "time_window": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "No time stated; open to full day",
+    "span": null,
+    "value": {
+      "end_min": null,
+      "start_min": null
+    }
+  },
+  "urgency": {
+    "confidence": 0.6,
+    "derived": true,
+    "derived_rule": "No urgency cues; non-painful cavity default routine",
+    "span": null,
+    "value": "routine"
+  }
+}

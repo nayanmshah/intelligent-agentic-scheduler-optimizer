@@ -1,0 +1,61 @@
+{
+  "appointment_type": {
+    "confidence": 0.62,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 45,
+      "start": 35,
+      "text": "extraction"
+    },
+    "value": "extraction"
+  },
+  "date_range": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "No date stated; defaulted to reference date through +14 days",
+    "span": null,
+    "value": {
+      "end": "2026-08-24",
+      "start": "2026-08-10"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "No weekday exclusions stated",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.6,
+    "derived": true,
+    "derived_rule": "'surgeon' does not match any listed provider",
+    "span": null,
+    "value": null
+  },
+  "request_text": "I want the surgeon to look at this extraction",
+  "time_window": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "No time stated; open to full day",
+    "span": null,
+    "value": {
+      "end_min": null,
+      "start_min": null
+    }
+  },
+  "urgency": {
+    "confidence": 0.45,
+    "derived": true,
+    "derived_rule": "No urgency cue in text; default routine",
+    "span": null,
+    "value": "routine"
+  }
+}

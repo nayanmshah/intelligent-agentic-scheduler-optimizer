@@ -1,0 +1,106 @@
+[
+  {
+    "end_min": 780,
+    "id": "blk-lunch",
+    "kind": "lunch",
+    "scope": "global",
+    "start_min": 720,
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  {
+    "end_min": 480,
+    "id": "blk-huddle",
+    "kind": "huddle",
+    "scope": "global",
+    "start_min": 470,
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  {
+    "end_min": 660,
+    "id": "blk-prime-op3",
+    "kind": "restorative_block",
+    "min_production_value": 300,
+    "scope": "operatory",
+    "scope_ref": "OP-3",
+    "start_min": 480,
+    "weekdays": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "end_min": 660,
+    "id": "blk-prime-op4",
+    "kind": "restorative_block",
+    "min_production_value": 300,
+    "scope": "operatory",
+    "scope_ref": "OP-4",
+    "start_min": 480,
+    "weekdays": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "end_min": 1020,
+    "id": "blk-pedo-op2",
+    "kind": "pedo_after_school",
+    "scope": "operatory",
+    "scope_ref": "OP-2",
+    "start_min": 900,
+    "weekdays": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "end_min": 690,
+    "id": "blk-hold-am",
+    "kind": "emergency_hold",
+    "scope": "operatory",
+    "scope_ref": "OP-1",
+    "start_min": 660,
+    "unlock_min_urgency": "urgent",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  {
+    "end_min": 990,
+    "id": "blk-hold-pm",
+    "kind": "emergency_hold",
+    "scope": "operatory",
+    "scope_ref": "OP-3",
+    "start_min": 960,
+    "unlock_min_urgency": "urgent",
+    "weekdays": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  }
+]

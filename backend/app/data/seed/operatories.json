@@ -1,0 +1,49 @@
+[
+  {
+    "equipment_tags": [],
+    "id": "OP-1",
+    "location_id": "loc-1",
+    "name": "Op 1",
+    "preferred_use": "hygiene"
+  },
+  {
+    "equipment_tags": [],
+    "id": "OP-2",
+    "location_id": "loc-1",
+    "name": "Op 2",
+    "preferred_use": "hygiene"
+  },
+  {
+    "equipment_tags": [],
+    "id": "OP-3",
+    "location_id": "loc-1",
+    "name": "Op 3",
+    "preferred_use": "restorative"
+  },
+  {
+    "equipment_tags": [],
+    "id": "OP-4",
+    "location_id": "loc-1",
+    "name": "Op 4",
+    "preferred_use": "restorative"
+  },
+  {
+    "equipment_tags": [
+      "surgical"
+    ],
+    "id": "OP-5",
+    "location_id": "loc-1",
+    "name": "Op 5",
+    "preferred_use": "surgical"
+  },
+  {
+    "equipment_tags": [
+      "cerec",
+      "pano"
+    ],
+    "id": "OP-6",
+    "location_id": "loc-1",
+    "name": "Op 6",
+    "preferred_use": "restorative"
+  }
+]

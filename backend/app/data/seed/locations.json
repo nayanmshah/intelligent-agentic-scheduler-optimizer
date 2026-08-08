@@ -1,0 +1,34 @@
+[
+  {
+    "business_hours": [
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 0
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 1
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 2
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 3
+      },
+      {
+        "close_min": 840,
+        "open_min": 480,
+        "weekday": 4
+      }
+    ],
+    "id": "loc-1",
+    "name": "Riverbend Dental",
+    "timezone": "America/Los_Angeles"
+  }
+]

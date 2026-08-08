@@ -1,0 +1,64 @@
+{
+  "appointment_type": {
+    "confidence": 0.3,
+    "derived": true,
+    "derived_rule": "no procedure or symptom stated; default routine cleaning",
+    "span": null,
+    "value": "prophy_adult"
+  },
+  "date_range": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "no date stated; default reference date through +14 days",
+    "span": null,
+    "value": {
+      "end": "2026-08-24",
+      "start": "2026-08-10"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.96,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 32,
+      "start": 11,
+      "text": "Wednesdays or Fridays"
+    },
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": [
+        2,
+        4
+      ]
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "no provider mentioned",
+    "span": null,
+    "value": null
+  },
+  "request_text": "I can't do Wednesdays or Fridays",
+  "time_window": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "no time stated; open to close",
+    "span": null,
+    "value": {
+      "end_min": null,
+      "start_min": null
+    }
+  },
+  "urgency": {
+    "confidence": 0.4,
+    "derived": true,
+    "derived_rule": "no urgency cues in text; default routine",
+    "span": null,
+    "value": "routine"
+  }
+}

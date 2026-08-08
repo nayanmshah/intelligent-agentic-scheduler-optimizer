@@ -1,0 +1,69 @@
+{
+  "appointment_type": {
+    "confidence": 0.7,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 9,
+      "start": 2,
+      "text": "filling"
+    },
+    "value": "filling_1s"
+  },
+  "date_range": {
+    "confidence": 0.9,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 22,
+      "start": 13,
+      "text": "Wednesday"
+    },
+    "value": {
+      "end": "2026-08-12",
+      "start": "2026-08-12"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.9,
+    "derived": true,
+    "derived_rule": "no exclusions stated",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.9,
+    "derived": true,
+    "derived_rule": "no provider mentioned",
+    "span": null,
+    "value": null
+  },
+  "request_text": "A filling on Wednesday late morning",
+  "time_window": {
+    "confidence": 0.75,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 35,
+      "start": 23,
+      "text": "late morning"
+    },
+    "value": {
+      "end_min": 720,
+      "start_min": 600
+    }
+  },
+  "urgency": {
+    "confidence": 0.6,
+    "derived": true,
+    "derived_rule": "no urgency stated; routine default",
+    "span": null,
+    "value": "routine"
+  }
+}

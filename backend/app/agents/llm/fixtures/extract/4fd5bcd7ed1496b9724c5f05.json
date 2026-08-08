@@ -1,0 +1,69 @@
+{
+  "appointment_type": {
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 15,
+      "start": 0,
+      "text": "Gum maintenance"
+    },
+    "value": "perio_maint"
+  },
+  "date_range": {
+    "confidence": 0.9,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 27,
+      "start": 19,
+      "text": "Thursday"
+    },
+    "value": {
+      "end": "2026-08-13",
+      "start": "2026-08-13"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.9,
+    "derived": true,
+    "derived_rule": "no exclusions stated",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.9,
+    "derived": true,
+    "derived_rule": "no provider mentioned",
+    "span": null,
+    "value": null
+  },
+  "request_text": "Gum maintenance on Thursday afternoon",
+  "time_window": {
+    "confidence": 0.85,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 37,
+      "start": 28,
+      "text": "afternoon"
+    },
+    "value": {
+      "end_min": 1020,
+      "start_min": 720
+    }
+  },
+  "urgency": {
+    "confidence": 0.6,
+    "derived": true,
+    "derived_rule": "no urgency stated; routine maintenance default",
+    "span": null,
+    "value": "routine"
+  }
+}

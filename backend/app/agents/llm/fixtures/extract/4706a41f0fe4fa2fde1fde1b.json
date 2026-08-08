@@ -1,0 +1,61 @@
+{
+  "appointment_type": {
+    "confidence": 0.94,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 10,
+      "start": 3,
+      "text": "denture"
+    },
+    "value": "denture_adjust"
+  },
+  "date_range": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "no date stated; default reference date through +14 days",
+    "span": null,
+    "value": {
+      "end": "2026-08-24",
+      "start": "2026-08-10"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.9,
+    "derived": true,
+    "derived_rule": "no weekday exclusions stated",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.9,
+    "derived": true,
+    "derived_rule": "no provider named",
+    "span": null,
+    "value": null
+  },
+  "request_text": "My denture is rubbing, can it be adjusted?",
+  "time_window": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "no time preference stated",
+    "span": null,
+    "value": {
+      "end_min": null,
+      "start_min": null
+    }
+  },
+  "urgency": {
+    "confidence": 0.55,
+    "derived": true,
+    "derived_rule": "minor discomfort, no urgency language",
+    "span": null,
+    "value": "routine"
+  }
+}

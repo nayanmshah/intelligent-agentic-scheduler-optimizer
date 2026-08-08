@@ -1,0 +1,35 @@
+---
+title: Intelligent Agentic Scheduling Optimizer — System Context
+---
+flowchart TB
+    subgraph people ["People"]
+        OP["Front-Desk Operator<br/>Operator Console"]
+        OM["Office Manager / Ops Lead<br/>Policy · Traces · Scorecard"]
+    end
+
+    subgraph app ["Scheduling Optimizer — single process, one machine"]
+        UI["React + TypeScript SPA"]
+        API["FastAPI application<br/>orchestrator · reasoner · eval"]
+        MEM["In-memory session state<br/>schedule copy · holds · traces"]
+    end
+
+    subgraph files ["Committed files — the system of record"]
+        SEED["Seed dataset JSON<br/>+ SEED_DIGEST"]
+        FIX["LLM response fixtures"]
+        GOLD["Golden set — 40 labelled requests"]
+    end
+
+    subgraph optional ["Optional — never on the request path"]
+        LLM["Anthropic Claude API"]
+        OPIK["Opik — self-hosted, localhost"]
+    end
+
+    OP --> UI
+    OM --> UI
+    UI -->|"HTTP / JSON"| API
+    API --> MEM
+    API -->|"read at boot"| SEED
+    API -->|"read on cache hit"| FIX
+    API -->|"read by harness"| GOLD
+    API -.->|"explicit opt-in only"| LLM
+    API -.->|"fire and forget"| OPIK

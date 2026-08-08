@@ -1,0 +1,30 @@
+---
+title: Deterministic Reasoner — the pipeline annotates, it never deletes
+---
+flowchart TB
+    IN["RequestConstraints<br/>typed, with confidences and source spans"]
+
+    IN --> E["ENUMERATE<br/>grid slots x eligible providers<br/>3,348 slots -> ~13,000 candidates"]
+
+    E --> PA["LAYER 0 — Phase A · slot-level rules<br/>hours · blocks · emergency hold · exclusions<br/>operatory free + turnover · held · equipment"]
+    PA --> PB["LAYER 0 — Phase B · provider-level rules<br/>provider free · credentialed · on site<br/>doctor-check containment"]
+
+    PA -. "annotate rejection_reason<br/>NEVER remove" .-> LEDGER["REJECTION LEDGER<br/>one stated cause per candidate"]
+    PB -. "annotate rejection_reason<br/>NEVER remove" .-> LEDGER
+
+    PB --> INV{"CONSERVATION INVARIANT<br/>feasible + sum(rejected) == enumerated"}
+    INV -->|"holds"| T["LAYER 1 — URGENCY GATE<br/>lexicographic tiers, not a weight<br/>rank inside the most urgent tier that has candidates"]
+    INV -->|"fails"| BOOM["assertion error<br/>the funnel would be lying"]
+
+    T -->|"tier empty and urgency >= urgent"| ESC["ESCALATE<br/>release emergency holds -> labelled overflow<br/>never return nothing"]
+    ESC --> S
+    T --> S["LAYER 2 — SCORE<br/>axis matrix A (n x 4), computed once<br/>time fit · continuity · efficiency · prime time"]
+
+    S --> W["score = A x effective weight vector<br/>re-rank is a product, not a re-run"]
+    W --> R["RATIONALE emitted BY THE SCORER<br/>top components + facts + at most one caveat"]
+
+    R --> SEL["SELECT<br/>tiebreak chain -> epsilon band -> diversity"]
+    SEL --> OUT["TOP 3 OFFERS<br/>+ funnel · ledger · counterfactual"]
+    R --> XP["EXPLAINER<br/>renders atoms only — cannot see the schedule"]
+    XP --> OUT
+    LEDGER --> OUT

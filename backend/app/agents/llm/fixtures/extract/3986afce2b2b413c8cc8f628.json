@@ -1,0 +1,61 @@
+{
+  "appointment_type": {
+    "confidence": 0.8,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 45,
+      "start": 0,
+      "text": "First visit for my daughter, she's never been"
+    },
+    "value": "np_exam_fmx"
+  },
+  "date_range": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "No date stated; default reference date through +14 days",
+    "span": null,
+    "value": {
+      "end": "2026-08-24",
+      "start": "2026-08-10"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.6,
+    "derived": true,
+    "derived_rule": "No weekday exclusions stated",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.6,
+    "derived": true,
+    "derived_rule": "No provider named",
+    "span": null,
+    "value": null
+  },
+  "request_text": "First visit for my daughter, she's never been",
+  "time_window": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "No time stated; open to full day",
+    "span": null,
+    "value": {
+      "end_min": null,
+      "start_min": null
+    }
+  },
+  "urgency": {
+    "confidence": 0.6,
+    "derived": true,
+    "derived_rule": "No urgency cues; first visit treated as routine",
+    "span": null,
+    "value": "routine"
+  }
+}

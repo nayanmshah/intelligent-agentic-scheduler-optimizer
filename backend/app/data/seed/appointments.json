@@ -1,0 +1,7502 @@
+[
+  {
+    "duration_min": 60,
+    "id": "appt-00000",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-012",
+    "provider_id": "prov-maya",
+    "start": "2026-08-03T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00012",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-056",
+    "provider_id": "prov-patel",
+    "start": "2026-08-03T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00019",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-065",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-03T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00025",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-043",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-03T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00032",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-076",
+    "provider_id": "prov-jo",
+    "start": "2026-08-03T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00007",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-084",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-03T08:20:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00001",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-025",
+    "provider_id": "prov-jo",
+    "start": "2026-08-03T09:10:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00020",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-072",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-03T09:10:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00033",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-029",
+    "provider_id": "prov-nia",
+    "start": "2026-08-03T09:20:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00008",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-094",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-03T09:30:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00013",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-092",
+    "provider_id": "prov-maya",
+    "start": "2026-08-03T09:40:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00021",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-113",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-03T09:40:00-07:00",
+    "status": "completed",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00026",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-040",
+    "provider_id": "prov-patel",
+    "start": "2026-08-03T09:50:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00002",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-099",
+    "provider_id": "prov-jo",
+    "start": "2026-08-03T10:20:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00022",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-091",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-03T10:30:00-07:00",
+    "status": "completed",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00009",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-115",
+    "provider_id": "prov-nia",
+    "start": "2026-08-03T10:40:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00014",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-049",
+    "provider_id": "prov-patel",
+    "start": "2026-08-03T10:50:00-07:00",
+    "status": "completed",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00027",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-004",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-03T11:00:00-07:00",
+    "status": "completed",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00034",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-074",
+    "provider_id": "prov-maya",
+    "start": "2026-08-03T11:00:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00003",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-016",
+    "provider_id": "prov-jo",
+    "start": "2026-08-03T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00015",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-062",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-03T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00023",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-111",
+    "provider_id": "prov-patel",
+    "start": "2026-08-03T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "rct"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00035",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-118",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-03T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00010",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-018",
+    "provider_id": "prov-maya",
+    "start": "2026-08-03T13:20:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00028",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-114",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-03T13:20:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00029",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-031",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-03T14:00:00-07:00",
+    "status": "completed",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00004",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-007",
+    "provider_id": "prov-maya",
+    "start": "2026-08-03T14:10:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00036",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-074",
+    "provider_id": "prov-jo",
+    "start": "2026-08-03T14:10:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00011",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-014",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-03T14:30:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00016",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-094",
+    "provider_id": "prov-patel",
+    "start": "2026-08-03T14:40:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00030",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-082",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-03T14:55:00-07:00",
+    "status": "completed",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00005",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-101",
+    "provider_id": "prov-maya",
+    "start": "2026-08-03T15:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00024",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-092",
+    "provider_id": "prov-patel",
+    "start": "2026-08-03T15:00:00-07:00",
+    "status": "completed",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00037",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-012",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-03T15:00:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00017",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-090",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-03T15:30:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00038",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-089",
+    "provider_id": "prov-jo",
+    "start": "2026-08-03T15:30:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00006",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-045",
+    "provider_id": "prov-nia",
+    "start": "2026-08-03T15:50:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00031",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-029",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-03T15:50:00-07:00",
+    "status": "completed",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00039",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-100",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-03T16:20:00-07:00",
+    "status": "completed",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00018",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-039",
+    "provider_id": "prov-patel",
+    "start": "2026-08-03T16:30:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00046",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-078",
+    "provider_id": "prov-maya",
+    "start": "2026-08-04T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00052",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-091",
+    "provider_id": "prov-jo",
+    "start": "2026-08-04T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00058",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-084",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-04T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00064",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-103",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-04T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00073",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-014",
+    "provider_id": "prov-patel",
+    "start": "2026-08-04T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00040",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-068",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-04T08:20:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00065",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-079",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-04T08:40:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00074",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-098",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-04T08:50:00-07:00",
+    "status": "completed",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00059",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-063",
+    "provider_id": "prov-patel",
+    "start": "2026-08-04T08:55:00-07:00",
+    "status": "completed",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00041",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-107",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-04T09:10:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00053",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-020",
+    "provider_id": "prov-maya",
+    "start": "2026-08-04T09:10:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00066",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-078",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-04T09:20:00-07:00",
+    "status": "completed",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00047",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-020",
+    "provider_id": "prov-nia",
+    "start": "2026-08-04T09:30:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00075",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-109",
+    "provider_id": "prov-patel",
+    "start": "2026-08-04T10:00:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00060",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-046",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-04T10:05:00-07:00",
+    "status": "completed",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00042",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-108",
+    "provider_id": "prov-jo",
+    "start": "2026-08-04T10:20:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00054",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-003",
+    "provider_id": "prov-patel",
+    "start": "2026-08-04T10:20:00-07:00",
+    "status": "completed",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00067",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-066",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-04T10:35:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00048",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-051",
+    "provider_id": "prov-maya",
+    "start": "2026-08-04T10:40:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00076",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-006",
+    "provider_id": "prov-nia",
+    "start": "2026-08-04T10:50:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00055",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-095",
+    "provider_id": "prov-patel",
+    "start": "2026-08-04T11:10:00-07:00",
+    "status": "completed",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00068",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-112",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-04T11:15:00-07:00",
+    "status": "completed",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00043",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-096",
+    "provider_id": "prov-jo",
+    "start": "2026-08-04T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00049",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-108",
+    "provider_id": "prov-nia",
+    "start": "2026-08-04T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00056",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-014",
+    "provider_id": "prov-patel",
+    "start": "2026-08-04T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "rct"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00069",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-004",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-04T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00061",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-041",
+    "provider_id": "prov-maya",
+    "start": "2026-08-04T13:10:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00077",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-058",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-04T13:20:00-07:00",
+    "status": "completed",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00070",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-034",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-04T13:55:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00044",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-108",
+    "provider_id": "prov-maya",
+    "start": "2026-08-04T14:10:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00050",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-037",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-04T14:10:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00062",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-034",
+    "provider_id": "prov-jo",
+    "start": "2026-08-04T14:20:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00078",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-048",
+    "provider_id": "prov-nia",
+    "start": "2026-08-04T14:30:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00057",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-085",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-04T14:40:00-07:00",
+    "status": "completed",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00045",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-085",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-04T15:20:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00051",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-018",
+    "provider_id": "prov-maya",
+    "start": "2026-08-04T15:20:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00063",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-081",
+    "provider_id": "prov-patel",
+    "start": "2026-08-04T15:30:00-07:00",
+    "status": "completed",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00071",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-045",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-04T15:35:00-07:00",
+    "status": "completed",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00079",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-007",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-04T15:40:00-07:00",
+    "status": "completed",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00072",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-021",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-04T16:30:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00080",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-056",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-04T16:30:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00086",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-047",
+    "provider_id": "prov-maya",
+    "start": "2026-08-05T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00092",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-036",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-05T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00106",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-118",
+    "provider_id": "prov-patel",
+    "start": "2026-08-05T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00098",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-099",
+    "provider_id": "prov-jo",
+    "start": "2026-08-05T08:20:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00114",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-040",
+    "provider_id": "prov-nia",
+    "start": "2026-08-05T08:20:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00081",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-007",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-05T08:30:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00093",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-078",
+    "provider_id": "prov-patel",
+    "start": "2026-08-05T08:55:00-07:00",
+    "status": "completed",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00115",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-011",
+    "provider_id": "prov-maya",
+    "start": "2026-08-05T09:10:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00082",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-110",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-05T09:20:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00099",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-074",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-05T09:30:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00107",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-108",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-05T09:30:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00087",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-105",
+    "provider_id": "prov-jo",
+    "start": "2026-08-05T09:40:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00100",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-111",
+    "provider_id": "prov-nia",
+    "start": "2026-08-05T10:00:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00116",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-038",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-05T10:20:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00094",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-023",
+    "provider_id": "prov-maya",
+    "start": "2026-08-05T10:35:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00088",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-027",
+    "provider_id": "prov-jo",
+    "start": "2026-08-05T10:50:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00108",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-015",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-05T10:50:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00117",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-091",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-05T11:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00101",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-029",
+    "provider_id": "prov-patel",
+    "start": "2026-08-05T11:30:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-dirty-01",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-007",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-05T11:40:00-07:00",
+    "status": "completed",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00083",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-037",
+    "provider_id": "prov-jo",
+    "start": "2026-08-05T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00089",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-033",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-05T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00095",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-054",
+    "provider_id": "prov-patel",
+    "start": "2026-08-05T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00118",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-070",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-05T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00102",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-032",
+    "provider_id": "prov-maya",
+    "start": "2026-08-05T13:10:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00109",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-077",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-05T13:20:00-07:00",
+    "status": "completed",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00090",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-047",
+    "provider_id": "prov-nia",
+    "start": "2026-08-05T14:10:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00110",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-012",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-05T14:15:00-07:00",
+    "status": "completed",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00084",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-114",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-05T14:20:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00103",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-077",
+    "provider_id": "prov-jo",
+    "start": "2026-08-05T14:20:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00096",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-113",
+    "provider_id": "prov-maya",
+    "start": "2026-08-05T14:40:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00119",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-055",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-05T14:40:00-07:00",
+    "status": "completed",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00111",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-107",
+    "provider_id": "prov-patel",
+    "start": "2026-08-05T15:10:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00091",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-003",
+    "provider_id": "prov-nia",
+    "start": "2026-08-05T15:20:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00085",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-095",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-05T15:30:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00104",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-008",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-05T15:30:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00120",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-113",
+    "provider_id": "prov-jo",
+    "start": "2026-08-05T15:30:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00112",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-077",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-05T15:50:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00105",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-046",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-05T16:00:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00097",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-115",
+    "provider_id": "prov-patel",
+    "start": "2026-08-05T16:30:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00113",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-060",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-05T16:30:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00121",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-008",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-06T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00133",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-110",
+    "provider_id": "prov-patel",
+    "start": "2026-08-06T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00149",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-084",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-06T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00140",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-085",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-06T08:20:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00157",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-066",
+    "provider_id": "prov-jo",
+    "start": "2026-08-06T08:20:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00127",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-074",
+    "provider_id": "prov-nia",
+    "start": "2026-08-06T08:30:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00150",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-108",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-06T08:40:00-07:00",
+    "status": "completed",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00122",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-020",
+    "provider_id": "prov-maya",
+    "start": "2026-08-06T08:50:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00141",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-011",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-06T08:50:00-07:00",
+    "status": "completed",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00158",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-076",
+    "provider_id": "prov-maya",
+    "start": "2026-08-06T09:30:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00123",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-005",
+    "provider_id": "prov-nia",
+    "start": "2026-08-06T09:40:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00128",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-020",
+    "provider_id": "prov-jo",
+    "start": "2026-08-06T09:40:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00134",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-054",
+    "provider_id": "prov-patel",
+    "start": "2026-08-06T09:40:00-07:00",
+    "status": "completed",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00142",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-105",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-06T09:45:00-07:00",
+    "status": "completed",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00151",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-037",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-06T10:05:00-07:00",
+    "status": "completed",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00159",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-059",
+    "provider_id": "prov-maya",
+    "start": "2026-08-06T10:40:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00129",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-001",
+    "provider_id": "prov-jo",
+    "start": "2026-08-06T10:50:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00135",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-074",
+    "provider_id": "prov-nia",
+    "start": "2026-08-06T10:50:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00152",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-032",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-06T11:00:00-07:00",
+    "status": "completed",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00143",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-002",
+    "provider_id": "prov-patel",
+    "start": "2026-08-06T11:25:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00130",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-028",
+    "provider_id": "prov-maya",
+    "start": "2026-08-06T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00136",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-001",
+    "provider_id": "prov-patel",
+    "start": "2026-08-06T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00144",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-007",
+    "provider_id": "prov-nia",
+    "start": "2026-08-06T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00160",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-088",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-06T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00153",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-106",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-06T13:10:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00124",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-064",
+    "provider_id": "prov-jo",
+    "start": "2026-08-06T13:30:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00145",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-046",
+    "provider_id": "prov-patel",
+    "start": "2026-08-06T13:50:00-07:00",
+    "status": "completed",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00161",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-119",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-06T13:55:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00137",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-016",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-06T14:10:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00154",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-016",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-06T14:10:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00131",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-003",
+    "provider_id": "prov-maya",
+    "start": "2026-08-06T14:30:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00125",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-093",
+    "provider_id": "prov-jo",
+    "start": "2026-08-06T14:40:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00155",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-020",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-06T14:50:00-07:00",
+    "status": "completed",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00138",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-091",
+    "provider_id": "prov-patel",
+    "start": "2026-08-06T15:00:00-07:00",
+    "status": "completed",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00162",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-088",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-06T15:05:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00146",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-077",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-06T15:35:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00163",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-054",
+    "provider_id": "prov-maya",
+    "start": "2026-08-06T15:35:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00126",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-017",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-06T15:50:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00132",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-027",
+    "provider_id": "prov-nia",
+    "start": "2026-08-06T16:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00147",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-078",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-06T16:05:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00156",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-051",
+    "provider_id": "prov-patel",
+    "start": "2026-08-06T16:05:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00139",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-029",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-06T16:30:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00148",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-117",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-06T16:35:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00164",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-094",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-07T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00176",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-104",
+    "provider_id": "prov-jo",
+    "start": "2026-08-07T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00186",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-108",
+    "provider_id": "prov-maya",
+    "start": "2026-08-07T08:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00172",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-099",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-07T08:10:00-07:00",
+    "status": "completed",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00168",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-059",
+    "provider_id": "prov-nia",
+    "start": "2026-08-07T08:20:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00181",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-106",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-07T08:20:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00177",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-007",
+    "provider_id": "prov-patel",
+    "start": "2026-08-07T08:50:00-07:00",
+    "status": "completed",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00165",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-054",
+    "provider_id": "prov-maya",
+    "start": "2026-08-07T09:10:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00187",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-100",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-07T09:10:00-07:00",
+    "status": "completed",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00182",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-043",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-07T09:20:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00169",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-087",
+    "provider_id": "prov-jo",
+    "start": "2026-08-07T09:30:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00173",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-001",
+    "provider_id": "prov-patel",
+    "start": "2026-08-07T09:30:00-07:00",
+    "status": "completed",
+    "type_id": "rct"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00178",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-015",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-07T09:40:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00188",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-019",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-07T09:40:00-07:00",
+    "status": "completed",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00183",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-046",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-07T10:00:00-07:00",
+    "status": "completed",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00166",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-109",
+    "provider_id": "prov-maya",
+    "start": "2026-08-07T10:20:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00179",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-051",
+    "provider_id": "prov-jo",
+    "start": "2026-08-07T10:30:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00170",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-106",
+    "provider_id": "prov-nia",
+    "start": "2026-08-07T10:40:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00184",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-017",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-07T10:55:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00174",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-046",
+    "provider_id": "prov-maya",
+    "start": "2026-08-07T11:10:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00189",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-051",
+    "provider_id": "prov-patel",
+    "start": "2026-08-07T11:10:00-07:00",
+    "status": "completed",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00171",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-107",
+    "provider_id": "prov-nia",
+    "start": "2026-08-07T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00175",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-046",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-07T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00180",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-040",
+    "provider_id": "prov-jo",
+    "start": "2026-08-07T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00185",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-072",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-07T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00190",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-030",
+    "provider_id": "prov-patel",
+    "start": "2026-08-07T13:00:00-07:00",
+    "status": "completed",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00167",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-083",
+    "provider_id": "prov-maya",
+    "start": "2026-08-07T13:20:00-07:00",
+    "status": "completed",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00191",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-057",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-10T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00197",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-034",
+    "provider_id": "prov-jo",
+    "start": "2026-08-10T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00205",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-058",
+    "provider_id": "prov-patel",
+    "start": "2026-08-10T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "rct"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00212",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-015",
+    "provider_id": "prov-maya",
+    "start": "2026-08-10T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00219",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-036",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-10T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00229",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-023",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-10T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00220",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-033",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-10T08:55:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00192",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-016",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-10T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00198",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-016",
+    "provider_id": "prov-maya",
+    "start": "2026-08-10T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00213",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-072",
+    "provider_id": "prov-nia",
+    "start": "2026-08-10T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00206",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-039",
+    "provider_id": "prov-patel",
+    "start": "2026-08-10T09:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00221",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-088",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-10T09:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00230",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-082",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-10T09:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00193",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-025",
+    "provider_id": "prov-maya",
+    "start": "2026-08-10T10:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00199",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-052",
+    "provider_id": "prov-jo",
+    "start": "2026-08-10T10:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00214",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-030",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-10T10:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00231",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-087",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-10T10:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00222",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-053",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-10T10:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00207",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-038",
+    "provider_id": "prov-patel",
+    "start": "2026-08-10T10:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00200",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-091",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-10T11:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00223",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-016",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-10T11:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00232",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-072",
+    "provider_id": "prov-patel",
+    "start": "2026-08-10T11:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00208",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-095",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-10T11:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00194",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-115",
+    "provider_id": "prov-nia",
+    "start": "2026-08-10T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00201",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-111",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-10T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00209",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-090",
+    "provider_id": "prov-patel",
+    "start": "2026-08-10T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "rct"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00215",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-002",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-10T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00224",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-066",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-10T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00233",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-051",
+    "provider_id": "prov-maya",
+    "start": "2026-08-10T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00225",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-036",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-10T13:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00202",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-111",
+    "provider_id": "prov-jo",
+    "start": "2026-08-10T13:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00216",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-021",
+    "provider_id": "prov-maya",
+    "start": "2026-08-10T13:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00234",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-119",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-10T13:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00195",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-057",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-10T14:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00235",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-031",
+    "provider_id": "prov-nia",
+    "start": "2026-08-10T14:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00203",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-033",
+    "provider_id": "prov-maya",
+    "start": "2026-08-10T14:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00210",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-084",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-10T14:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00217",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-033",
+    "provider_id": "prov-patel",
+    "start": "2026-08-10T14:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00226",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-054",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-10T14:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00196",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-075",
+    "provider_id": "prov-nia",
+    "start": "2026-08-10T15:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00227",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-013",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-10T15:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00236",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-107",
+    "provider_id": "prov-jo",
+    "start": "2026-08-10T15:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00218",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-096",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-10T15:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00204",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-115",
+    "provider_id": "prov-maya",
+    "start": "2026-08-10T16:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00228",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-098",
+    "provider_id": "prov-patel",
+    "start": "2026-08-10T16:15:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00211",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-074",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-10T16:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-1-480",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-012",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-11T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-2-480",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-012",
+    "provider_id": "prov-nia",
+    "start": "2026-08-11T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-3-480",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-012",
+    "provider_id": "prov-patel",
+    "start": "2026-08-11T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-4-480",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-012",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-11T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec5-OP-5-480",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-012",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-11T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-6-480",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-012",
+    "provider_id": "prov-maya",
+    "start": "2026-08-11T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-3-520",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-052",
+    "provider_id": "prov-patel",
+    "start": "2026-08-11T08:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-4-520",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-052",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-11T08:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec5-OP-5-525",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-057",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-11T08:45:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-1-540",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-072",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-11T09:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-2-540",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-072",
+    "provider_id": "prov-nia",
+    "start": "2026-08-11T09:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-6-540",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-072",
+    "provider_id": "prov-maya",
+    "start": "2026-08-11T09:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-3-560",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-092",
+    "provider_id": "prov-patel",
+    "start": "2026-08-11T09:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-4-560",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-092",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-11T09:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec5-OP-5-570",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-102",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-11T09:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-1-600",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-012",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-11T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-2-600",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-012",
+    "provider_id": "prov-nia",
+    "start": "2026-08-11T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-3-600",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-012",
+    "provider_id": "prov-patel",
+    "start": "2026-08-11T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-4-600",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-012",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-11T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-6-600",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-012",
+    "provider_id": "prov-maya",
+    "start": "2026-08-11T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec5-OP-5-615",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-027",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-11T10:15:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-3-640",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-052",
+    "provider_id": "prov-patel",
+    "start": "2026-08-11T10:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-4-640",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-052",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-11T10:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-2-660",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-072",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-11T11:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec5-OP-5-660",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-072",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-11T11:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-6-660",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-072",
+    "provider_id": "prov-nia",
+    "start": "2026-08-11T11:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-3-680",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-092",
+    "provider_id": "prov-patel",
+    "start": "2026-08-11T11:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-4-680",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-092",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-11T11:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-1-780",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-072",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-11T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-2-780",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-072",
+    "provider_id": "prov-nia",
+    "start": "2026-08-11T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-3-780",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-072",
+    "provider_id": "prov-patel",
+    "start": "2026-08-11T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-4-780",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-072",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-11T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec5-OP-5-780",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-072",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-11T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-6-780",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-072",
+    "provider_id": "prov-maya",
+    "start": "2026-08-11T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-3-820",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-112",
+    "provider_id": "prov-patel",
+    "start": "2026-08-11T13:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-4-820",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-112",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-11T13:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec5-OP-5-825",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-117",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-11T13:45:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-1-840",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-012",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-11T14:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-2-840",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-012",
+    "provider_id": "prov-nia",
+    "start": "2026-08-11T14:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-6-840",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-012",
+    "provider_id": "prov-maya",
+    "start": "2026-08-11T14:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-3-860",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-032",
+    "provider_id": "prov-patel",
+    "start": "2026-08-11T14:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-4-860",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-032",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-11T14:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec5-OP-5-870",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-042",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-11T14:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-1-900",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-072",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-11T15:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-2-900",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-072",
+    "provider_id": "prov-nia",
+    "start": "2026-08-11T15:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-3-900",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-072",
+    "provider_id": "prov-patel",
+    "start": "2026-08-11T15:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-4-900",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-072",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-11T15:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-6-900",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-072",
+    "provider_id": "prov-maya",
+    "start": "2026-08-11T15:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec5-OP-5-915",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-087",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-11T15:15:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-ec5-OP-3-940",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-112",
+    "provider_id": "prov-patel",
+    "start": "2026-08-11T15:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-4-940",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-112",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-11T15:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-1-960",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-012",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-11T16:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec5-OP-2-960",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-012",
+    "provider_id": "prov-nia",
+    "start": "2026-08-11T16:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec5-OP-5-960",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-012",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-11T16:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-ec5-OP-6-960",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-012",
+    "provider_id": "prov-patel",
+    "start": "2026-08-11T16:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-4-980",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-032",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-11T16:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec5-OP-6-980",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-032",
+    "provider_id": "prov-maya",
+    "start": "2026-08-11T16:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-ec5-OP-3-990",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-042",
+    "provider_id": "prov-patel",
+    "start": "2026-08-11T16:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00289",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-008",
+    "provider_id": "prov-nia",
+    "start": "2026-08-12T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00296",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-071",
+    "provider_id": "prov-jo",
+    "start": "2026-08-12T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00310",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-023",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-12T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00318",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-073",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-12T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00311",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-117",
+    "provider_id": "prov-maya",
+    "start": "2026-08-12T08:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00319",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-051",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-12T08:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00297",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-028",
+    "provider_id": "prov-jo",
+    "start": "2026-08-12T08:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00329",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-091",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-12T08:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-ec3-a",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-065",
+    "provider_id": "prov-patel",
+    "start": "2026-08-12T09:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00330",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-113",
+    "provider_id": "prov-nia",
+    "start": "2026-08-12T09:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00320",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-023",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-12T09:35:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00312",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-044",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-12T09:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00298",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-081",
+    "provider_id": "prov-maya",
+    "start": "2026-08-12T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00291",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-089",
+    "provider_id": "prov-jo",
+    "start": "2026-08-12T10:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00321",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-001",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-12T10:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00313",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-089",
+    "provider_id": "prov-patel",
+    "start": "2026-08-12T10:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00332",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-015",
+    "provider_id": "prov-nia",
+    "start": "2026-08-12T11:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec3-b",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-085",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-12T11:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00322",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-006",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-12T11:25:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00292",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-117",
+    "provider_id": "prov-maya",
+    "start": "2026-08-12T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00300",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-066",
+    "provider_id": "prov-jo",
+    "start": "2026-08-12T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00306",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-079",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-12T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00323",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-104",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-12T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00333",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-000",
+    "provider_id": "prov-nia",
+    "start": "2026-08-12T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00324",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-092",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-12T13:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00293",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-015",
+    "provider_id": "prov-nia",
+    "start": "2026-08-12T14:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00334",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-116",
+    "provider_id": "prov-maya",
+    "start": "2026-08-12T14:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec4-a",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-035",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-12T14:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00325",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-052",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-12T14:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00326",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-060",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-12T15:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00294",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-096",
+    "provider_id": "prov-nia",
+    "start": "2026-08-12T15:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00302",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-112",
+    "provider_id": "prov-jo",
+    "start": "2026-08-12T15:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00308",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-103",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-12T15:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00316",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-036",
+    "provider_id": "prov-patel",
+    "start": "2026-08-12T15:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00327",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-045",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-12T15:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00295",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-099",
+    "provider_id": "prov-maya",
+    "start": "2026-08-12T16:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00317",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-015",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-12T16:25:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00309",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-036",
+    "provider_id": "prov-patel",
+    "start": "2026-08-12T16:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00342",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-113",
+    "provider_id": "prov-jo",
+    "start": "2026-08-13T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00349",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-065",
+    "provider_id": "prov-maya",
+    "start": "2026-08-13T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00356",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-058",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-13T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00364",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-056",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-13T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00375",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-092",
+    "provider_id": "prov-patel",
+    "start": "2026-08-13T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00376",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-027",
+    "provider_id": "prov-nia",
+    "start": "2026-08-13T08:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00365",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-003",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-13T08:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00350",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-097",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-13T08:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00357",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-072",
+    "provider_id": "prov-patel",
+    "start": "2026-08-13T08:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00337",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-010",
+    "provider_id": "prov-maya",
+    "start": "2026-08-13T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00366",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-053",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-13T09:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00358",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-093",
+    "provider_id": "prov-patel",
+    "start": "2026-08-13T09:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00351",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-070",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-13T09:45:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00377",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-036",
+    "provider_id": "prov-nia",
+    "start": "2026-08-13T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00367",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-078",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-13T10:15:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00338",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-093",
+    "provider_id": "prov-jo",
+    "start": "2026-08-13T10:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00344",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-004",
+    "provider_id": "prov-maya",
+    "start": "2026-08-13T10:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00359",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-026",
+    "provider_id": "prov-nia",
+    "start": "2026-08-13T10:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00368",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-072",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-13T10:55:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00352",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-028",
+    "provider_id": "prov-patel",
+    "start": "2026-08-13T11:25:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-ec1-0-0",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-067",
+    "provider_id": "prov-patel",
+    "start": "2026-08-13T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-ec1-1-0",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-067",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-13T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec1-2-0",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-067",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-13T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec1-2-1",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-112",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-13T13:45:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec1-0-1",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-037",
+    "provider_id": "prov-patel",
+    "start": "2026-08-13T14:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec1-1-1",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-037",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-13T14:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec1-2-2",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-037",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-13T14:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec1-0-2",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-082",
+    "provider_id": "prov-patel",
+    "start": "2026-08-13T15:15:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec1-1-2",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-082",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-13T15:15:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec1-2-3",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-082",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-13T15:15:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-ec1-2-4",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-007",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-13T16:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec1-0-3",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-022",
+    "provider_id": "prov-patel",
+    "start": "2026-08-13T16:15:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-ec1-1-3",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-022",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-13T16:15:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-ec1-2-5",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-037",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-13T16:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00389",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-074",
+    "provider_id": "prov-patel",
+    "start": "2026-08-14T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00397",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-010",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-14T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00390",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-085",
+    "provider_id": "prov-nia",
+    "start": "2026-08-14T08:55:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00384",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-064",
+    "provider_id": "prov-jo",
+    "start": "2026-08-14T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00394",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-054",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-14T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00395",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-113",
+    "provider_id": "prov-patel",
+    "start": "2026-08-14T10:05:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00385",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-051",
+    "provider_id": "prov-jo",
+    "start": "2026-08-14T10:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00388",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-110",
+    "provider_id": "prov-nia",
+    "start": "2026-08-14T10:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00391",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-087",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-14T10:35:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00396",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-050",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-14T11:05:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00399",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-098",
+    "provider_id": "prov-maya",
+    "start": "2026-08-14T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00407",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-015",
+    "provider_id": "prov-nia",
+    "start": "2026-08-17T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00414",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-035",
+    "provider_id": "prov-patel",
+    "start": "2026-08-17T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "rct"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00422",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-066",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-17T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00441",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-002",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-17T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00400",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-025",
+    "provider_id": "prov-jo",
+    "start": "2026-08-17T08:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00431",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-059",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-17T08:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00423",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-039",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-17T08:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00432",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-031",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-17T08:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00442",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-112",
+    "provider_id": "prov-maya",
+    "start": "2026-08-17T08:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00401",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-112",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-17T09:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00408",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-051",
+    "provider_id": "prov-jo",
+    "start": "2026-08-17T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00433",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-061",
+    "provider_id": "prov-patel",
+    "start": "2026-08-17T09:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00415",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-011",
+    "provider_id": "prov-nia",
+    "start": "2026-08-17T09:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00424",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-042",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-17T09:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00409",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-073",
+    "provider_id": "prov-jo",
+    "start": "2026-08-17T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00443",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-074",
+    "provider_id": "prov-patel",
+    "start": "2026-08-17T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00402",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-060",
+    "provider_id": "prov-maya",
+    "start": "2026-08-17T10:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00434",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-059",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-17T10:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00444",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-021",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-17T10:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00416",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-119",
+    "provider_id": "prov-patel",
+    "start": "2026-08-17T10:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00425",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-054",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-17T10:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00435",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-077",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-17T11:05:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00410",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-105",
+    "provider_id": "prov-maya",
+    "start": "2026-08-17T11:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00417",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-034",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-17T11:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00426",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-094",
+    "provider_id": "prov-patel",
+    "start": "2026-08-17T11:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00445",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-051",
+    "provider_id": "prov-jo",
+    "start": "2026-08-17T11:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00403",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-069",
+    "provider_id": "prov-nia",
+    "start": "2026-08-17T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00411",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-018",
+    "provider_id": "prov-maya",
+    "start": "2026-08-17T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00418",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-024",
+    "provider_id": "prov-patel",
+    "start": "2026-08-17T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00427",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-098",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-17T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00436",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-032",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-17T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00446",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-021",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-17T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00437",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-027",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-17T13:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00447",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-104",
+    "provider_id": "prov-jo",
+    "start": "2026-08-17T13:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00412",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-017",
+    "provider_id": "prov-nia",
+    "start": "2026-08-17T14:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00419",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-105",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-17T14:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00404",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-017",
+    "provider_id": "prov-maya",
+    "start": "2026-08-17T14:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00428",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-043",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-17T14:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00438",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-022",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-17T14:35:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00448",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-104",
+    "provider_id": "prov-maya",
+    "start": "2026-08-17T15:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00420",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-008",
+    "provider_id": "prov-patel",
+    "start": "2026-08-17T15:05:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00405",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-030",
+    "provider_id": "prov-jo",
+    "start": "2026-08-17T15:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00413",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-103",
+    "provider_id": "prov-nia",
+    "start": "2026-08-17T15:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00439",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-099",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-17T15:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00429",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-085",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-17T15:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00449",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-068",
+    "provider_id": "prov-maya",
+    "start": "2026-08-17T15:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00430",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-086",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-17T16:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00440",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-076",
+    "provider_id": "prov-patel",
+    "start": "2026-08-17T16:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00406",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-022",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-17T16:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00421",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-103",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-17T16:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00456",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-051",
+    "provider_id": "prov-nia",
+    "start": "2026-08-18T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00462",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-086",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-18T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00471",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-024",
+    "provider_id": "prov-patel",
+    "start": "2026-08-18T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00481",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-023",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-18T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00491",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-099",
+    "provider_id": "prov-maya",
+    "start": "2026-08-18T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00450",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-065",
+    "provider_id": "prov-jo",
+    "start": "2026-08-18T08:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00482",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-038",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-18T08:55:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00451",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-018",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-18T09:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00457",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-118",
+    "provider_id": "prov-jo",
+    "start": "2026-08-18T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00463",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-020",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-18T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00472",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-032",
+    "provider_id": "prov-nia",
+    "start": "2026-08-18T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00492",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-113",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-18T09:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00483",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-074",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-18T09:35:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00464",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-061",
+    "provider_id": "prov-maya",
+    "start": "2026-08-18T09:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00452",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-066",
+    "provider_id": "prov-nia",
+    "start": "2026-08-18T09:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00473",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-006",
+    "provider_id": "prov-patel",
+    "start": "2026-08-18T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00484",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-095",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-18T10:15:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00458",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-097",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-18T10:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00465",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-078",
+    "provider_id": "prov-jo",
+    "start": "2026-08-18T10:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00493",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-053",
+    "provider_id": "prov-maya",
+    "start": "2026-08-18T10:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00474",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-006",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-18T10:55:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00485",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-025",
+    "provider_id": "prov-patel",
+    "start": "2026-08-18T10:55:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00475",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-095",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-18T11:25:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00494",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-022",
+    "provider_id": "prov-patel",
+    "start": "2026-08-18T11:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00453",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-065",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-18T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00459",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-092",
+    "provider_id": "prov-nia",
+    "start": "2026-08-18T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00466",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-115",
+    "provider_id": "prov-maya",
+    "start": "2026-08-18T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00476",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-030",
+    "provider_id": "prov-patel",
+    "start": "2026-08-18T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00486",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-031",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-18T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00495",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-117",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-18T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00477",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-029",
+    "provider_id": "prov-jo",
+    "start": "2026-08-18T13:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00496",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-057",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-18T13:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00487",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-037",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-18T13:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00454",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-035",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-18T14:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00460",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-092",
+    "provider_id": "prov-nia",
+    "start": "2026-08-18T14:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00467",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-090",
+    "provider_id": "prov-patel",
+    "start": "2026-08-18T14:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00497",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-070",
+    "provider_id": "prov-maya",
+    "start": "2026-08-18T14:25:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00488",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-083",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-18T14:35:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00478",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-051",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-18T14:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00468",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-097",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-18T15:05:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00479",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-095",
+    "provider_id": "prov-nia",
+    "start": "2026-08-18T15:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00489",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-015",
+    "provider_id": "prov-patel",
+    "start": "2026-08-18T15:15:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00498",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-080",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-18T15:15:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00455",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-056",
+    "provider_id": "prov-jo",
+    "start": "2026-08-18T15:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00461",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-087",
+    "provider_id": "prov-maya",
+    "start": "2026-08-18T15:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00469",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-016",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-18T15:35:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00499",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-097",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-18T15:45:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00490",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-119",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-18T15:55:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00480",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-017",
+    "provider_id": "prov-patel",
+    "start": "2026-08-18T16:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00470",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-095",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-18T16:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00500",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-077",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-18T16:35:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00501",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-038",
+    "provider_id": "prov-maya",
+    "start": "2026-08-19T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00508",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-080",
+    "provider_id": "prov-jo",
+    "start": "2026-08-19T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00515",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-016",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-19T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00521",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-007",
+    "provider_id": "prov-nia",
+    "start": "2026-08-19T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00528",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-113",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-19T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00538",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-006",
+    "provider_id": "prov-patel",
+    "start": "2026-08-19T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00529",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-118",
+    "provider_id": "prov-patel",
+    "start": "2026-08-19T08:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00509",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-094",
+    "provider_id": "prov-nia",
+    "start": "2026-08-19T08:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00522",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-045",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-19T08:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00539",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-112",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-19T08:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00502",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-054",
+    "provider_id": "prov-jo",
+    "start": "2026-08-19T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00516",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-007",
+    "provider_id": "prov-maya",
+    "start": "2026-08-19T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00523",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-050",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-19T09:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00530",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-037",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-19T09:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00540",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-106",
+    "provider_id": "prov-patel",
+    "start": "2026-08-19T09:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00510",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-057",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-19T09:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00503",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-102",
+    "provider_id": "prov-nia",
+    "start": "2026-08-19T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00541",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-073",
+    "provider_id": "prov-jo",
+    "start": "2026-08-19T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00531",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-017",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-19T10:15:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00517",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-041",
+    "provider_id": "prov-patel",
+    "start": "2026-08-19T10:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00511",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-014",
+    "provider_id": "prov-maya",
+    "start": "2026-08-19T10:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00524",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-027",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-19T10:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00532",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-062",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-19T11:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00542",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-082",
+    "provider_id": "prov-nia",
+    "start": "2026-08-19T11:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00512",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-117",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-19T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00518",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-048",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-19T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00525",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-088",
+    "provider_id": "prov-patel",
+    "start": "2026-08-19T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00533",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-105",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-19T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00543",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-089",
+    "provider_id": "prov-jo",
+    "start": "2026-08-19T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00504",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-007",
+    "provider_id": "prov-maya",
+    "start": "2026-08-19T13:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00534",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-022",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-19T13:55:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00513",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-040",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-19T14:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00505",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-068",
+    "provider_id": "prov-maya",
+    "start": "2026-08-19T14:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00544",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-038",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-19T14:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00519",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-061",
+    "provider_id": "prov-jo",
+    "start": "2026-08-19T14:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00526",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-100",
+    "provider_id": "prov-nia",
+    "start": "2026-08-19T14:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00535",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-049",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-19T14:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00514",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-064",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-19T15:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00506",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-079",
+    "provider_id": "prov-maya",
+    "start": "2026-08-19T15:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00536",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-105",
+    "provider_id": "prov-patel",
+    "start": "2026-08-19T15:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00545",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-033",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-19T15:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00527",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-060",
+    "provider_id": "prov-nia",
+    "start": "2026-08-19T15:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00537",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-031",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-19T16:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00507",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-098",
+    "provider_id": "prov-maya",
+    "start": "2026-08-19T16:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00520",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-088",
+    "provider_id": "prov-patel",
+    "start": "2026-08-19T16:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00546",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-050",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-19T16:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00547",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-077",
+    "provider_id": "prov-nia",
+    "start": "2026-08-20T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00553",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-005",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-20T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00561",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-001",
+    "provider_id": "prov-patel",
+    "start": "2026-08-20T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "rct"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00569",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-060",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-20T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-ec8-2026-08-20-480",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-018",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-20T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00586",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-080",
+    "provider_id": "prov-jo",
+    "start": "2026-08-20T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00577",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-004",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-20T08:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00570",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-112",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-20T08:55:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00548",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-010",
+    "provider_id": "prov-nia",
+    "start": "2026-08-20T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00554",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-079",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-20T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00587",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-107",
+    "provider_id": "prov-maya",
+    "start": "2026-08-20T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00578",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-007",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-20T09:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00562",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-083",
+    "provider_id": "prov-patel",
+    "start": "2026-08-20T09:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00571",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-010",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-20T09:45:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00555",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-060",
+    "provider_id": "prov-jo",
+    "start": "2026-08-20T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00563",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-040",
+    "provider_id": "prov-patel",
+    "start": "2026-08-20T10:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00579",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-012",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-20T10:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00549",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-019",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-20T10:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00588",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-117",
+    "provider_id": "prov-maya",
+    "start": "2026-08-20T10:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00580",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-107",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-20T10:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00572",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-119",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-20T10:55:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00556",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-067",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-20T11:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec11-OP-1-780",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-073",
+    "provider_id": "prov-nia",
+    "start": "2026-08-20T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00564",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-047",
+    "provider_id": "prov-patel",
+    "start": "2026-08-20T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00573",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-041",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-20T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00581",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-105",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-20T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00589",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-094",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-20T13:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00565",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-087",
+    "provider_id": "prov-patel",
+    "start": "2026-08-20T13:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00582",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-097",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-20T13:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00590",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-051",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-20T13:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-ec11-OP-1-840",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-013",
+    "provider_id": "prov-jo",
+    "start": "2026-08-20T14:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00574",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-099",
+    "provider_id": "prov-patel",
+    "start": "2026-08-20T14:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00566",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-013",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-20T14:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00583",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-010",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-20T14:35:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00591",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-119",
+    "provider_id": "prov-maya",
+    "start": "2026-08-20T14:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00575",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-010",
+    "provider_id": "prov-maya",
+    "start": "2026-08-20T15:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00567",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-051",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-20T15:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00584",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-011",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-20T15:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00592",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-024",
+    "provider_id": "prov-patel",
+    "start": "2026-08-20T15:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00585",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-000",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-20T16:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00568",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-076",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-20T16:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00576",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-067",
+    "provider_id": "prov-patel",
+    "start": "2026-08-20T16:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00593",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-075",
+    "provider_id": "prov-maya",
+    "start": "2026-08-21T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00601",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-107",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-21T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00606",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-100",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-21T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00612",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-097",
+    "provider_id": "prov-patel",
+    "start": "2026-08-21T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00618",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-096",
+    "provider_id": "prov-nia",
+    "start": "2026-08-21T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00597",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-037",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-21T08:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00607",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-005",
+    "provider_id": "prov-patel",
+    "start": "2026-08-21T08:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00613",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-105",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-21T08:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00594",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-118",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-21T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00602",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-083",
+    "provider_id": "prov-maya",
+    "start": "2026-08-21T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00619",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-096",
+    "provider_id": "prov-jo",
+    "start": "2026-08-21T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00598",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-046",
+    "provider_id": "prov-nia",
+    "start": "2026-08-21T09:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00608",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-016",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-21T09:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00614",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-091",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-21T09:35:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00595",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-087",
+    "provider_id": "prov-jo",
+    "start": "2026-08-21T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00620",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-044",
+    "provider_id": "prov-patel",
+    "start": "2026-08-21T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00609",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-041",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-21T10:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00599",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-013",
+    "provider_id": "prov-maya",
+    "start": "2026-08-21T10:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00603",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-089",
+    "provider_id": "prov-patel",
+    "start": "2026-08-21T10:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00615",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-024",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-21T10:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00621",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-004",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-21T10:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00610",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-070",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-21T11:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00622",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-119",
+    "provider_id": "prov-jo",
+    "start": "2026-08-21T11:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00616",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-002",
+    "provider_id": "prov-patel",
+    "start": "2026-08-21T11:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00604",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-096",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-21T11:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00596",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-114",
+    "provider_id": "prov-nia",
+    "start": "2026-08-21T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00600",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-067",
+    "provider_id": "prov-jo",
+    "start": "2026-08-21T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00605",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-008",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-21T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00611",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-024",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-21T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00617",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-013",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-21T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00623",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-027",
+    "provider_id": "prov-patel",
+    "start": "2026-08-21T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00624",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-045",
+    "provider_id": "prov-jo",
+    "start": "2026-08-24T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00629",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-056",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-24T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00634",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-088",
+    "provider_id": "prov-patel",
+    "start": "2026-08-24T08:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "rct"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00650",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-062",
+    "provider_id": "prov-nia",
+    "start": "2026-08-24T08:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00639",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-033",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-24T08:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00630",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-064",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-24T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00644",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-105",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-24T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00651",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-080",
+    "provider_id": "prov-maya",
+    "start": "2026-08-24T09:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00625",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-087",
+    "provider_id": "prov-nia",
+    "start": "2026-08-24T09:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00645",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-053",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-24T09:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00631",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-089",
+    "provider_id": "prov-jo",
+    "start": "2026-08-24T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00640",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-037",
+    "provider_id": "prov-patel",
+    "start": "2026-08-24T10:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "rct"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00635",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-090",
+    "provider_id": "prov-maya",
+    "start": "2026-08-24T10:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00652",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-017",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-24T10:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00632",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-071",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-24T11:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00646",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-036",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-24T11:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00653",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-077",
+    "provider_id": "prov-jo",
+    "start": "2026-08-24T11:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00647",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-045",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-24T13:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00636",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-010",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-24T13:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00626",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-043",
+    "provider_id": "prov-jo",
+    "start": "2026-08-24T13:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00641",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-084",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-24T13:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00654",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-116",
+    "provider_id": "prov-patel",
+    "start": "2026-08-24T13:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00627",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-058",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-24T14:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00633",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-091",
+    "provider_id": "prov-nia",
+    "start": "2026-08-24T15:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00648",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-041",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-24T15:05:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00637",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-089",
+    "provider_id": "prov-maya",
+    "start": "2026-08-24T15:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00642",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-084",
+    "provider_id": "prov-jo",
+    "start": "2026-08-24T15:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00649",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-116",
+    "provider_id": "prov-patel",
+    "start": "2026-08-24T15:45:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00628",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-036",
+    "provider_id": "prov-maya",
+    "start": "2026-08-24T15:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00655",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-103",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-24T15:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00643",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-059",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-24T16:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00638",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-037",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-24T16:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00665",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-033",
+    "provider_id": "prov-nia",
+    "start": "2026-08-25T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00670",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-034",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-25T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00683",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-002",
+    "provider_id": "prov-patel",
+    "start": "2026-08-25T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00675",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-034",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-25T08:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00661",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-015",
+    "provider_id": "prov-jo",
+    "start": "2026-08-25T08:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00676",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-071",
+    "provider_id": "prov-patel",
+    "start": "2026-08-25T08:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00666",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-004",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-25T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00677",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-068",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-25T09:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00656",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-009",
+    "provider_id": "prov-jo",
+    "start": "2026-08-25T09:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00662",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-053",
+    "provider_id": "prov-maya",
+    "start": "2026-08-25T09:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00671",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-066",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-25T09:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00684",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-078",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-25T09:45:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00667",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-016",
+    "provider_id": "prov-patel",
+    "start": "2026-08-25T09:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00678",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-033",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-25T10:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00668",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-044",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-25T11:15:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00685",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-094",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-25T11:15:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00672",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-079",
+    "provider_id": "prov-patel",
+    "start": "2026-08-25T11:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00679",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-064",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-25T11:25:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00657",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-092",
+    "provider_id": "prov-maya",
+    "start": "2026-08-25T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00669",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-080",
+    "provider_id": "prov-jo",
+    "start": "2026-08-25T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00658",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-078",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-25T13:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00673",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-085",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-25T13:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00680",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-022",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-25T13:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00663",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-007",
+    "provider_id": "prov-jo",
+    "start": "2026-08-25T14:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00686",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-083",
+    "provider_id": "prov-patel",
+    "start": "2026-08-25T14:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00659",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-002",
+    "provider_id": "prov-maya",
+    "start": "2026-08-25T14:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00687",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-104",
+    "provider_id": "prov-nia",
+    "start": "2026-08-25T14:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00674",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-111",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-25T14:55:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00681",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-059",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-25T14:55:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00664",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-017",
+    "provider_id": "prov-jo",
+    "start": "2026-08-25T15:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00660",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-110",
+    "provider_id": "prov-maya",
+    "start": "2026-08-25T16:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00688",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-025",
+    "provider_id": "prov-jo",
+    "start": "2026-08-25T16:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00682",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-090",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-25T16:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00707",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-037",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-26T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00713",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-045",
+    "provider_id": "prov-jo",
+    "start": "2026-08-26T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00692",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-047",
+    "provider_id": "prov-nia",
+    "start": "2026-08-26T08:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00701",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-104",
+    "provider_id": "prov-patel",
+    "start": "2026-08-26T08:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00689",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-027",
+    "provider_id": "prov-maya",
+    "start": "2026-08-26T08:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00697",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-017",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-26T08:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00708",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-008",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-26T08:55:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00714",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-098",
+    "provider_id": "prov-maya",
+    "start": "2026-08-26T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00693",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-015",
+    "provider_id": "prov-jo",
+    "start": "2026-08-26T09:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00702",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-035",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-26T09:45:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_seat"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00690",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-052",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-26T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00698",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-052",
+    "provider_id": "prov-patel",
+    "start": "2026-08-26T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "rct"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00694",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-052",
+    "provider_id": "prov-maya",
+    "start": "2026-08-26T10:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00715",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-075",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-26T10:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00716",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-011",
+    "provider_id": "prov-jo",
+    "start": "2026-08-26T10:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00709",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-089",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-26T11:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00703",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-029",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-26T11:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00717",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-040",
+    "provider_id": "prov-patel",
+    "start": "2026-08-26T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00710",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-051",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-26T13:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00699",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-119",
+    "provider_id": "prov-jo",
+    "start": "2026-08-26T13:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00704",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-023",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-26T13:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00718",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-109",
+    "provider_id": "prov-patel",
+    "start": "2026-08-26T13:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00695",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-031",
+    "provider_id": "prov-jo",
+    "start": "2026-08-26T14:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00711",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-108",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-26T14:25:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00691",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-098",
+    "provider_id": "prov-maya",
+    "start": "2026-08-26T14:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00700",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-039",
+    "provider_id": "prov-nia",
+    "start": "2026-08-26T14:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00705",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-079",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-26T14:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00719",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-050",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-26T14:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00712",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-010",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-26T15:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00696",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-015",
+    "provider_id": "prov-maya",
+    "start": "2026-08-26T16:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00706",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-097",
+    "provider_id": "prov-jo",
+    "start": "2026-08-26T16:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00720",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-075",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-26T16:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00725",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-021",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-27T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00748",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-082",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-27T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "np_exam_fmx"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00736",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-021",
+    "provider_id": "prov-patel",
+    "start": "2026-08-27T08:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00741",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-045",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-27T08:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00731",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-012",
+    "provider_id": "prov-jo",
+    "start": "2026-08-27T08:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00721",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-020",
+    "provider_id": "prov-nia",
+    "start": "2026-08-27T08:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00742",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-114",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-27T09:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00726",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-028",
+    "provider_id": "prov-maya",
+    "start": "2026-08-27T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00732",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-052",
+    "provider_id": "prov-patel",
+    "start": "2026-08-27T09:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "rct"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00743",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-088",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-27T09:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00749",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-079",
+    "provider_id": "prov-jo",
+    "start": "2026-08-27T09:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00737",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-067",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-27T09:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00722",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-032",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-27T10:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00744",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-118",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-27T10:45:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00727",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-100",
+    "provider_id": "prov-jo",
+    "start": "2026-08-27T10:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00750",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-062",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-27T10:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_1s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00738",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-075",
+    "provider_id": "prov-nia",
+    "start": "2026-08-27T11:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00733",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-039",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-27T11:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00728",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-052",
+    "provider_id": "prov-jo",
+    "start": "2026-08-27T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 90,
+    "id": "appt-00734",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-034",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-27T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "crown_prep"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00739",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-067",
+    "provider_id": "prov-patel",
+    "start": "2026-08-27T13:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00723",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-053",
+    "provider_id": "prov-jo",
+    "start": "2026-08-27T13:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00745",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-094",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-27T13:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00751",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-009",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-27T14:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00735",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-036",
+    "provider_id": "prov-maya",
+    "start": "2026-08-27T14:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00740",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-112",
+    "provider_id": "prov-patel",
+    "start": "2026-08-27T14:40:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00746",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-076",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-27T14:45:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00724",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-041",
+    "provider_id": "prov-jo",
+    "start": "2026-08-27T15:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00729",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-039",
+    "provider_id": "prov-nia",
+    "start": "2026-08-27T15:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00752",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-053",
+    "provider_id": "prov-maya",
+    "start": "2026-08-27T15:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00730",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-057",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-27T15:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00747",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-063",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-27T16:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00753",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-022",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-28T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00770",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-118",
+    "provider_id": "prov-nia",
+    "start": "2026-08-28T08:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00765",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-078",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-28T08:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00755",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-063",
+    "provider_id": "prov-maya",
+    "start": "2026-08-28T08:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00759",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-091",
+    "provider_id": "prov-patel",
+    "start": "2026-08-28T08:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00760",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-044",
+    "provider_id": "prov-jo",
+    "start": "2026-08-28T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00766",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-053",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-28T09:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00754",
+    "operatory_id": "OP-1",
+    "patient_id": "pat-011",
+    "provider_id": "prov-nia",
+    "start": "2026-08-28T09:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00756",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-103",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-28T09:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00771",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-080",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-28T09:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00761",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-112",
+    "provider_id": "prov-patel",
+    "start": "2026-08-28T10:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "filling_2s"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00763",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-091",
+    "provider_id": "prov-jo",
+    "start": "2026-08-28T10:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00767",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-000",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-28T10:25:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00772",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-070",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-28T10:50:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00757",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-088",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-28T11:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 30,
+    "id": "appt-00768",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-008",
+    "provider_id": "prov-reyes",
+    "start": "2026-08-28T11:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "limited_exam"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00773",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-038",
+    "provider_id": "prov-maya",
+    "start": "2026-08-28T11:20:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 20,
+    "id": "appt-00762",
+    "operatory_id": "OP-3",
+    "patient_id": "pat-006",
+    "provider_id": "prov-patel",
+    "start": "2026-08-28T11:30:00-07:00",
+    "status": "scheduled",
+    "type_id": "denture_adjust"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00758",
+    "operatory_id": "OP-2",
+    "patient_id": "pat-041",
+    "provider_id": "prov-jo",
+    "start": "2026-08-28T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "perio_maint"
+  },
+  {
+    "duration_min": 60,
+    "id": "appt-00764",
+    "operatory_id": "OP-4",
+    "patient_id": "pat-101",
+    "provider_id": "prov-sarah",
+    "start": "2026-08-28T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_adult"
+  },
+  {
+    "duration_min": 40,
+    "id": "appt-00774",
+    "operatory_id": "OP-6",
+    "patient_id": "pat-010",
+    "provider_id": "prov-nia",
+    "start": "2026-08-28T13:00:00-07:00",
+    "status": "scheduled",
+    "type_id": "prophy_child"
+  },
+  {
+    "duration_min": 45,
+    "id": "appt-00769",
+    "operatory_id": "OP-5",
+    "patient_id": "pat-038",
+    "provider_id": "prov-okafor",
+    "start": "2026-08-28T13:10:00-07:00",
+    "status": "scheduled",
+    "type_id": "extraction"
+  }
+]

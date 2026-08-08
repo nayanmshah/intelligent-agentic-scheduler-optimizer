@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* Presentation mode is one attribute on the root driving a type scale, rather than
+   a branch inside every component (FR-108). One switch, no component-level logic. */
+:root {
+  --scale: 1;
+  --ink: #16181d;
+  --ink-soft: #5b6270;
+  --line: #e3e6ec;
+  --surface: #ffffff;
+  --page: #f6f7f9;
+  --accent: #1f5f8b;
+  --warn: #9a5b12;
+}
+
+:root[data-presentation="on"] {
+  --scale: 1.28;
+}
+
+html {
+  font-size: calc(16px * var(--scale));
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The only animation in the product: cards moving on a weight change, because the
+   movement itself is the evidence that weights matter. Suppressed when asked. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

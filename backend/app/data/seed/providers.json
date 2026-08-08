@@ -1,0 +1,344 @@
+[
+  {
+    "credentials": [
+      "DDS",
+      "restorative",
+      "endo"
+    ],
+    "id": "prov-patel",
+    "name": "Dr. Patel",
+    "pod": "A",
+    "pto": [],
+    "role": "DDS",
+    "working_hours": [
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 0
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 1
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 2
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 3
+      },
+      {
+        "close_min": 840,
+        "open_min": 480,
+        "weekday": 4
+      }
+    ]
+  },
+  {
+    "credentials": [
+      "DDS",
+      "restorative"
+    ],
+    "id": "prov-reyes",
+    "name": "Dr. Reyes",
+    "pod": "B",
+    "pto": [],
+    "role": "DDS",
+    "working_hours": [
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 0
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 1
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 2
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 3
+      },
+      {
+        "close_min": 840,
+        "open_min": 480,
+        "weekday": 4
+      }
+    ]
+  },
+  {
+    "credentials": [
+      "DDS",
+      "oral_surgery"
+    ],
+    "id": "prov-okafor",
+    "name": "Dr. Okafor",
+    "pod": "S",
+    "pto": [],
+    "role": "DDS",
+    "working_hours": [
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 0
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 1
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 2
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 3
+      },
+      {
+        "close_min": 840,
+        "open_min": 480,
+        "weekday": 4
+      }
+    ]
+  },
+  {
+    "credentials": [
+      "RDH"
+    ],
+    "id": "prov-sarah",
+    "name": "Sarah",
+    "pod": "A",
+    "pto": [
+      {
+        "end": "2026-08-14",
+        "start": "2026-08-12"
+      }
+    ],
+    "role": "RDH",
+    "working_hours": [
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 0
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 1
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 2
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 3
+      },
+      {
+        "close_min": 840,
+        "open_min": 480,
+        "weekday": 4
+      }
+    ]
+  },
+  {
+    "credentials": [
+      "RDH"
+    ],
+    "id": "prov-nia",
+    "name": "Nia",
+    "pod": "A",
+    "pto": [],
+    "role": "RDH",
+    "working_hours": [
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 0
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 1
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 2
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 3
+      },
+      {
+        "close_min": 840,
+        "open_min": 480,
+        "weekday": 4
+      }
+    ]
+  },
+  {
+    "credentials": [
+      "RDH"
+    ],
+    "id": "prov-maya",
+    "name": "Maya",
+    "pod": "B",
+    "pto": [],
+    "role": "RDH",
+    "working_hours": [
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 0
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 1
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 2
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 3
+      },
+      {
+        "close_min": 840,
+        "open_min": 480,
+        "weekday": 4
+      }
+    ]
+  },
+  {
+    "credentials": [
+      "RDH"
+    ],
+    "id": "prov-jo",
+    "name": "Jo",
+    "pod": "B",
+    "pto": [],
+    "role": "RDH",
+    "working_hours": [
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 0
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 1
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 2
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 3
+      },
+      {
+        "close_min": 840,
+        "open_min": 480,
+        "weekday": 4
+      }
+    ]
+  },
+  {
+    "credentials": [
+      "DA"
+    ],
+    "id": "prov-dana",
+    "name": "Dana",
+    "pod": "A",
+    "pto": [],
+    "role": "DA",
+    "working_hours": [
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 0
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 1
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 2
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 3
+      },
+      {
+        "close_min": 840,
+        "open_min": 480,
+        "weekday": 4
+      }
+    ]
+  },
+  {
+    "credentials": [
+      "DA"
+    ],
+    "id": "prov-chris",
+    "name": "Chris",
+    "pod": "B",
+    "pto": [],
+    "role": "DA",
+    "working_hours": [
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 0
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 1
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 2
+      },
+      {
+        "close_min": 1020,
+        "open_min": 480,
+        "weekday": 3
+      },
+      {
+        "close_min": 840,
+        "open_min": 480,
+        "weekday": 4
+      }
+    ]
+  }
+]

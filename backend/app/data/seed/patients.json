@@ -1,0 +1,1881 @@
+[
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-000",
+    "last_seen_by_type": {},
+    "name": "Ana Alvarez",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-001",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-06",
+        "provider_id": "prov-patel"
+      },
+      "perio_maint": {
+        "on": "2026-08-06",
+        "provider_id": "prov-jo"
+      },
+      "rct": {
+        "on": "2026-08-07",
+        "provider_id": "prov-patel"
+      }
+    },
+    "name": "Ben Alvarez",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-002",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-06",
+        "provider_id": "prov-patel"
+      }
+    },
+    "name": "Cara Alvarez",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-003",
+    "last_seen_by_type": {
+      "filling_1s": {
+        "on": "2026-08-04",
+        "provider_id": "prov-patel"
+      },
+      "perio_maint": {
+        "on": "2026-08-06",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Dev Brooks",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-004",
+    "last_seen_by_type": {
+      "extraction": {
+        "on": "2026-08-04",
+        "provider_id": "prov-okafor"
+      }
+    },
+    "name": "Elle Brooks",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-005",
+    "last_seen_by_type": {
+      "prophy_child": {
+        "on": "2026-08-06",
+        "provider_id": "prov-nia"
+      }
+    },
+    "name": "Femi Brooks",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-006",
+    "last_seen_by_type": {
+      "prophy_child": {
+        "on": "2026-08-04",
+        "provider_id": "prov-nia"
+      }
+    },
+    "name": "Gus Chen",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-007",
+    "last_seen_by_type": {
+      "filling_1s": {
+        "on": "2026-08-07",
+        "provider_id": "prov-patel"
+      },
+      "filling_2s": {
+        "on": "2026-08-05",
+        "provider_id": "prov-reyes"
+      },
+      "prophy_child": {
+        "on": "2026-08-06",
+        "provider_id": "prov-nia"
+      }
+    },
+    "name": "Hana Chen",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-008",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-05",
+        "provider_id": "prov-reyes"
+      },
+      "prophy_child": {
+        "on": "2026-08-06",
+        "provider_id": "prov-sarah"
+      }
+    },
+    "name": "Ivan Chen",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-009",
+    "last_seen_by_type": {},
+    "name": "Jess Duarte",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-010",
+    "last_seen_by_type": {},
+    "name": "Kai Duarte",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "senior",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-011",
+    "last_seen_by_type": {
+      "crown_seat": {
+        "on": "2026-08-06",
+        "provider_id": "prov-reyes"
+      },
+      "perio_maint": {
+        "on": "2026-08-05",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Lena Duarte",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-012",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-03",
+        "provider_id": "prov-reyes"
+      },
+      "extraction": {
+        "on": "2026-08-05",
+        "provider_id": "prov-okafor"
+      },
+      "prophy_adult": {
+        "on": "2026-08-03",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Mo Ellis",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-013",
+    "last_seen_by_type": {},
+    "name": "Nora Ellis",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-014",
+    "last_seen_by_type": {
+      "filling_1s": {
+        "on": "2026-08-04",
+        "provider_id": "prov-patel"
+      },
+      "prophy_child": {
+        "on": "2026-08-03",
+        "provider_id": "prov-sarah"
+      },
+      "rct": {
+        "on": "2026-08-04",
+        "provider_id": "prov-patel"
+      }
+    },
+    "name": "Omar Ellis",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-015",
+    "last_seen_by_type": {
+      "limited_exam": {
+        "on": "2026-08-05",
+        "provider_id": "prov-reyes"
+      },
+      "prophy_child": {
+        "on": "2026-08-07",
+        "provider_id": "prov-sarah"
+      }
+    },
+    "name": "Pia Farooq",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-016",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-06",
+        "provider_id": "prov-reyes"
+      },
+      "limited_exam": {
+        "on": "2026-08-06",
+        "provider_id": "prov-okafor"
+      },
+      "prophy_adult": {
+        "on": "2026-08-03",
+        "provider_id": "prov-jo"
+      }
+    },
+    "name": "Quinn Farooq",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-017",
+    "last_seen_by_type": {
+      "limited_exam": {
+        "on": "2026-08-07",
+        "provider_id": "prov-reyes"
+      },
+      "prophy_adult": {
+        "on": "2026-08-06",
+        "provider_id": "prov-sarah"
+      }
+    },
+    "name": "Rosa Farooq",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-018",
+    "last_seen_by_type": {
+      "perio_maint": {
+        "on": "2026-08-04",
+        "provider_id": "prov-maya"
+      },
+      "prophy_child": {
+        "on": "2026-08-03",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Sam Grant",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-019",
+    "last_seen_by_type": {
+      "filling_2s": {
+        "on": "2026-08-07",
+        "provider_id": "prov-reyes"
+      }
+    },
+    "name": "Tess Grant",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-020",
+    "last_seen_by_type": {
+      "extraction": {
+        "on": "2026-08-06",
+        "provider_id": "prov-okafor"
+      },
+      "perio_maint": {
+        "on": "2026-08-04",
+        "provider_id": "prov-maya"
+      },
+      "prophy_adult": {
+        "on": "2026-08-06",
+        "provider_id": "prov-jo"
+      },
+      "prophy_child": {
+        "on": "2026-08-06",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Uma Grant",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-021",
+    "last_seen_by_type": {
+      "limited_exam": {
+        "on": "2026-08-04",
+        "provider_id": "prov-reyes"
+      }
+    },
+    "name": "Vik Haddad",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "senior",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-022",
+    "last_seen_by_type": {},
+    "name": "Wren Haddad",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-023",
+    "last_seen_by_type": {
+      "perio_maint": {
+        "on": "2026-08-05",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Xan Haddad",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-024",
+    "last_seen_by_type": {},
+    "name": "Yara Ibarra",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-025",
+    "last_seen_by_type": {
+      "prophy_adult": {
+        "on": "2026-08-03",
+        "provider_id": "prov-jo"
+      }
+    },
+    "name": "Zed Ibarra",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-026",
+    "last_seen_by_type": {},
+    "name": "Ana Ibarra",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-027",
+    "last_seen_by_type": {
+      "prophy_child": {
+        "on": "2026-08-06",
+        "provider_id": "prov-nia"
+      }
+    },
+    "name": "Ben Jensen",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-028",
+    "last_seen_by_type": {
+      "prophy_adult": {
+        "on": "2026-08-06",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Cara Jensen",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-029",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-06",
+        "provider_id": "prov-okafor"
+      },
+      "extraction": {
+        "on": "2026-08-03",
+        "provider_id": "prov-okafor"
+      },
+      "prophy_adult": {
+        "on": "2026-08-03",
+        "provider_id": "prov-nia"
+      }
+    },
+    "name": "Dev Jensen",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-030",
+    "last_seen_by_type": {
+      "filling_1s": {
+        "on": "2026-08-07",
+        "provider_id": "prov-patel"
+      }
+    },
+    "name": "Elle Kowal",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-031",
+    "last_seen_by_type": {
+      "extraction": {
+        "on": "2026-08-03",
+        "provider_id": "prov-okafor"
+      }
+    },
+    "name": "Femi Kowal",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-032",
+    "last_seen_by_type": {
+      "extraction": {
+        "on": "2026-08-06",
+        "provider_id": "prov-okafor"
+      },
+      "perio_maint": {
+        "on": "2026-08-05",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Gus Kowal",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "senior",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-033",
+    "last_seen_by_type": {
+      "perio_maint": {
+        "on": "2026-08-05",
+        "provider_id": "prov-sarah"
+      }
+    },
+    "name": "Hana Lind",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-034",
+    "last_seen_by_type": {
+      "limited_exam": {
+        "on": "2026-08-04",
+        "provider_id": "prov-okafor"
+      },
+      "prophy_child": {
+        "on": "2026-08-04",
+        "provider_id": "prov-jo"
+      }
+    },
+    "name": "Ivan Lind",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-035",
+    "last_seen_by_type": {},
+    "name": "Jess Lind",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-036",
+    "last_seen_by_type": {
+      "crown_seat": {
+        "on": "2026-08-05",
+        "provider_id": "prov-reyes"
+      }
+    },
+    "name": "Kai Moreau",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-037",
+    "last_seen_by_type": {
+      "extraction": {
+        "on": "2026-08-06",
+        "provider_id": "prov-okafor"
+      },
+      "perio_maint": {
+        "on": "2026-08-04",
+        "provider_id": "prov-sarah"
+      },
+      "prophy_adult": {
+        "on": "2026-08-05",
+        "provider_id": "prov-jo"
+      }
+    },
+    "name": "Lena Moreau",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-038",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-05",
+        "provider_id": "prov-okafor"
+      }
+    },
+    "name": "Mo Moreau",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-039",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-03",
+        "provider_id": "prov-patel"
+      }
+    },
+    "name": "Nora Nkemi",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-040",
+    "last_seen_by_type": {
+      "limited_exam": {
+        "on": "2026-08-03",
+        "provider_id": "prov-patel"
+      },
+      "prophy_adult": {
+        "on": "2026-08-07",
+        "provider_id": "prov-jo"
+      },
+      "prophy_child": {
+        "on": "2026-08-05",
+        "provider_id": "prov-nia"
+      }
+    },
+    "name": "Omar Nkemi",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-041",
+    "last_seen_by_type": {
+      "prophy_adult": {
+        "on": "2026-08-04",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Pia Nkemi",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-042",
+    "last_seen_by_type": {},
+    "name": "Quinn Ortiz",
+    "no_show_count": 5
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-043",
+    "last_seen_by_type": {
+      "limited_exam": {
+        "on": "2026-08-07",
+        "provider_id": "prov-okafor"
+      }
+    },
+    "name": "Rosa Ortiz",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "senior",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-044",
+    "last_seen_by_type": {},
+    "name": "Sam Ortiz",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-045",
+    "last_seen_by_type": {
+      "extraction": {
+        "on": "2026-08-04",
+        "provider_id": "prov-okafor"
+      },
+      "prophy_child": {
+        "on": "2026-08-03",
+        "provider_id": "prov-nia"
+      }
+    },
+    "name": "Tess Park",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-046",
+    "last_seen_by_type": {
+      "crown_prep": {
+        "on": "2026-08-04",
+        "provider_id": "prov-reyes"
+      },
+      "crown_seat": {
+        "on": "2026-08-06",
+        "provider_id": "prov-patel"
+      },
+      "denture_adjust": {
+        "on": "2026-08-05",
+        "provider_id": "prov-okafor"
+      },
+      "extraction": {
+        "on": "2026-08-07",
+        "provider_id": "prov-okafor"
+      },
+      "perio_maint": {
+        "on": "2026-08-07",
+        "provider_id": "prov-sarah"
+      },
+      "prophy_child": {
+        "on": "2026-08-07",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Uma Park",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-047",
+    "last_seen_by_type": {
+      "perio_maint": {
+        "on": "2026-08-05",
+        "provider_id": "prov-maya"
+      },
+      "prophy_child": {
+        "on": "2026-08-05",
+        "provider_id": "prov-nia"
+      }
+    },
+    "name": "Vik Park",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-048",
+    "last_seen_by_type": {
+      "prophy_adult": {
+        "on": "2026-08-04",
+        "provider_id": "prov-nia"
+      }
+    },
+    "name": "Wren Alvarez",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-049",
+    "last_seen_by_type": {
+      "filling_1s": {
+        "on": "2026-08-03",
+        "provider_id": "prov-patel"
+      }
+    },
+    "name": "Xan Alvarez",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-050",
+    "last_seen_by_type": {},
+    "name": "Yara Alvarez",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-051",
+    "last_seen_by_type": {
+      "filling_1s": {
+        "on": "2026-08-07",
+        "provider_id": "prov-patel"
+      },
+      "limited_exam": {
+        "on": "2026-08-06",
+        "provider_id": "prov-patel"
+      },
+      "prophy_adult": {
+        "on": "2026-08-07",
+        "provider_id": "prov-jo"
+      }
+    },
+    "name": "Zed Brooks",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-052",
+    "last_seen_by_type": {},
+    "name": "Ana Brooks",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-053",
+    "last_seen_by_type": {},
+    "name": "Ben Brooks",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-054",
+    "last_seen_by_type": {
+      "crown_prep": {
+        "on": "2026-08-05",
+        "provider_id": "prov-patel"
+      },
+      "filling_2s": {
+        "on": "2026-08-06",
+        "provider_id": "prov-patel"
+      },
+      "perio_maint": {
+        "on": "2026-08-07",
+        "provider_id": "prov-maya"
+      },
+      "prophy_child": {
+        "on": "2026-08-06",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Cara Chen",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "senior",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-055",
+    "last_seen_by_type": {
+      "filling_1s": {
+        "on": "2026-08-05",
+        "provider_id": "prov-reyes"
+      }
+    },
+    "name": "Dev Chen",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-056",
+    "last_seen_by_type": {
+      "crown_prep": {
+        "on": "2026-08-03",
+        "provider_id": "prov-patel"
+      },
+      "denture_adjust": {
+        "on": "2026-08-04",
+        "provider_id": "prov-okafor"
+      }
+    },
+    "name": "Elle Chen",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-057",
+    "last_seen_by_type": {},
+    "name": "Femi Duarte",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-058",
+    "last_seen_by_type": {
+      "filling_2s": {
+        "on": "2026-08-04",
+        "provider_id": "prov-reyes"
+      }
+    },
+    "name": "Gus Duarte",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-059",
+    "last_seen_by_type": {
+      "perio_maint": {
+        "on": "2026-08-07",
+        "provider_id": "prov-nia"
+      },
+      "prophy_adult": {
+        "on": "2026-08-06",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Hana Duarte",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-060",
+    "last_seen_by_type": {
+      "limited_exam": {
+        "on": "2026-08-05",
+        "provider_id": "prov-okafor"
+      }
+    },
+    "name": "Ivan Ellis",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-061",
+    "last_seen_by_type": {},
+    "name": "Jess Ellis",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-062",
+    "last_seen_by_type": {
+      "crown_prep": {
+        "on": "2026-08-03",
+        "provider_id": "prov-reyes"
+      }
+    },
+    "name": "Kai Ellis",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-063",
+    "last_seen_by_type": {
+      "filling_2s": {
+        "on": "2026-08-04",
+        "provider_id": "prov-patel"
+      }
+    },
+    "name": "Lena Farooq",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-064",
+    "last_seen_by_type": {
+      "prophy_adult": {
+        "on": "2026-08-06",
+        "provider_id": "prov-jo"
+      }
+    },
+    "name": "Mo Farooq",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-065",
+    "last_seen_by_type": {
+      "filling_1s": {
+        "on": "2026-08-03",
+        "provider_id": "prov-reyes"
+      }
+    },
+    "name": "Nora Farooq",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "senior",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-066",
+    "last_seen_by_type": {
+      "limited_exam": {
+        "on": "2026-08-04",
+        "provider_id": "prov-okafor"
+      },
+      "perio_maint": {
+        "on": "2026-08-06",
+        "provider_id": "prov-jo"
+      }
+    },
+    "name": "Omar Grant",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-067",
+    "last_seen_by_type": {},
+    "name": "Pia Grant",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-068",
+    "last_seen_by_type": {
+      "prophy_child": {
+        "on": "2026-08-04",
+        "provider_id": "prov-sarah"
+      }
+    },
+    "name": "Quinn Grant",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-069",
+    "last_seen_by_type": {},
+    "name": "Rosa Haddad",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-070",
+    "last_seen_by_type": {
+      "crown_prep": {
+        "on": "2026-08-05",
+        "provider_id": "prov-reyes"
+      }
+    },
+    "name": "Sam Haddad",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-071",
+    "last_seen_by_type": {},
+    "name": "Tess Haddad",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-072",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-03",
+        "provider_id": "prov-okafor"
+      },
+      "limited_exam": {
+        "on": "2026-08-07",
+        "provider_id": "prov-reyes"
+      }
+    },
+    "name": "Uma Ibarra",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-073",
+    "last_seen_by_type": {},
+    "name": "Vik Ibarra",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-074",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-05",
+        "provider_id": "prov-okafor"
+      },
+      "perio_maint": {
+        "on": "2026-08-06",
+        "provider_id": "prov-nia"
+      },
+      "prophy_child": {
+        "on": "2026-08-06",
+        "provider_id": "prov-nia"
+      }
+    },
+    "name": "Wren Ibarra",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-075",
+    "last_seen_by_type": {},
+    "name": "Xan Jensen",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-076",
+    "last_seen_by_type": {
+      "perio_maint": {
+        "on": "2026-08-06",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Yara Jensen",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-077",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-06",
+        "provider_id": "prov-okafor"
+      },
+      "extraction": {
+        "on": "2026-08-05",
+        "provider_id": "prov-okafor"
+      },
+      "limited_exam": {
+        "on": "2026-08-05",
+        "provider_id": "prov-reyes"
+      },
+      "perio_maint": {
+        "on": "2026-08-05",
+        "provider_id": "prov-jo"
+      }
+    },
+    "name": "Zed Jensen",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-078",
+    "last_seen_by_type": {
+      "crown_prep": {
+        "on": "2026-08-05",
+        "provider_id": "prov-patel"
+      },
+      "denture_adjust": {
+        "on": "2026-08-06",
+        "provider_id": "prov-reyes"
+      },
+      "extraction": {
+        "on": "2026-08-04",
+        "provider_id": "prov-okafor"
+      },
+      "prophy_adult": {
+        "on": "2026-08-04",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Ana Kowal",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-079",
+    "last_seen_by_type": {
+      "limited_exam": {
+        "on": "2026-08-04",
+        "provider_id": "prov-okafor"
+      }
+    },
+    "name": "Ben Kowal",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-080",
+    "last_seen_by_type": {},
+    "name": "Cara Kowal",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-081",
+    "last_seen_by_type": {
+      "crown_prep": {
+        "on": "2026-08-04",
+        "provider_id": "prov-patel"
+      }
+    },
+    "name": "Dev Lind",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-082",
+    "last_seen_by_type": {
+      "extraction": {
+        "on": "2026-08-03",
+        "provider_id": "prov-okafor"
+      }
+    },
+    "name": "Elle Lind",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-083",
+    "last_seen_by_type": {
+      "prophy_child": {
+        "on": "2026-08-07",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Femi Lind",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-084",
+    "last_seen_by_type": {
+      "crown_seat": {
+        "on": "2026-08-04",
+        "provider_id": "prov-reyes"
+      },
+      "limited_exam": {
+        "on": "2026-08-06",
+        "provider_id": "prov-okafor"
+      },
+      "prophy_adult": {
+        "on": "2026-08-03",
+        "provider_id": "prov-sarah"
+      }
+    },
+    "name": "Gus Moreau",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-085",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-06",
+        "provider_id": "prov-reyes"
+      },
+      "filling_2s": {
+        "on": "2026-08-04",
+        "provider_id": "prov-reyes"
+      },
+      "prophy_adult": {
+        "on": "2026-08-04",
+        "provider_id": "prov-sarah"
+      }
+    },
+    "name": "Hana Moreau",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-086",
+    "last_seen_by_type": {},
+    "name": "Ivan Moreau",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-087",
+    "last_seen_by_type": {
+      "prophy_adult": {
+        "on": "2026-08-07",
+        "provider_id": "prov-jo"
+      }
+    },
+    "name": "Jess Nkemi",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "senior",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-088",
+    "last_seen_by_type": {
+      "crown_seat": {
+        "on": "2026-08-06",
+        "provider_id": "prov-reyes"
+      },
+      "denture_adjust": {
+        "on": "2026-08-06",
+        "provider_id": "prov-reyes"
+      }
+    },
+    "name": "Kai Nkemi",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-089",
+    "last_seen_by_type": {
+      "prophy_child": {
+        "on": "2026-08-03",
+        "provider_id": "prov-jo"
+      }
+    },
+    "name": "Lena Nkemi",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-090",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-03",
+        "provider_id": "prov-reyes"
+      }
+    },
+    "name": "Mo Ortiz",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-091",
+    "last_seen_by_type": {
+      "filling_1s": {
+        "on": "2026-08-06",
+        "provider_id": "prov-patel"
+      },
+      "filling_2s": {
+        "on": "2026-08-03",
+        "provider_id": "prov-reyes"
+      },
+      "prophy_adult": {
+        "on": "2026-08-04",
+        "provider_id": "prov-jo"
+      },
+      "prophy_child": {
+        "on": "2026-08-05",
+        "provider_id": "prov-sarah"
+      }
+    },
+    "name": "Nora Ortiz",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-092",
+    "last_seen_by_type": {
+      "crown_prep": {
+        "on": "2026-08-03",
+        "provider_id": "prov-patel"
+      },
+      "perio_maint": {
+        "on": "2026-08-03",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Omar Ortiz",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-093",
+    "last_seen_by_type": {
+      "prophy_adult": {
+        "on": "2026-08-06",
+        "provider_id": "prov-jo"
+      }
+    },
+    "name": "Pia Park",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-094",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-03",
+        "provider_id": "prov-patel"
+      },
+      "prophy_adult": {
+        "on": "2026-08-07",
+        "provider_id": "prov-sarah"
+      }
+    },
+    "name": "Quinn Park",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-095",
+    "last_seen_by_type": {
+      "filling_1s": {
+        "on": "2026-08-04",
+        "provider_id": "prov-patel"
+      },
+      "perio_maint": {
+        "on": "2026-08-05",
+        "provider_id": "prov-sarah"
+      }
+    },
+    "name": "Rosa Park",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-096",
+    "last_seen_by_type": {
+      "perio_maint": {
+        "on": "2026-08-04",
+        "provider_id": "prov-jo"
+      }
+    },
+    "name": "Sam Alvarez",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-097",
+    "last_seen_by_type": {},
+    "name": "Tess Alvarez",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-098",
+    "last_seen_by_type": {
+      "filling_1s": {
+        "on": "2026-08-04",
+        "provider_id": "prov-reyes"
+      }
+    },
+    "name": "Uma Alvarez",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "senior",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-099",
+    "last_seen_by_type": {
+      "filling_2s": {
+        "on": "2026-08-07",
+        "provider_id": "prov-reyes"
+      },
+      "perio_maint": {
+        "on": "2026-08-05",
+        "provider_id": "prov-jo"
+      },
+      "prophy_child": {
+        "on": "2026-08-03",
+        "provider_id": "prov-jo"
+      }
+    },
+    "name": "Vik Brooks",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-100",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-07",
+        "provider_id": "prov-reyes"
+      },
+      "filling_1s": {
+        "on": "2026-08-03",
+        "provider_id": "prov-reyes"
+      }
+    },
+    "name": "Wren Brooks",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-101",
+    "last_seen_by_type": {
+      "prophy_child": {
+        "on": "2026-08-03",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Xan Brooks",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-102",
+    "last_seen_by_type": {},
+    "name": "Yara Chen",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-103",
+    "last_seen_by_type": {
+      "limited_exam": {
+        "on": "2026-08-04",
+        "provider_id": "prov-okafor"
+      }
+    },
+    "name": "Zed Chen",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-104",
+    "last_seen_by_type": {
+      "prophy_child": {
+        "on": "2026-08-07",
+        "provider_id": "prov-jo"
+      }
+    },
+    "name": "Ana Chen",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-105",
+    "last_seen_by_type": {
+      "crown_prep": {
+        "on": "2026-08-06",
+        "provider_id": "prov-reyes"
+      },
+      "perio_maint": {
+        "on": "2026-08-05",
+        "provider_id": "prov-jo"
+      }
+    },
+    "name": "Ben Duarte",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-106",
+    "last_seen_by_type": {
+      "limited_exam": {
+        "on": "2026-08-07",
+        "provider_id": "prov-okafor"
+      },
+      "prophy_child": {
+        "on": "2026-08-07",
+        "provider_id": "prov-nia"
+      }
+    },
+    "name": "Cara Duarte",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-107",
+    "last_seen_by_type": {
+      "limited_exam": {
+        "on": "2026-08-05",
+        "provider_id": "prov-patel"
+      },
+      "prophy_adult": {
+        "on": "2026-08-04",
+        "provider_id": "prov-sarah"
+      },
+      "prophy_child": {
+        "on": "2026-08-07",
+        "provider_id": "prov-nia"
+      }
+    },
+    "name": "Dev Duarte",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-108",
+    "last_seen_by_type": {
+      "extraction": {
+        "on": "2026-08-06",
+        "provider_id": "prov-okafor"
+      },
+      "limited_exam": {
+        "on": "2026-08-05",
+        "provider_id": "prov-reyes"
+      },
+      "perio_maint": {
+        "on": "2026-08-04",
+        "provider_id": "prov-maya"
+      },
+      "prophy_adult": {
+        "on": "2026-08-07",
+        "provider_id": "prov-maya"
+      },
+      "prophy_child": {
+        "on": "2026-08-04",
+        "provider_id": "prov-jo"
+      }
+    },
+    "name": "Elle Ellis",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-109",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-04",
+        "provider_id": "prov-patel"
+      },
+      "prophy_child": {
+        "on": "2026-08-07",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Femi Ellis",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "senior",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-110",
+    "last_seen_by_type": {
+      "crown_prep": {
+        "on": "2026-08-06",
+        "provider_id": "prov-patel"
+      },
+      "prophy_adult": {
+        "on": "2026-08-05",
+        "provider_id": "prov-sarah"
+      }
+    },
+    "name": "Gus Ellis",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-111",
+    "last_seen_by_type": {
+      "perio_maint": {
+        "on": "2026-08-05",
+        "provider_id": "prov-nia"
+      },
+      "rct": {
+        "on": "2026-08-03",
+        "provider_id": "prov-patel"
+      }
+    },
+    "name": "Hana Farooq",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-112",
+    "last_seen_by_type": {
+      "extraction": {
+        "on": "2026-08-04",
+        "provider_id": "prov-okafor"
+      }
+    },
+    "name": "Ivan Farooq",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-113",
+    "last_seen_by_type": {
+      "filling_1s": {
+        "on": "2026-08-03",
+        "provider_id": "prov-reyes"
+      },
+      "perio_maint": {
+        "on": "2026-08-05",
+        "provider_id": "prov-jo"
+      },
+      "prophy_adult": {
+        "on": "2026-08-05",
+        "provider_id": "prov-maya"
+      }
+    },
+    "name": "Jess Farooq",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-114",
+    "last_seen_by_type": {
+      "limited_exam": {
+        "on": "2026-08-03",
+        "provider_id": "prov-okafor"
+      },
+      "prophy_adult": {
+        "on": "2026-08-05",
+        "provider_id": "prov-sarah"
+      }
+    },
+    "name": "Kai Grant",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-115",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-05",
+        "provider_id": "prov-patel"
+      },
+      "prophy_adult": {
+        "on": "2026-08-03",
+        "provider_id": "prov-nia"
+      }
+    },
+    "name": "Lena Grant",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-sarah",
+    "id": "pat-116",
+    "last_seen_by_type": {},
+    "name": "Mo Grant",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-nia",
+    "id": "pat-117",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-06",
+        "provider_id": "prov-reyes"
+      }
+    },
+    "name": "Nora Haddad",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "adult",
+    "assigned_dentist_id": "prov-patel",
+    "assigned_hygienist_id": "prov-maya",
+    "id": "pat-118",
+    "last_seen_by_type": {
+      "denture_adjust": {
+        "on": "2026-08-03",
+        "provider_id": "prov-okafor"
+      },
+      "limited_exam": {
+        "on": "2026-08-05",
+        "provider_id": "prov-patel"
+      }
+    },
+    "name": "Omar Haddad",
+    "no_show_count": 0
+  },
+  {
+    "age_band": "child",
+    "assigned_dentist_id": "prov-reyes",
+    "assigned_hygienist_id": "prov-jo",
+    "id": "pat-119",
+    "last_seen_by_type": {
+      "prophy_adult": {
+        "on": "2026-08-06",
+        "provider_id": "prov-sarah"
+      }
+    },
+    "name": "Pia Haddad",
+    "no_show_count": 0
+  }
+]

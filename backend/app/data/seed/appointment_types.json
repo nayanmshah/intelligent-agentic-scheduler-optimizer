@@ -1,0 +1,134 @@
+[
+  {
+    "continuity_multiplier": 1.0,
+    "duration_min": 60,
+    "id": "prophy_adult",
+    "name": "Cleaning",
+    "production_value": 120,
+    "required_credentials": [
+      "RDH"
+    ],
+    "requires_doctor_check": true
+  },
+  {
+    "continuity_multiplier": 1.0,
+    "duration_min": 40,
+    "id": "prophy_child",
+    "name": "Child cleaning",
+    "production_value": 95,
+    "required_credentials": [
+      "RDH"
+    ],
+    "requires_doctor_check": true
+  },
+  {
+    "continuity_multiplier": 1.0,
+    "duration_min": 60,
+    "id": "perio_maint",
+    "name": "Gum maintenance",
+    "production_value": 180,
+    "required_credentials": [
+      "RDH"
+    ],
+    "requires_doctor_check": true
+  },
+  {
+    "continuity_multiplier": 1.0,
+    "duration_min": 90,
+    "id": "np_exam_fmx",
+    "name": "New patient exam",
+    "production_value": 320,
+    "required_credentials": [
+      "DDS"
+    ],
+    "required_equipment": [
+      "pano"
+    ]
+  },
+  {
+    "continuity_multiplier": 0.5,
+    "default_urgency": "urgent",
+    "duration_min": 30,
+    "id": "limited_exam",
+    "name": "Emergency exam",
+    "production_value": 110,
+    "required_credentials": [
+      "DDS"
+    ]
+  },
+  {
+    "continuity_multiplier": 1.0,
+    "duration_min": 40,
+    "id": "filling_1s",
+    "name": "Filling",
+    "production_value": 240,
+    "required_credentials": [
+      "restorative"
+    ]
+  },
+  {
+    "continuity_multiplier": 1.0,
+    "duration_min": 60,
+    "id": "filling_2s",
+    "name": "Two-surface filling",
+    "production_value": 330,
+    "required_credentials": [
+      "restorative"
+    ]
+  },
+  {
+    "continuity_multiplier": 1.5,
+    "duration_min": 90,
+    "id": "crown_prep",
+    "name": "Crown preparation",
+    "prime_time_protected": true,
+    "production_value": 1250,
+    "required_credentials": [
+      "restorative"
+    ]
+  },
+  {
+    "continuity_multiplier": 2.0,
+    "duration_min": 45,
+    "id": "crown_seat",
+    "name": "Crown fitting",
+    "production_value": 400,
+    "required_credentials": [
+      "restorative"
+    ]
+  },
+  {
+    "continuity_multiplier": 1.0,
+    "duration_min": 45,
+    "id": "extraction",
+    "name": "Extraction",
+    "production_value": 420,
+    "required_credentials": [
+      "oral_surgery"
+    ],
+    "required_equipment": [
+      "surgical"
+    ]
+  },
+  {
+    "continuity_multiplier": 1.5,
+    "duration_min": 90,
+    "id": "rct",
+    "name": "Root canal",
+    "prime_time_protected": true,
+    "production_value": 1100,
+    "required_credentials": [
+      "endo"
+    ]
+  },
+  {
+    "continuity_multiplier": 1.0,
+    "duration_min": 20,
+    "id": "denture_adjust",
+    "name": "Denture adjustment",
+    "production_value": 80,
+    "required_credentials": [
+      "DDS"
+    ]
+  }
+]

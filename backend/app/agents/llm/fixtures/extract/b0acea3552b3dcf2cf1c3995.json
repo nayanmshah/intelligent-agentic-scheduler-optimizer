@@ -1,0 +1,61 @@
+{
+  "appointment_type": {
+    "confidence": 0.3,
+    "derived": true,
+    "derived_rule": "No procedure or symptom stated; defaulted to routine adult cleaning",
+    "span": null,
+    "value": "prophy_adult"
+  },
+  "date_range": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "No date stated; defaulted to reference date through +14 days",
+    "span": null,
+    "value": {
+      "end": "2026-08-24",
+      "start": "2026-08-10"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.9,
+    "derived": true,
+    "derived_rule": "No weekday exclusions stated",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.9,
+    "derived": true,
+    "derived_rule": "No provider mentioned",
+    "span": null,
+    "value": null
+  },
+  "request_text": "Afternoon works best for me",
+  "time_window": {
+    "confidence": 0.8,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 9,
+      "start": 0,
+      "text": "Afternoon"
+    },
+    "value": {
+      "end_min": 1020,
+      "start_min": 720
+    }
+  },
+  "urgency": {
+    "confidence": 0.45,
+    "derived": true,
+    "derived_rule": "No urgency cues; 'works best' phrasing suggests preference, not need",
+    "span": null,
+    "value": "flexible"
+  }
+}

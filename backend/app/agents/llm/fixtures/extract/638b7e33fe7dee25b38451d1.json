@@ -1,0 +1,61 @@
+{
+  "appointment_type": {
+    "confidence": 0.3,
+    "derived": true,
+    "derived_rule": "no procedure or symptom stated; defaulted to routine cleaning",
+    "span": null,
+    "value": "prophy_adult"
+  },
+  "date_range": {
+    "confidence": 0.5,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 26,
+      "start": 10,
+      "text": "a week on Monday"
+    },
+    "value": {
+      "end": "2026-08-17",
+      "start": "2026-08-17"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.6,
+    "derived": true,
+    "derived_rule": "no exclusions stated",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.6,
+    "derived": true,
+    "derived_rule": "no provider mentioned",
+    "span": null,
+    "value": null
+  },
+  "request_text": "How about a week on Monday?",
+  "time_window": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "no time stated; open to full day",
+    "span": null,
+    "value": {
+      "end_min": null,
+      "start_min": null
+    }
+  },
+  "urgency": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "no urgency cues in text",
+    "span": null,
+    "value": "routine"
+  }
+}

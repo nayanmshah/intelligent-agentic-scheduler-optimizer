@@ -1,0 +1,69 @@
+{
+  "appointment_type": {
+    "confidence": 0.9,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 22,
+      "start": 0,
+      "text": "My tooth is killing me"
+    },
+    "value": "limited_exam"
+  },
+  "date_range": {
+    "confidence": 0.97,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 38,
+      "start": 33,
+      "text": "today"
+    },
+    "value": {
+      "end": "2026-08-10",
+      "start": "2026-08-10"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.9,
+    "derived": true,
+    "derived_rule": "no weekday exclusions stated",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.9,
+    "derived": true,
+    "derived_rule": "no provider mentioned",
+    "span": null,
+    "value": null
+  },
+  "request_text": "My tooth is killing me, anything today?",
+  "time_window": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "no time stated; open window",
+    "span": null,
+    "value": {
+      "end_min": null,
+      "start_min": null
+    }
+  },
+  "urgency": {
+    "confidence": 0.93,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 22,
+      "start": 12,
+      "text": "killing me"
+    },
+    "value": "emergency"
+  }
+}

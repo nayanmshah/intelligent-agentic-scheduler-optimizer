@@ -1,0 +1,373 @@
+{
+  "labeler": "proposed-unreviewed (single annotator) [R-08]",
+  "sensitivity": {
+    "continuity": {
+      "curve": [
+        {
+          "top3_pct": 39.0,
+          "weight": 0.0
+        },
+        {
+          "top3_pct": 39.0,
+          "weight": 0.05
+        },
+        {
+          "top3_pct": 39.0,
+          "weight": 0.1
+        },
+        {
+          "top3_pct": 41.5,
+          "weight": 0.15
+        },
+        {
+          "top3_pct": 68.3,
+          "weight": 0.2
+        },
+        {
+          "top3_pct": 70.7,
+          "weight": 0.25
+        },
+        {
+          "top3_pct": 70.7,
+          "weight": 0.3
+        },
+        {
+          "top3_pct": 61.0,
+          "weight": 0.35
+        },
+        {
+          "top3_pct": 53.7,
+          "weight": 0.4
+        },
+        {
+          "top3_pct": 63.4,
+          "weight": 0.45
+        },
+        {
+          "top3_pct": 61.0,
+          "weight": 0.5
+        },
+        {
+          "top3_pct": 68.3,
+          "weight": 0.55
+        },
+        {
+          "top3_pct": 61.0,
+          "weight": 0.6
+        },
+        {
+          "top3_pct": 58.5,
+          "weight": 0.65
+        },
+        {
+          "top3_pct": 58.5,
+          "weight": 0.7
+        },
+        {
+          "top3_pct": 61.0,
+          "weight": 0.75
+        },
+        {
+          "top3_pct": 61.0,
+          "weight": 0.8
+        },
+        {
+          "top3_pct": 56.1,
+          "weight": 0.85
+        },
+        {
+          "top3_pct": 58.5,
+          "weight": 0.9
+        },
+        {
+          "top3_pct": 39.0,
+          "weight": 0.95
+        },
+        {
+          "top3_pct": 34.1,
+          "weight": 1.0
+        }
+      ],
+      "flat_from": 0.25,
+      "flat_to": 0.3
+    },
+    "efficiency": {
+      "curve": [
+        {
+          "top3_pct": 39.0,
+          "weight": 0.0
+        },
+        {
+          "top3_pct": 70.7,
+          "weight": 0.05
+        },
+        {
+          "top3_pct": 58.5,
+          "weight": 0.1
+        },
+        {
+          "top3_pct": 61.0,
+          "weight": 0.15
+        },
+        {
+          "top3_pct": 61.0,
+          "weight": 0.2
+        },
+        {
+          "top3_pct": 58.5,
+          "weight": 0.25
+        },
+        {
+          "top3_pct": 63.4,
+          "weight": 0.3
+        },
+        {
+          "top3_pct": 58.5,
+          "weight": 0.35
+        },
+        {
+          "top3_pct": 61.0,
+          "weight": 0.4
+        },
+        {
+          "top3_pct": 58.5,
+          "weight": 0.45
+        },
+        {
+          "top3_pct": 58.5,
+          "weight": 0.5
+        },
+        {
+          "top3_pct": 29.3,
+          "weight": 0.55
+        },
+        {
+          "top3_pct": 29.3,
+          "weight": 0.6
+        },
+        {
+          "top3_pct": 29.3,
+          "weight": 0.65
+        },
+        {
+          "top3_pct": 26.8,
+          "weight": 0.7
+        },
+        {
+          "top3_pct": 26.8,
+          "weight": 0.75
+        },
+        {
+          "top3_pct": 26.8,
+          "weight": 0.8
+        },
+        {
+          "top3_pct": 26.8,
+          "weight": 0.85
+        },
+        {
+          "top3_pct": 26.8,
+          "weight": 0.9
+        },
+        {
+          "top3_pct": 24.4,
+          "weight": 0.95
+        },
+        {
+          "top3_pct": 24.4,
+          "weight": 1.0
+        }
+      ],
+      "flat_from": 0.05,
+      "flat_to": 0.05
+    },
+    "prime_time": {
+      "curve": [
+        {
+          "top3_pct": 70.7,
+          "weight": 0.0
+        },
+        {
+          "top3_pct": 41.5,
+          "weight": 0.05
+        },
+        {
+          "top3_pct": 39.0,
+          "weight": 0.1
+        },
+        {
+          "top3_pct": 39.0,
+          "weight": 0.15
+        },
+        {
+          "top3_pct": 39.0,
+          "weight": 0.2
+        },
+        {
+          "top3_pct": 36.6,
+          "weight": 0.25
+        },
+        {
+          "top3_pct": 36.6,
+          "weight": 0.3
+        },
+        {
+          "top3_pct": 36.6,
+          "weight": 0.35
+        },
+        {
+          "top3_pct": 34.1,
+          "weight": 0.4
+        },
+        {
+          "top3_pct": 34.1,
+          "weight": 0.45
+        },
+        {
+          "top3_pct": 34.1,
+          "weight": 0.5
+        },
+        {
+          "top3_pct": 34.1,
+          "weight": 0.55
+        },
+        {
+          "top3_pct": 34.1,
+          "weight": 0.6
+        },
+        {
+          "top3_pct": 34.1,
+          "weight": 0.65
+        },
+        {
+          "top3_pct": 34.1,
+          "weight": 0.7
+        },
+        {
+          "top3_pct": 34.1,
+          "weight": 0.75
+        },
+        {
+          "top3_pct": 34.1,
+          "weight": 0.8
+        },
+        {
+          "top3_pct": 34.1,
+          "weight": 0.85
+        },
+        {
+          "top3_pct": 34.1,
+          "weight": 0.9
+        },
+        {
+          "top3_pct": 34.1,
+          "weight": 0.95
+        },
+        {
+          "top3_pct": 31.7,
+          "weight": 1.0
+        }
+      ],
+      "flat_from": 0.0,
+      "flat_to": 0.0
+    },
+    "time_fit": {
+      "curve": [
+        {
+          "top3_pct": 58.5,
+          "weight": 0.0
+        },
+        {
+          "top3_pct": 61.0,
+          "weight": 0.05
+        },
+        {
+          "top3_pct": 61.0,
+          "weight": 0.1
+        },
+        {
+          "top3_pct": 58.5,
+          "weight": 0.15
+        },
+        {
+          "top3_pct": 61.0,
+          "weight": 0.2
+        },
+        {
+          "top3_pct": 63.4,
+          "weight": 0.25
+        },
+        {
+          "top3_pct": 46.3,
+          "weight": 0.3
+        },
+        {
+          "top3_pct": 46.3,
+          "weight": 0.35
+        },
+        {
+          "top3_pct": 68.3,
+          "weight": 0.4
+        },
+        {
+          "top3_pct": 46.3,
+          "weight": 0.45
+        },
+        {
+          "top3_pct": 48.8,
+          "weight": 0.5
+        },
+        {
+          "top3_pct": 48.8,
+          "weight": 0.55
+        },
+        {
+          "top3_pct": 48.8,
+          "weight": 0.6
+        },
+        {
+          "top3_pct": 70.7,
+          "weight": 0.65
+        },
+        {
+          "top3_pct": 70.7,
+          "weight": 0.7
+        },
+        {
+          "top3_pct": 68.3,
+          "weight": 0.75
+        },
+        {
+          "top3_pct": 41.5,
+          "weight": 0.8
+        },
+        {
+          "top3_pct": 39.0,
+          "weight": 0.85
+        },
+        {
+          "top3_pct": 39.0,
+          "weight": 0.9
+        },
+        {
+          "top3_pct": 39.0,
+          "weight": 0.95
+        },
+        {
+          "top3_pct": 36.6,
+          "weight": 1.0
+        }
+      ],
+      "flat_from": 0.65,
+      "flat_to": 0.7
+    }
+  },
+  "top1_pct": 24.4,
+  "top3_pct": 70.7,
+  "weights": {
+    "continuity": 0.25,
+    "efficiency": 0.05,
+    "prime_time": 0.0,
+    "time_fit": 0.7000000000000001
+  }
+}

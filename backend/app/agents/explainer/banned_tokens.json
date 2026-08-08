@@ -1,0 +1,50 @@
+{
+  "_comment": "Committed as data (FR-065) so extending it is a data change and CI enforces it over every golden-set output in both LLM and template modes.",
+  "jargon": [
+    "fragmentation",
+    "fragment",
+    "candidate",
+    "constraint",
+    "tier",
+    "weight",
+    "weighted",
+    "score",
+    "scored",
+    "scoring",
+    "operatory",
+    "overflow",
+    "escalate",
+    "escalated",
+    "escalation",
+    "heuristic",
+    "optimiser",
+    "optimizer",
+    "algorithm",
+    "ranking",
+    "rank"
+  ],
+  "axis_names": [
+    "time fit",
+    "time-fit",
+    "efficiency",
+    "continuity",
+    "prime time",
+    "prime-time"
+  ],
+  "hedges": [
+    "probably",
+    "possibly",
+    "it seems",
+    "i think",
+    "might be",
+    "should be able"
+  ],
+  "identifier_patterns": [
+    "^OP-\\d+$",
+    "^prov-",
+    "^pat-",
+    "^appt-",
+    "^cand-",
+    "^[0-9a-f]{16}$"
+  ]
+}
