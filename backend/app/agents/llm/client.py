@@ -19,6 +19,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from app.config import Settings
+from app.trace import usage as usage_trace
 
 
 def _supports_effort(model: str) -> bool:
@@ -109,6 +110,11 @@ class LlmClient:
             response = await client.with_options(timeout=timeout).messages.create(**kwargs)
         except Exception as exc:
             raise LlmUnavailable(str(exc)) from exc
+
+        # Before the refusal and parse branches below, both of which raise: a refused
+        # or malformed response is still a billed response, and a cost view that
+        # counted only the successes would understate exactly the runs worth costing.
+        usage_trace.record(usage_trace.LlmUsage.from_response(getattr(response, "usage", None)))
 
         if getattr(response, "stop_reason", None) == "refusal":
             raise LlmRefused(getattr(getattr(response, "stop_details", None), "category", ""))

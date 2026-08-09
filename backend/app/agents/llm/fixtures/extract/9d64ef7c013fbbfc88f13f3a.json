@@ -1,0 +1,73 @@
+{
+  "appointment_type": {
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 129,
+      "start": 121,
+      "text": "cleaning"
+    },
+    "value": "prophy_adult"
+  },
+  "date_range": {
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 65,
+      "start": 54,
+      "text": "next Friday"
+    },
+    "value": {
+      "end": "2026-08-14",
+      "start": "2026-08-14"
+    }
+  },
+  "exclusions": {
+    "confidence": 1.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.99,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 33,
+      "start": 28,
+      "text": "Sarah"
+    },
+    "value": "prov-sarah"
+  },
+  "request_text": "give me an appointment with Sarah at the 7:00 p.m. on next Friday make it 5:00 p.m. instead yeah this appointment is for cleaning",
+  "time_window": {
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 83,
+      "start": 74,
+      "text": "5:00 p.m."
+    },
+    "value": {
+      "end_min": null,
+      "start_min": 1020
+    }
+  },
+  "urgency": {
+    "confidence": 0.95,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "routine"
+  }
+}

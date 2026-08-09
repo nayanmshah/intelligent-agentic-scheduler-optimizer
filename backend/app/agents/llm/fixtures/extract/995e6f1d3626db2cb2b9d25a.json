@@ -1,0 +1,65 @@
+{
+  "appointment_type": {
+    "confidence": 0.3,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "prophy_adult"
+  },
+  "date_range": {
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 37,
+      "start": 26,
+      "text": "August 12th"
+    },
+    "value": {
+      "end": "2026-08-12",
+      "start": "2026-08-12"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": null
+  },
+  "request_text": "give me an appointment on August 12th at 3:00 p.m.",
+  "time_window": {
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 50,
+      "start": 41,
+      "text": "3:00 p.m."
+    },
+    "value": {
+      "end_min": null,
+      "start_min": 900
+    }
+  },
+  "urgency": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "routine"
+  }
+}

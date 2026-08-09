@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import json
 from collections.abc import AsyncIterator
+from datetime import date
 from typing import Any
 
 from fastapi import APIRouter, HTTPException, Request
@@ -41,7 +42,7 @@ async def submit(body: SubmitRequest, request: Request) -> dict[str, Any]:
     c = _c(request)
     patient = c.load.bundle.patient(body.patient_id) if body.patient_id else None
     record = await c.orchestrator.run(
-        IncomingRequest(text=body.text, patient=patient),
+        IncomingRequest(text=body.text, patient=patient, source=body.source),
         c.clock.now(),
         c.state.active_profile,
     )
@@ -99,7 +100,7 @@ async def submit_stream(body: SubmitRequest, request: Request) -> StreamingRespo
 
         task = asyncio.create_task(
             c.orchestrator.run(
-                IncomingRequest(text=body.text, patient=patient),
+                IncomingRequest(text=body.text, patient=patient, source=body.source),
                 c.clock.now(),
                 c.state.active_profile,
                 progress=_QueueSink(queue),
@@ -147,7 +148,9 @@ async def answer(decision_id: str, body: AnswerRequest, request: Request) -> dic
     if prior is None:
         raise HTTPException(404, "decision not found")
     record = await c.orchestrator.run(
-        IncomingRequest(text=f"{prior.raw_text} ({body.choice})", patient=None),
+        IncomingRequest(
+            text=f"{prior.raw_text} ({body.choice})", patient=None, source=prior.source
+        ),
         c.clock.now(),
         c.state.active_profile,
     )
@@ -161,6 +164,121 @@ async def get_decision(decision_id: str, request: Request) -> dict[str, Any]:
     if record is None:
         raise HTTPException(404, "decision not found")
     return decision_json(record)
+
+
+@router.get("/requests/{decision_id}/why-options")
+async def why_options(decision_id: str, request: Request) -> dict[str, Any]:
+    """The days and start times an operator can actually ask about (FR-109).
+
+    Generated from the same business hours and grid granularity the search used, so
+    every option offered is a time an appointment could conceivably start -- asking
+    "why not 3:07?" of a ten-minute grid is a question with no honest answer.
+    """
+    c = _c(request)
+    record = c.trace_store.decision(decision_id)
+    if record is None or record.constraints is None:
+        raise HTTPException(404, "decision not found")
+
+    from app.reasoner.enumerate import horizon_days
+
+    loc = c.repo.seed.locations[0]
+    step = c.settings.grid_granularity_min
+    days, times = [], {}
+    for d in horizon_days(record.now.date(), c.settings, loc):
+        hours = loc.hours_for(d.weekday())
+        if hours is None:
+            continue
+        days.append({"value": d.isoformat(), "label": _day_label(d)})
+        times[d.isoformat()] = [
+            {"value": _hhmm(m), "label": _clock_label(m)}
+            for m in range(hours.open_min, hours.close_min, step)
+        ]
+    # Land on the day the offers are on: the operator is being asked about *that*
+    # afternoon, not the first day of the horizon.
+    offered = record.offers[0].day.isoformat() if record.offers else None
+    known = {d["value"] for d in days}
+    return {
+        "days": days,
+        "times": times,
+        "default_day": offered if offered in known else (days[0]["value"] if days else None),
+    }
+
+
+@router.get("/requests/{decision_id}/why")
+async def why_not(
+    decision_id: str, request: Request, at: str, day: str | None = None
+) -> dict[str, Any]:
+    """FR-109 -- "but isn't 3 o'clock free?", answered for that one time.
+
+    The ledger groups every rejection by cause, which is the right grain for "where did
+    13,000 candidates go?" and the wrong grain for the question a patient actually asks.
+    This counts only the candidates starting at one time, and keeps "nothing there was
+    bookable" separate from "it was bookable and simply outranked" -- different answers,
+    and only one of them is a refusal.
+    """
+    c = _c(request)
+    record = c.trace_store.decision(decision_id)
+    if record is None or record.constraints is None:
+        raise HTTPException(404, "decision not found")
+    try:
+        hh, mm = at.split(":")
+        start_min = int(hh) * 60 + int(mm)
+    except ValueError:
+        raise HTTPException(422, "at must be HH:MM") from None
+    try:
+        target = (
+            date.fromisoformat(day)
+            if day
+            else (record.offers[0].day if record.offers else record.now.date())
+        )
+    except ValueError:
+        raise HTTPException(422, "day must be YYYY-MM-DD") from None
+
+    # ``request_id=record.id`` matters: this decision placed soft holds on its own
+    # top three (FR-068), and a request never blocks its own holds [AR-03]. Without
+    # it the lookup reports the offered slots as "held for another patient" -- held
+    # for *this* patient -- and reports them as not bookable at all.
+    e = c.reasoner.explain_slot(record.constraints, record.now, target, start_min, record.id)
+
+    # How many of the bookable ones are already on screen. "Outranked" is false about
+    # a time the operator is looking at in the top three.
+    tz = zone(c.repo.seed.locations[0].timezone)
+    offered_here = sum(
+        1
+        for o in (*record.offers, *record.overflow)
+        if to_local(o.start, tz) == (target, start_min)
+    )
+    return {
+        "day": e.day.isoformat(),
+        "day_label": _day_label(e.day),
+        "at": _clock_label(e.start_min),
+        "considered": e.considered,
+        "bookable": e.bookable,
+        "offered": offered_here,
+        "causes": [
+            {"reason": g.reason.value, "count": g.count, "sentence": g.sentence}
+            for g in e.causes
+        ],
+    }
+
+
+_WEEKDAYS = ("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+_MONTHS = ("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+
+def _day_label(d: date) -> str:
+    return f"{_WEEKDAYS[d.weekday()]}, {_MONTHS[d.month - 1]} {d.day}"
+
+
+def _hhmm(minute_of_day: int) -> str:
+    return f"{minute_of_day // 60:02d}:{minute_of_day % 60:02d}"
+
+
+def _clock_label(minute_of_day: int) -> str:
+    h, m = divmod(minute_of_day, 60)
+    suffix = "AM" if h < 12 else "PM"
+    return f"{(h % 12) or 12}:{m:02d} {suffix}"
 
 
 def _place_holds(c: Any, record: Any) -> None:

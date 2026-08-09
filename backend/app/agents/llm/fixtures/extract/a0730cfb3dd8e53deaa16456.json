@@ -1,0 +1,65 @@
+{
+  "appointment_type": {
+    "confidence": 0.85,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 28,
+      "start": 0,
+      "text": "My tooth's been bothering me"
+    },
+    "value": "limited_exam"
+  },
+  "date_range": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "end": "2026-08-24",
+      "start": "2026-08-10"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": null,
+  "provider_preference": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": null
+  },
+  "request_text": "My tooth's been bothering me",
+  "time_window": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "end_min": null,
+      "start_min": null
+    }
+  },
+  "urgency": {
+    "confidence": 0.85,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 28,
+      "start": 0,
+      "text": "My tooth's been bothering me"
+    },
+    "value": "urgent"
+  }
+}

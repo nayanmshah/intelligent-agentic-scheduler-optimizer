@@ -1,0 +1,61 @@
+{
+  "appointment_type": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "prophy_child"
+  },
+  "date_range": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "end": "2026-08-23",
+      "start": "2026-08-09"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": null,
+  "provider_preference": {
+    "confidence": 0.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": null
+  },
+  "request_text": "My kid gets out of school at 3, so after that",
+  "time_window": {
+    "confidence": 0.7,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 40,
+      "start": 35,
+      "text": "after"
+    },
+    "value": {
+      "end_min": null,
+      "start_min": 900
+    }
+  },
+  "urgency": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "routine"
+  }
+}

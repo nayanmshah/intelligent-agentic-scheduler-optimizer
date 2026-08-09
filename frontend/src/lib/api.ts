@@ -36,6 +36,23 @@ export type InterpretationField = {
   span: { text: string; start: number; end: number } | null;
 };
 
+/** FR-109: the per-time answer to "but isn't 3 o'clock free?" */
+export type WhyOptions = {
+  days: { value: string; label: string }[];
+  times: Record<string, { value: string; label: string }[]>;
+  default_day: string | null;
+};
+
+export type WhyAnswer = {
+  day: string;
+  day_label: string;
+  at: string;
+  considered: number;
+  bookable: number;
+  offered: number;
+  causes: { reason: string; count: number; sentence: string }[];
+};
+
 export type Funnel = {
   grid_slots: number;
   enumerated: number;
@@ -50,6 +67,8 @@ export type Decision = {
   id: string;
   trace_id: string;
   raw_text: string;
+  /** FR-110: how the words arrived. "voice" means a confirmed transcript. */
+  source: "text" | "voice";
   origin_state: "offered" | "offered_overflow";
   question: string | null;
   flags: string[];
@@ -74,6 +93,8 @@ export type Reference = {
   clock: string;
   network: string;
   llm_mode: string;
+  /** FR-110. False turns dictation off without a rebuild; the browser decides the rest. */
+  voice_input: boolean;
   opik_enabled: boolean;
   agents: Record<string, string>;
   seed_anomalies: string;
@@ -93,11 +114,14 @@ async function json<T>(url: string, init?: RequestInit): Promise<T> {
 
 export const api = {
   reference: () => json<Reference>("/api/reference"),
+  whyOptions: (id: string) => json<WhyOptions>(`/api/requests/${id}/why-options`),
+  why: (id: string, at: string, day: string) =>
+    json<WhyAnswer>(`/api/requests/${id}/why?at=${encodeURIComponent(at)}&day=${day}`),
   preflight: () => json<{ ready: boolean; checks: { name: string; status: string; detail: string }[] }>("/api/preflight"),
-  submit: (text: string, patientId: string | null) =>
+  submit: (text: string, patientId: string | null, source: "text" | "voice" = "text") =>
     json<Decision>("/api/requests", {
       method: "POST",
-      body: JSON.stringify({ text, patient_id: patientId }),
+      body: JSON.stringify({ text, patient_id: patientId, source }),
     }),
 
   /**
@@ -113,12 +137,13 @@ export const api = {
   submitStream: async (
     text: string,
     patientId: string | null,
+    source: "text" | "voice",
     onStage: (s: StageEvent) => void,
   ): Promise<Decision> => {
     const res = await fetch("/api/requests/stream", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ text, patient_id: patientId }),
+      body: JSON.stringify({ text, patient_id: patientId, source }),
     });
     if (!res.ok || !res.body) throw new Error(await res.text().catch(() => res.statusText));
 

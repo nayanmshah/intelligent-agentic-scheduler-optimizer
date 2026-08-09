@@ -232,14 +232,32 @@ They earned their place: during the build they caught three real violations, inc
 the reasoner importing the explainer to build a sentence. The fix was to move the prose
 into `agents/explainer/render.py` — the code changed, not the guard.
 
+### Why does dictation not just submit what it heard?
+
+Because FR-003 would quietly become a lie. Every extracted field carries a verbatim span of
+`request_text` — that provenance is what makes the interpretation strip trustworthy. If speech
+submitted itself, `request_text` would be the *transcriber's* reading, and the chips would be
+quoting a machine while appearing to quote the patient. A misheard "Tuesday" for "Thursday" then
+enters the audit trail as something the patient said, and every guarantee downstream is faithful to
+the wrong sentence.
+
+Landing the transcript in the field the operator is already looking at costs one glance and fixes
+the whole class: the operator sees the words before they become the record. It is also the honest
+version of "the human confirms rather than investigates" — confirming a sentence is a second, and
+`source: voice` is kept on the record so "did the dictated ones go worse?" stays answerable.
+
 ### Does the model actually fit the latency budget?
 
-**No, and it ships live anyway — that is a decision, not an oversight.** A full live
-request takes ~16 seconds: ~7s extract, ~4s verify, ~5s explain, sequential because each
-stage needs the last one's output. Disabling adaptive thinking changes it by 0.1s; the
-cost is producing six fields each carrying a confidence, a derivation rule and a
-verbatim span, and that provenance is the reason the interpretation strip is
-trustworthy.
+**Yes now — it did not at first, and the fix was measurement.** The first live pipeline
+took ~15.9 s: ~7 s extract, ~4 s verify, ~5 s explain, all sequential. It now runs at
+**3.9 s p50**, inside the 5 s budget, and none of that came from accepting less
+provenance. Three findings did it (`latency-research.md`): latency tracked *output
+tokens* almost linearly, so the wire schema shrank to quotes and the offsets are computed
+locally; adaptive thinking was worth under 0.2 s and was never the lever; and
+verification does not gate the search, so it runs in parallel with reason-and-explain
+instead of ahead of them. Every field still carries a confidence, a derivation rule and a
+verbatim span — that provenance is why the interpretation strip is trustworthy, and it
+was never what cost the seconds.
 
 The alternative was defaulting to replayed fixtures, which makes the product's headline
 capability the one thing nobody ever sees working. A demo of an agentic system that
@@ -260,8 +278,8 @@ The cache key includes the request text, the model id and the prompt version, so
 bumping any of the three invalidates only its own entries.
 
 Fixtures are the **fallback**, not the default — that inverted with ADR-20, and live mode
-deliberately does not read the cache at all. Serving a recording while the header says
-"Live models" would make the capability invisible exactly when someone is watching.
+deliberately does not read the cache at all. Serving a recording while the screen carries no
+degradation warning would make the capability invisible exactly when someone is watching.
 
 What the cache still guarantees is the degraded path: when the model is unreachable, a
 miss raises rather than silently reaching for the network — which it used to do, making

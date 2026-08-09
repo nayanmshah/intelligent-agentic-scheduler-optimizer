@@ -33,7 +33,7 @@ exam *inside* the appointment window.
 | Rank | Metric | Target |
 | ---- | ------ | ------ |
 | 1 | **Confirm-without-investigating rate** — booked slot was in the offered top 3, no calendar manually opened | ≥ 85% |
-| 2 | **Time-to-offer** — request → three options | ~16s live (measured); < 2s on the degraded path |
+| 2 | **Time-to-offer** — request → three options | **3.9 s p50 live** (measured, ADR-21; was ~15.9 s); < 2 s on the degraded path |
 | 3 | **Schedule-quality delta** — production per chair-hour and unusable-gap minutes created, vs. a naive first-available baseline | positive, measured |
 | 4 | **Consistency** — same request, same answer, every time | byte-identical |
 
@@ -88,9 +88,12 @@ over the extraction, not over the ranking.
 | 4 | **Explainer** | LLM phrasing over scorer-emitted facts, template fallback, faithfulness gate | Sees only the score components the reasoner produced. Structurally cannot invent a reason it was not given. |
 
 **Orchestrator:** a plain, readable state machine — explicit stages, per-stage timeout and fallback,
-a `TraceSink` emit at every hop, under ~150 lines. **Deliberately not an agent framework.** A
-legible hand-rolled orchestrator is easier to reason about, debug, and modify than a framework DAG,
-and it keeps the control flow visible in the code rather than in library internals.
+a `TraceSink` emit at every hop, under ~150 lines. **Deliberately not an agent *framework*** — which
+is a statement about the substrate, not the architecture. The system *is* agentic: four cooperating
+agents with distinct roles, contracts and fallbacks, coordinated by an orchestrator. What it does
+not do is delegate that coordination to LangGraph or CrewAI: a legible hand-rolled orchestrator is
+easier to reason about, debug, and modify than a framework DAG, and it keeps the control flow
+visible in the code rather than in library internals.
 
 > **Design principle:** *LLMs at the edges, determinism in the core. Language in, language out —
 > arithmetic in between.*
@@ -398,7 +401,7 @@ no-show-risk policy hook.
 | **R-09** | *"Is this just a fancy first-available?"* | Head-to-head against a naive first-available baseline over the golden set, reporting human agreement and fragmentation minutes created. Where the delta is small for a request class, report that too | Baseline comparison |
 | **R-10** | Operators ignore the ranking | Then the ranking is wrong and we need to know. Every override is captured as a labeled counterexample flowing back into the golden set — designed in, not patched on | Override capture |
 | **R-11** | Nondeterminism | Temperature 0, fixtures by default, and the ranking is deterministic given the extraction — so the only variance sits upstream of the decision, and it is measured | Reproducibility test |
-| **R-12** | External dependency failure | The model is called on every request, and every stage falls back — to committed fixtures, then to deterministic rules — so an outage degrades the answer rather than removing it. The header names which path answered. Opik is optional and never on the critical path — the replay panel reads the in-process store | Offline test suite |
+| **R-12** | External dependency failure | The model is called on every request, and every stage falls back — to committed fixtures, then to deterministic rules — so an outage degrades the answer rather than removing it. The header raises an amber pill the moment the fallbacks answer — the expected state is silent, the exception is not. Opik is optional and never on the critical path — the replay panel reads the in-process store | Offline test suite |
 
 ---
 

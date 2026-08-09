@@ -4,7 +4,7 @@
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
-    "value": "limited_exam"
+    "value": "prophy_adult"
   },
   "date_range": {
     "confidence": 0.95,
@@ -34,7 +34,7 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.5,
+    "confidence": 0.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -42,7 +42,7 @@
   },
   "request_text": "Something on Wednesday afternoon",
   "time_window": {
-    "confidence": 0.75,
+    "confidence": 0.85,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -52,7 +52,7 @@
     },
     "value": {
       "end_min": null,
-      "start_min": 900
+      "start_min": 720
     }
   },
   "urgency": {

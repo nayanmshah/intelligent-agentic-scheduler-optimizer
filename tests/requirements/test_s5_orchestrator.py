@@ -200,3 +200,21 @@ def test_the_phi_redactor_provably_removes_patient_text(container) -> None:
     assert cleaned.attrs["raw_text"] == "[redacted]"
     assert cleaned.attrs["duration_ms"] == 1  # non-PHI survives
     assert "raw_text" in redactor.covered
+
+
+# ----------------------------------------------------------------- FR-088 ----
+async def test_record_stores_the_instant_the_decision_actually_ran(container) -> None:
+    """Replay re-runs the reasoner at ``record.now``. Storing the *configured*
+    reference instant instead of the one passed in was invisible while the clock was
+    frozen -- the two were the same value -- and replayed every real-clock decision at
+    the wrong time of day, which is exactly when rule 0 changes the answer."""
+    from datetime import timedelta
+
+    ran_at = SETTINGS.reference_now + timedelta(hours=6, minutes=17)
+    record = await container.orchestrator.run(
+        IncomingRequest(text="anything today please", patient=None),
+        ran_at,
+        container.state.active_profile,
+    )
+    assert record.now == ran_at
+    assert record.now != SETTINGS.reference_now, "the fixture must differ, or it proves nothing"

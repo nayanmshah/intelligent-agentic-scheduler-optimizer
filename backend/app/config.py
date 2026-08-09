@@ -96,6 +96,13 @@ class Settings(BaseSettings):
     # -- scheduling policy ------------------------------------------------------
     search_horizon_days: int = 14  # [A-09]
     grid_granularity_min: int = 10  # [A-20]
+
+    # Voice is a *front door*, never a second pipeline (FR-110). It is on by default
+    # because a capability nobody sees working is a capability nobody believes; it is
+    # a flag because the browser API is the one part of this product that can fail for
+    # reasons the code cannot see -- a denied microphone, a browser that never shipped
+    # it -- and a demo must be able to turn it off without a rebuild.
+    voice_input: bool = True
     turnover_min: int = 10  # [A-08]
     doctor_check_min: int = 10  # FR-023
     min_bookable_min: int = 30  # orphan-gap threshold, FR-043

@@ -31,6 +31,11 @@ from app.trace.sink import Span
 #: Stages that call a model. Typed ``llm`` in Opik so its cost/latency views light up.
 _LLM_STAGES = {"extract", "verify", "explain"}
 
+#: Opik keys its price table on (provider, model). Every model call here goes to the
+#: Anthropic API directly -- not Bedrock or Vertex, which are separate providers at
+#: different prices -- so this is a fact about the client, not a default.
+_PROVIDER = "anthropic"
+
 #: Fallback only: used when a stage has not been taught to summarise its own
 #: payloads. Real input/output comes from ``app.trace.payloads``.
 _STAGE_DESCRIPTIONS = {
@@ -201,6 +206,12 @@ class OpikTraceSink:
             span_out = attrs.pop("output", None) or {
                 "implementation": attrs.get("implementation")
             }
+            # Cost is f(provider, model, usage). Sending the model alone -- which is
+            # what this did first -- yields a confident $0 on every span. The provider
+            # is named only when tokens were actually spent, so a stage that fell back
+            # to the deterministic path is not labelled as a model call that cost
+            # nothing.
+            span_usage = attrs.pop("usage", None)
             # start_time and end_time are supplied at creation, so no .end() call is
             # needed -- and calling it here would risk the batcher shipping an update
             # for a span it has not yet created (the SDK warns about exactly this).
@@ -210,6 +221,8 @@ class OpikTraceSink:
                 start_time=cursor,
                 end_time=end,
                 model=attrs.get("model"),
+                provider=_PROVIDER if span_usage else None,
+                usage=span_usage,
                 input=span_in,
                 output=span_out,
                 metadata={"duration_ms": round(s.duration_ms, 1), **attrs},
@@ -279,6 +292,9 @@ def _decision_tags(record: Any) -> list[str]:
         tags.append("asked-a-question")
     if getattr(record, "limited_availability", False):
         tags.append("limited-availability")
+    if getattr(record, "source", "text") == "voice":
+        # Filterable, so "did the dictated ones go worse?" is a click (FR-110).
+        tags.append("source:voice")
     state = getattr(getattr(record, "origin_state", None), "value", None)
     if state:
         tags.append(state)

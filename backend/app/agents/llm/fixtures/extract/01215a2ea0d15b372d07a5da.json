@@ -1,0 +1,61 @@
+{
+  "appointment_type": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "prophy_adult"
+  },
+  "date_range": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "end": "2026-08-23",
+      "start": "2026-08-09"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": null,
+  "provider_preference": {
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 24,
+      "start": 15,
+      "text": "Dr. Patel"
+    },
+    "value": "prov-patel"
+  },
+  "request_text": "I'd rather see Dr. Patel this time",
+  "time_window": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "end_min": null,
+      "start_min": null
+    }
+  },
+  "urgency": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "routine"
+  }
+}

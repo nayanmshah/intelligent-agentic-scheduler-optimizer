@@ -359,13 +359,26 @@ Each is a `Protocol` with two implementations, selected by config in one registr
 
 ```mermaid
 flowchart LR
-    A["1 · Extractor<br/><b>claude-opus-5</b>"] --> B["2 · Verifier<br/><b>claude-sonnet-5</b>"]
+    A["1 · Extractor<br/><b>claude-haiku-4-5</b>"] --> B["2 · Verifier<br/><b>claude-haiku-4-5</b>"]
     B --> C["3 · Reasoner<br/><i>no model, ever</i>"]
-    C --> D["4 · Explainer<br/><b>claude-sonnet-5</b><br/>+ faithfulness gate"]
+    C --> D["4 · Explainer<br/><b>claude-haiku-4-5</b><br/>+ faithfulness gate"]
     A -. "timeout · refusal · no key" .-> A2["fixtures, then rules"]
     B -. "any failure" .-> B2["rules — always run as the floor"]
     D -. "gate rejects" .-> D2["template"]
 ```
+
+**Speech is a front door, not a fifth role** `[FR-110]`. The browser's Web Speech API writes a
+transcript into the request field; the operator confirms and submits it as text. Nothing in the
+diagram above changes — there is no ASR stage, no new fallback edge, and a test asserts a dictated
+request and a typed one produce byte-identical decisions.
+
+That placement is the whole design. FR-003 requires every extracted field to quote a verbatim span
+of `request_text`; if dictation submitted itself, those spans would quote the *transcriber* rather
+than the patient, and a misheard "Tuesday" would enter the audit trail as something the patient
+said. Landing the transcript in a field a human confirms keeps `request_text` exactly what a human
+agreed was said. What the record does keep is `source: text | voice`, so "is speech worse?" is a
+query rather than an opinion — and it survives the clarify re-run, which would otherwise relabel a
+dictated request as typed.
 
 Full version, with the models and every fallback edge:
 [`diagrams/agent-topology.mmd`](diagrams/agent-topology.mmd).
@@ -624,6 +637,7 @@ Execution is **two-phase**, which is both the performance story and the fan-out 
 
 ```
 Phase A — slot-level rules, evaluated once per grid slot (provider-independent)
+  0. not_in_the_past              -> IN_THE_PAST           [system clock, ADR-22]
   1. within_business_hours        -> BEFORE_OPEN | PAST_CLOSE
   2. not_overlapping_global_block -> BLOCKED_LUNCH | BLOCKED_HUDDLE | BLOCKED_ADMIN
   3. emergency_hold_locked        -> EMERGENCY_HOLD_LOCKED
@@ -639,6 +653,25 @@ Phase B — provider-level rules, per (surviving slot x eligible provider)
  10. doctor_check_containment     -> DOCTOR_CHECK_UNAVAILABLE
  -> feasible
 ```
+
+Rule 0 exists because the clock became real. A slot on today's date must start *after* now;
+with `NOW` pinned to 09:00 only one early hour could ever leak, which is how offering a time
+that had already passed stayed invisible until `SCHED_CLOCK=system` became the default. It is
+first because "that time had already gone by today" is the one honest cause for such a slot,
+and the first failing rule is the stated cause (FR-028).
+
+**Two grains, one mechanism** `[FR-109]`. The ledger groups rejections by cause, which answers
+*"where did 13 000 candidates go?"* — and is the wrong grain for the question an operator is
+actually asked, which is about one time. `explain_slot` re-runs Layer 0 and filters to a single
+`(day, start_min)`, reporting how many combinations existed there, how many were bookable, and
+each cause in plain language. It **re-runs rather than caches**, at ~80 ms. Ranking is a pure function of
+`(constraints, schedule, profile, NOW)`, and three of those four are fixed by the stored record —
+so the answer is byte-identical to the original *for an unchanged schedule*, and deliberately
+reflects the present when a booking has landed since. Both readings are defensible; this one was
+chosen because the operator is asking about the calendar in front of them, not a historical one.
+The limitation is recorded in `known-limitations.md`. It passes the decision's own
+`request_id`, because a request never blocks its own holds `[AR-03]`; without that the offered
+slots come back as "held for another patient" — held for *this* patient.
 
 A Phase-A rejection is written to *every* candidate in that slot with the same cause, which
 preserves both the fixed order of FR-025 and the single-cause guarantee of FR-028 while doing the
@@ -1171,11 +1204,14 @@ stage, so per-stage model costs nothing structurally.
 Each model id is a `Settings` field and forms part of that stage's fixture cache key (FR-006), so
 changing one is a config edit that invalidates only its own fixtures.
 
-**Extraction is decided by measurement, not by argument** `[ADR-15]`. It ships on `claude-opus-5`
-because the ordering is asymmetric: a downgrade backed by evidence is always available, while an
-un-shipping a confidently-wrong date is not. FR-093 already reports per-field extraction accuracy
-per implementation over the golden set — run it on both models and keep the cheaper one if it holds.
-The instrument that settles this is one the product needs anyway, which is the point.
+**Extraction is decided by measurement, not by argument** `[ADR-15]`. It shipped first on
+`claude-opus-5`, on the argument that the ordering is asymmetric: a downgrade backed by evidence is
+always available, while un-shipping a confidently-wrong date is not. **The evidence then arrived**
+`[ADR-21]`: 54 live calls per finalist put Haiku at 89.6% against Opus's 92.3% on labels already
+biased against every model, for 3.4× the speed — and the argument that had held the line was
+answered rather than overruled. It now ships on `claude-haiku-4-5`. FR-093 reports per-field
+extraction accuracy per implementation over the golden set, so the same instrument reverses the
+decision the day the accuracy gap matters more than the seconds.
 
 **At production volume this stops being a rounding error.** At demo scale the difference between
 tiers across all three stages is pennies. At ~25 requests per office per day across a large group it
@@ -1257,6 +1293,7 @@ so the contract cannot drift silently.
 | `PATCH` | `/requests/{id}/constraints` | Edit interpretation; deterministic re-run, **zero LLM** | FR-007 |
 | `POST` | `/requests/{id}/answer` | Answer the clarifying question | FR-011 |
 | `GET` | `/requests/{id}` | Full `DecisionRecord` | FR-074 |
+| `GET` | `/requests/{id}/why?at=&day=` · `/why-options` | Why *one time* was not offered, and the day/time options that exist | FR-109 |
 | `POST` | `/holds` · `DELETE` `/holds/{id}` | Soft hold lifecycle | FR-068 |
 | `POST` | `/bookings` | Confirm — re-verifies before writing | FR-069 |
 | `POST` | `/session/reset` | Restore reference data, keep traces | FR-071, FR-072 |
@@ -1266,7 +1303,7 @@ so the contract cannot drift silently.
 | `GET` | `/traces` · `/traces/{id}` · `POST` `/traces/{id}/replay` | Inspect and replay | UC-12 |
 | `POST` | `/eval/run` · `GET` `/eval/runs/{id}` | Harness and scorecard | UC-13 |
 | `GET` | `/system/preflight` | Backend, seed digest, clock, network mode, Opik status | FR-106, NFR-12 |
-| `GET` | `/system/reference` | Active `NOW`, mode indicators, seed digest | FR-104, FR-105 |
+| `GET` | `/system/reference` | Active `NOW`, clock mode, degraded-path indicator, dictation flag, seed digest | FR-104, FR-105, FR-110 |
 | `GET` | `/schedule/grid` | Six-operatory manual-comparison view | FR-107 |
 
 Every decision-bearing response carries `funnel`, `ledger_summary`, `trace_id`, the **nominal and
@@ -1320,8 +1357,9 @@ ladder (§15.4), which is asserted by a test rather than hoped for.
 reset only.
 
 That headroom is for the *deterministic* work, and it is why the degraded path answers in under
-two seconds. The live path is dominated by three sequential model calls (~16 s, §15.4) — the
-arithmetic below it is not the constraint and never was.
+two seconds. The live path is dominated by model calls — 3.9 s p50 since ADR-21 shrank the payloads
+and moved verification off the critical path (§15.4) — and the arithmetic below it is not the
+constraint and never was.
 
 ---
 
@@ -1434,10 +1472,11 @@ operator-facing copy, though they remain correct in code and in these documents:
 | **ADR-12** | One `run_evaluation` function, CLI and HTTP entry points | Scorecard must render in-product **and** gate CI, without two implementations |
 | **ADR-13** | `TraceSink` fan-out with per-sink redaction | §13 — the leak vector is the external sink; the local store is the replay substrate |
 | **ADR-14** | Pure-Python request path; `numpy` for the eval harness only | Legibility where it is read, speed where FR-098 needs it |
-| **ADR-15** | Model is per-stage: Sonnet 5 for verification and explanation; extraction ships on Opus 5 and is settled by the golden set, not by argument | §15.3 — verification and explanation are trivial and latency compounds across three sequential calls. Extraction is the one stage where quality is visible, and a downgrade backed by measurement is always available while un-shipping a wrong date is not |
+| **ADR-15** | Model is per-stage, and settled by the golden set rather than by argument. Shipped Opus 5 for extraction and Sonnet 5 elsewhere; **superseded by ADR-21**, which measured all three tiers and moved every stage to Haiku 4.5 | §15.3 — verification and explanation are trivial and latency compounds across three sequential calls. Extraction is the one stage where quality is visible, and a downgrade backed by measurement is always available while un-shipping a wrong date is not |
 | **ADR-16** | Availability invalidation is keyed per `(resource, day)`, not one global version | §8.1 — a global counter makes every write rebuild everything, which is invisible at one location and quadratic at many. The structure is already keyed this way, so it is a dict-key change now and a redesign later. It also absorbs *external* invalidation (PMS cancellations) for free |
 | **ADR-17** | One timezone conversion module; instants at the boundary, minute-offsets inside | §11.1a — DST enters a 14-day horizon twice a year in every zone, and naive local times fail silently on exactly those two days. Confining the assumption keeps the multi-timezone fix local to one module |
 | **ADR-18** | Booking is a **conditional** commit (`expect=version`), never check-then-write | §12 — check-then-write cannot fail at one seat and double-books at two, which is the worst pairing of severity and undetectability. Costs nothing single-seat; the repository interface is what enforces it |
+| **ADR-22** | The clock is real by default (`SCHED_CLOCK=system`); tests, evals and release checks pin it frozen | §ADR-22 — an application scheduling real days runs on today's date; reproducibility is a property verification needs, not a property the product should fake. The flip exposed two defects that a pinned 09:00 clock had been hiding |
 | **ADR-19** | `ScheduleRepository` `Protocol` between the reasoner and any store | §12 — every other boundary here is a `Protocol`; this one was the omission. Without it, adopting a database edits the scheduling logic |
 
 ### Architecture refinements to the PRD
@@ -1481,7 +1520,8 @@ operator-facing copy, though they remain correct in code and in these documents:
 | Extraction and provenance | FR-001 … FR-008 | `agents/extractor/`, `agents/llm/`, `domain/request.py` |
 | Verification and fan-out | FR-009 … FR-015 | `agents/verifier/`, `reasoner/hypotheses.py` |
 | Enumeration and feasibility | FR-016 … FR-026 | `reasoner/availability.py`, `enumerate.py`, `ladder.py`, `feasibility.py` |
-| Rejection ledger and funnel | FR-027 … FR-031 | `domain/candidate.py`, `orchestrator/stages.py`, `api/requests.py` |
+| Dictation front door | FR-110 | `frontend/src/lib/useSpeech.ts`, `api/schemas.py::SubmitRequest.source` |
+| Rejection ledger and funnel | FR-027 … FR-031, FR-109 | `domain/candidate.py`, `orchestrator/stages.py`, `api/requests.py`, `reasoner/pipeline.py::explain_slot` |
 | Urgency gate and escalation | FR-032 … FR-038 | `reasoner/tiers.py` |
 | Scoring | FR-039 … FR-047 | `reasoner/scoring/`, `domain/policy.py` |
 | Selection | FR-048 … FR-054 | `reasoner/select.py` |
@@ -1510,9 +1550,10 @@ a request**, which no offline test could have detected because none of them ran 
 
 **Consequences, accepted:**
 
-- **Latency.** ~16 s per request against an original 5 s target. Bounded by the ladder
-  above, and named in `known-limitations.md` §12 with the four routes that would close
-  it.
+- **Latency.** 3.9 s p50 against an original 5 s target — inside it, after ADR-21. The
+  first live pipeline was ~15.9 s; what closed the gap was measurement (output tokens,
+  not "thinking"), and `known-limitations.md` §12 names what a sub-2 s target would
+  additionally cost.
 - **Determinism.** The demo path is no longer byte-reproducible. FR-097 runs in fixture
   mode and reports *not applicable* on a live scorecard rather than a pass. Ranking
   stays a pure function of `(constraints, schedule, profile, NOW)`, so the
@@ -1561,6 +1602,46 @@ cost for ~2.7 accuracy points on biased labels); hedged duplicate requests (tail
 collapsed to 3.6 s at n=54, not worth the complexity); speculative rules-first
 rendering (saves ~1.9 s of *perceived* wait at the cost of cards that can change
 underneath the operator — revisit only if sub-2 s becomes a requirement).
+
+---
+
+### ADR-22 — The clock is real by default; pinned only where reproducibility is the point
+
+**Decision.** `SCHED_CLOCK=system` ships. `NOW` comes from the system clock in the
+product; tests, evals, fixtures and `release-check.sh` pin `SCHED_CLOCK=frozen`.
+
+**Context.** The clock was injected from S1 (SD-3, FR-102) but *defaulted* to a frozen
+reference instant, on the argument that "next Thursday" must resolve identically on every
+run. That argument is correct about verification and wrong about the product: an
+application scheduling real days runs on today's date. The seam already existed; only the
+default was backwards.
+
+**What it exposed.** Nothing filtered out slots earlier than *now* on today's date. Pinned
+at 09:00, only one early hour could ever leak, so the defect was invisible; at a 12:30
+demo, *"anything today?"* offered 10:40 AM. It is now ladder rule 0 (`not_in_the_past`),
+first because "that time had already gone by" is the one honest cause for such a slot. A
+second defect surfaced the same way: `DecisionRecord.now` stored `settings.reference_now`
+rather than the instant the decision ran at, and replay re-runs the reasoner at
+`record.now` — so every real-clock decision replayed at 09:00. Both were invisible while
+the two values were the same number.
+
+**Consequences.**
+
+- **The product runs on now; verification runs on a fixed instant.** Golden labels resolve
+  relative dates against the reference, and a suite that drifted with the wall clock would
+  begin failing on nobody's change the day the seeded window slid past.
+- **Pre-flight owns the seam.** System clock inside the dataset window (2026-08-03 …
+  2026-08-28) passes with the window named; outside it, pre-flight **fails** with the
+  remedy, because every search would return empty and "READY" would be a lie. It reads the
+  date through `SystemClock`, not `date.today()` — FR-102 binds pre-flight too.
+- **The UI stops narrating the expected state** (FR-104). No date is shown under a real
+  clock; an amber "Simulated clock" pill appears only when frozen, because then the dates
+  on screen are *not* today's and hiding that would be the dishonest choice.
+
+**Rejected:** keeping frozen as the default and documenting it (the defects above stay
+hidden, and every demo has to explain a fake today); re-seeding the dataset relative to
+today at boot (breaks digest-pinned evals and byte-identical replay — the reproducibility
+argument was right, it just belongs to the test suite, not the product).
 
 ---
 

@@ -123,6 +123,7 @@ class AppContainer:
                 "explain": s.model_explain,
             },
             "timeout_ladder_total_s": round(s.timeout_ladder_total, 2),
+            "voice_input": s.voice_input,
             "opik_enabled": s.opik_enabled,
             "opik": self.opik.counters.as_dict() if s.opik_enabled else None,
             "seed_anomalies": self.load.summary,

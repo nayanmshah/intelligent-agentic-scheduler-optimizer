@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.4,
+    "confidence": 0.3,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -42,7 +42,7 @@
   },
   "request_text": "I need something first thing tomorrow, it's urgent",
   "time_window": {
-    "confidence": 0.85,
+    "confidence": 0.9,
     "derived": false,
     "derived_rule": null,
     "span": {

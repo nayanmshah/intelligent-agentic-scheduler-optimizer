@@ -8,6 +8,7 @@ state it will actually be in on an arbitrary machine.
 from __future__ import annotations
 
 import time
+from types import SimpleNamespace
 
 import pytest
 
@@ -396,3 +397,113 @@ def test_payload_helpers_tolerate_a_failed_stage() -> None:
     assert "error" in payloads.verdict_out(None)
     assert payloads.constraints_in(None) == {}
     assert "error" in payloads.reason_out(object())
+
+
+# ----------------------------------------------------------------- FR-085 ----
+# Cost is f(provider, model, usage). The sink sent the model and nothing else, so
+# every LLM span priced at exactly $0 -- a missing field wearing the costume of an
+# answer, which is the failure mode a cost view is least able to survive.
+def test_a_stage_claims_the_tokens_spent_inside_it() -> None:
+    """The client reports usage to whichever span is open, without the token counts
+    being threaded back through three return types that have nothing to do with
+    billing."""
+    from app.trace import usage
+    from app.trace.sink import NullTraceSink, Tracer
+
+    tracer = Tracer(NullTraceSink())
+    with tracer.span("extract") as s:
+        usage.record(usage.LlmUsage(input_tokens=2089, output_tokens=165))
+    assert s.attrs["usage"]["prompt_tokens"] == 2089
+    assert s.attrs["usage"]["completion_tokens"] == 165
+    assert s.attrs["usage"]["total_tokens"] == 2254
+
+
+def test_a_stage_that_called_no_model_carries_no_usage() -> None:
+    """`reason` is deterministic, and a stage that fell back to the deterministic
+    path spent nothing. Either priced as a model call would invent a bill."""
+    from app.trace.sink import NullTraceSink, Tracer
+
+    tracer = Tracer(NullTraceSink())
+    with tracer.span("reason") as s:
+        pass
+    assert "usage" not in s.attrs
+
+
+def test_tokens_are_attributed_to_the_stage_not_its_parent() -> None:
+    """`request` wraps every stage. If the collector did not nest, the same tokens
+    would be counted on the parent as well and the trace would bill twice."""
+    from app.trace import usage
+    from app.trace.sink import NullTraceSink, Tracer
+
+    tracer = Tracer(NullTraceSink())
+    with tracer.span("request") as outer, tracer.span("extract") as inner:
+        usage.record(usage.LlmUsage(input_tokens=100, output_tokens=10))
+    assert inner.attrs["usage"]["total_tokens"] == 110
+    assert "usage" not in outer.attrs, "the parent span double-counted its child's tokens"
+
+
+def test_cache_reads_and_writes_are_billed_on_the_prompt_side() -> None:
+    """The system prompt is sent with `cache_control`, so most of the input arrives
+    as a cache read. Dropping those would understate exactly the spend this codebase
+    works hardest to reduce."""
+    from app.trace import usage
+
+    merged = usage.merge([
+        usage.LlmUsage(
+            input_tokens=10,
+            output_tokens=5,
+            cache_creation_input_tokens=100,
+            cache_read_input_tokens=1000,
+        )
+    ])
+    assert merged["prompt_tokens"] == 1110
+    assert merged["cache_read_input_tokens"] == 1000
+
+
+def test_a_stage_that_retried_reports_both_calls() -> None:
+    """A span reporting only the last call would under-report the bill."""
+    from app.trace import usage
+
+    merged = usage.merge([
+        usage.LlmUsage(input_tokens=100, output_tokens=10),
+        usage.LlmUsage(input_tokens=200, output_tokens=20),
+    ])
+    assert merged["prompt_tokens"] == 300
+    assert merged["completion_tokens"] == 30
+
+
+def test_the_sink_sends_provider_and_usage_so_opik_can_price_the_span() -> None:
+    """The regression itself: the model alone is not enough to price a call, and
+    the provider is named only when tokens were actually spent."""
+    from app.trace.opik import OpikTraceSink
+
+    sent: list[dict] = []
+
+    class _Trace:
+        def span(self, **kw):  # type: ignore[no-untyped-def]
+            sent.append(kw)
+
+    class _Client:
+        def trace(self, **kw):  # type: ignore[no-untyped-def]
+            return _Trace()
+
+    sink = OpikTraceSink("http://127.0.0.1:1", enabled=False)
+    sink._buffer(
+        Span(
+            span_id="a", trace_id="t", stage="extract", t_start=0.0, t_end=0.001,
+            attrs={
+                "model": "claude-haiku-4-5",
+                "usage": {"prompt_tokens": 10, "completion_tokens": 2},
+            },
+        )
+    )
+    sink._buffer(Span(span_id="b", trace_id="t", stage="reason", t_start=0.0, t_end=0.001))
+    sink._flush_decision(_Client(), SimpleNamespace(trace_id="t", id="d", offers=[], flags=[]))
+
+    llm = next(s for s in sent if s["name"] == "extract")
+    assert llm["provider"] == "anthropic"
+    assert llm["usage"]["prompt_tokens"] == 10
+    assert llm["model"] == "claude-haiku-4-5"
+    det = next(s for s in sent if s["name"] == "reason")
+    assert det["provider"] is None, "a stage that spent nothing was labelled a model call"
+    assert det["usage"] is None

@@ -50,6 +50,20 @@ than being asked at the end.
 
 ## 1 · The main line — "it understood, and it can show its work"
 
+**Optional opener (20 seconds), if the room is Chrome and the mic works:** press **Speak**
+and say the request out loud instead of typing it. The words appear greyed while you talk,
+then land in the box.
+
+> "The brief said text *or speech*. Speech is a front door — it fills the box, it doesn't
+> submit. That's deliberate: every field below quotes the patient's exact words, and if the
+> transcriber submitted itself, those quotes would be quoting a machine. A misheard Tuesday
+> would enter the record as something the patient said. So a human confirms the sentence,
+> and everything downstream stays true. The pipeline can't tell the difference — there's a
+> test asserting a dictated request and a typed one produce the same decision."
+
+Rehearse it once beforehand; if the mic is denied or the room is loud, click the example
+chip instead and say the same paragraph. **Never debug a microphone in front of the panel.**
+
 Type (or click the first example chip):
 
 ```
@@ -124,6 +138,28 @@ We looked at  199 other times for you, but the provider is already booked.
 We looked at  184 other times for you, but no dentist was free for the short exam
                                         inside the appointment.
 ```
+
+**Then narrow it to one time.** The row above is the answer to *"where did 13,000
+candidates go?"* — but the question an operator is actually asked is about a single
+time. At the bottom of the ledger, pick **3:00 PM** on the offered day:
+
+```
+Why not…  [ 3:00 PM ]  [ Thu, Aug 20 ]
+
+24 combinations at 3:00 PM, Thu, Aug 20
+  16   the room is already in use
+   4   the room is being held for another patient
+   1   the provider is already booked
+3 were bookable — outranked by the times offered above.
+```
+
+> "That's the sentence that ends the phone call. And notice it distinguishes *nothing
+> was bookable* from *three were bookable and simply lost* — those are different things
+> to tell a patient, and only one of them is a no."
+
+Try a fully-booked time too, so both endings are seen. The options are generated from
+the real grid and real business hours, so every time offered is one an appointment could
+actually start at — asking "why not 3:07?" of a ten-minute grid has no honest answer.
 
 That last line is the one to point at — three rooms sat empty and the slot was still
 unbookable, because a hygiene appointment needs a dentist free for a short exam
@@ -235,7 +271,7 @@ Move **Continuity** up. Watch the ranking change and the contribution bars redra
 footer under the sliders states it outright: *re-ranked in Nms with zero model calls.*
 
 The preset row above the sliders carries a **General Practice** default and a profile
-marked **· fitted**. Worth 15 seconds:
+marked **· fitted**. Worth the four seconds:
 
 > "The fitted one is committed but **not** the default. Fitting to our own labels
 > lifted the hit rate to 70% and that's not a win — the labels and the objective came
@@ -346,7 +382,10 @@ Head-to-head vs naive first-available (FR-095)
 | An amber **Offline · fixtures (degraded)** pill appears | no key, or no network | Check `.env`. If it cannot be fixed, say so and demo the degradation deliberately — it still answers every request |
 | A request takes ~15s | three sequential model calls | Expected. Narrate the pipeline (§1); do not apologise for it |
 | One card reads plainer than the others | the faithfulness gate rejected that sentence | Working as designed — show it on the Traces screen (§6) |
-| Dates look wrong | Reading them against the real today | The dataset's today is **Monday 2026-08-10**, shown in the header |
+| No **Speak** button | Browser has no Web Speech API (Firefox), or `SCHED_VOICE_INPUT=false` | Use Chrome, or type — the control is absent by design rather than broken |
+| Dictation hears nothing | Microphone denied, or the wrong input device | The console says so in amber under the box. Type instead; do not debug live |
+| Dates look wrong | An amber **Simulated clock** pill is showing | `SCHED_CLOCK=frozen` is set — dates are relative to 2026-08-10, not today. Unset it for a live demo |
+| Every search comes back empty | Today is outside the seeded window (2026-08-03 … 28) | `make preflight` says so explicitly. Re-seed, or set `SCHED_CLOCK=frozen` |
 | A booking says the slot moved | Someone booked it earlier in the demo | Press `R` to restore the dataset. Traces are kept. |
 | Blank results panel | Request not submitted | The textarea needs `Enter`, not the send key of a different app |
 
@@ -364,5 +403,5 @@ per agent role that runs on a model, plus the measurement.
 §3 is the next to keep if you have a spare two minutes; §2, §4, §5 and §6 are depth on
 request.
 
-**Budget the clock.** At ~15 seconds a request, six live requests is a minute and a half
+**Budget the clock.** At ~4 seconds a request, six live requests is under half a minute
 of waiting. Rehearse what you say during it.

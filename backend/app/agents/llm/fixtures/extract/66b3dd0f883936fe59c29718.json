@@ -11,7 +11,7 @@
     "value": "limited_exam"
   },
   "date_range": {
-    "confidence": 0.9,
+    "confidence": 0.7,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -60,9 +60,9 @@
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 41,
+      "end": 28,
       "start": 0,
-      "text": "My tooth's been bothering me since Friday"
+      "text": "My tooth's been bothering me"
     },
     "value": "urgent"
   }

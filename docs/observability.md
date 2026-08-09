@@ -45,9 +45,18 @@ looking at.
 | **tags** | `fallback:<stage>`, `gate-fired`, `asked-a-question`, `limited-availability`, the origin state |
 | **spans** | `extract` · `verify` · `reason` · `explain`, each with its **real input and output** |
 
-Model stages are typed `llm` and carry the model id, so Opik's own cost and latency
-views work without being told anything extra. `reason` is typed `general` — it is
-deterministic and calls nothing.
+Model stages are typed `llm` and carry the model id, the provider, and the token
+counts the call actually spent, which is what Opik's cost view prices against —
+it computes cost as a function of all three. The model id alone is not enough: with
+usage missing, a span prices at exactly $0, which reads like an answer rather than
+the absent field it is. `reason` is typed `general` — it is deterministic and calls
+nothing, so it carries no usage and no provider, and is never priced as a model call.
+
+Token counts reach the span through [`app/trace/usage.py`](../backend/app/trace/usage.py)
+rather than being threaded back through the stages' return types; billing data
+belongs to the span, not to the extraction. Cache reads and writes count toward the
+prompt side, since the system prompt is sent with `cache_control` and most input
+arrives as a cache read.
 
 The tags are chosen to be *worth filtering by*: degradation, gate firings, and
 questions are the three things you would actually pull up on their own. A tag that is

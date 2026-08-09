@@ -212,10 +212,11 @@ is evidence; everything above it is the decision.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
-│  Reference date: Mon 10 Aug 2026, 9:00 AM   [Offline · fixtures]  ⟳  │  persistent (FR-104/105)
+│  Chairside · agentic scheduling   Seat: Front desk   Console ⋯  ⟳   │  persistent (FR-104/105)
 ├──────────────────────────────────────────────────────────────────────┤
 │  Patient ▾   ┌──────────────────────────────────────────────┐        │
 │              │ "Can I come in next Thursday after 3?"    ⏎  │        │  FR-001
+│              │                              [🎙 Speak] ← fills, never submits │  FR-110
 │              └──────────────────────────────────────────────┘        │
 ├──────────────────────────────────────────────────────────────────────┤
 │  [next Thursday → Thu 13 Aug ✎] [after 3 → 15:00–close ✎] [prophy ✎] │  interpretation strip

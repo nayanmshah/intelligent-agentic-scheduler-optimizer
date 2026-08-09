@@ -1,0 +1,69 @@
+{
+  "appointment_type": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "prophy_adult"
+  },
+  "date_range": {
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 61,
+      "start": 48,
+      "text": "next Saturday"
+    },
+    "value": {
+      "end": "2026-08-15",
+      "start": "2026-08-15"
+    }
+  },
+  "exclusions": {
+    "confidence": 1.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.99,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 31,
+      "start": 28,
+      "text": "Nia"
+    },
+    "value": "prov-nia"
+  },
+  "request_text": "give me an appointment with Nia at 3:00 p.m. on next Saturday",
+  "time_window": {
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 44,
+      "start": 35,
+      "text": "3:00 p.m."
+    },
+    "value": {
+      "end_min": 900,
+      "start_min": 900
+    }
+  },
+  "urgency": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "routine"
+  }
+}

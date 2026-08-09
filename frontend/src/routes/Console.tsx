@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { api, type Decision, type Offer, type StageEvent } from "@/lib/api";
+import { useSpeech } from "@/lib/useSpeech";
 import { InterpretationStrip } from "@/components/InterpretationStrip";
 import { FunnelCounter } from "@/components/FunnelCounter";
 import { OfferCard } from "@/components/OfferCard";
@@ -25,11 +26,26 @@ const EXAMPLES = [
  */
 export default function Console() {
   const [text, setText] = useState("");
+  //: "voice" only if the words in the box arrived by dictation and were then
+  //: confirmed. Any subsequent typing leaves it — the operator edited a transcript,
+  //: which is still a transcript, and the record should say so.
+  const [source, setSource] = useState<"text" | "voice">("text");
   const [decision, setDecision] = useState<Decision | null>(null);
   const [booked, setBooked] = useState<string | null>(null);
   const [confirmation, setConfirmation] = useState<string | null>(null);
   const [stages, setStages] = useState<StageEvent[]>([]);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  const { data: reference } = useQuery({ queryKey: ["reference"], queryFn: api.reference });
+
+  // Dictation appends to whatever is in the box rather than replacing it: a patient
+  // who pauses mid-sentence and resumes is one request, not two.
+  const onFinal = useCallback((phrase: string) => {
+    setSource("voice");
+    setText((prev) => (prev ? `${prev} ${phrase}` : phrase));
+  }, []);
+  const speech = useSpeech(onFinal);
+  const voiceOn = reference?.voice_input !== false && speech.supported;
 
   const submit = useMutation({
     mutationFn: (t: string) => {
@@ -37,7 +53,7 @@ export default function Console() {
       // while a new one runs invites reading a stale card as the fresh one.
       setDecision(null);
       setStages([]);
-      return api.submitStream(t, "pat-000", (ev) =>
+      return api.submitStream(t, "pat-000", source, (ev) =>
         setStages((prev) =>
           prev.some((s) => s.stage === ev.stage)
             ? prev.map((s) => (s.stage === ev.stage ? ev : s))
@@ -110,6 +126,18 @@ export default function Console() {
           className="w-full resize-none border-none bg-transparent px-5 py-3 text-[1.15rem] leading-relaxed outline-none placeholder:italic"
           style={{ color: "var(--ink)" }}
         />
+        {/* What was heard but not yet settled. Greyed, and never submittable — it
+            exists so the operator can see dictation working before the words land. */}
+        {speech.listening && (
+          <p className="px-5 pb-2 text-[1.05rem] italic" style={{ color: "var(--ink-faint)" }}>
+            {speech.interim || "Listening…"}
+          </p>
+        )}
+        {speech.error && (
+          <p className="px-5 pb-2 text-xs" style={{ color: "var(--warn)" }}>
+            {speech.error}
+          </p>
+        )}
         <div
           className="flex items-center gap-3 border-t px-5 py-2.5"
           style={{ borderColor: "var(--line)", background: "var(--page)" }}
@@ -120,10 +148,36 @@ export default function Console() {
             <span><span className="kbd">1</span>–<span className="kbd">3</span> hold</span>
             <span><span className="kbd">R</span> reset</span>
           </span>
+          {/* FR-110. Dictation never submits: it fills the box and the operator
+              confirms, which is what keeps every provenance span a quote of something
+              a human agreed was said. Absent entirely where the browser lacks the
+              API — a dead button teaches the operator to distrust the toolbar. */}
+          {voiceOn && (
+            <button
+              onClick={() => (speech.listening ? speech.stop() : speech.start())}
+              disabled={submit.isPending}
+              aria-pressed={speech.listening}
+              aria-label={speech.listening ? "Stop dictation" : "Dictate the request"}
+              title="Dictate — the words land in the box for you to confirm"
+              className="ml-auto inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+              style={
+                speech.listening
+                  ? { background: "var(--warn-bg)", color: "var(--warn)" }
+                  : { background: "var(--surface)", color: "var(--ink-soft)", border: "1px solid var(--line)" }
+              }
+            >
+              <span
+                aria-hidden
+                className={speech.listening ? "breathe inline-block h-2 w-2 rounded-full" : "inline-block h-2 w-2 rounded-full"}
+                style={{ background: speech.listening ? "var(--warn)" : "var(--ink-faint)" }}
+              />
+              {speech.listening ? "Stop" : "Speak"}
+            </button>
+          )}
           <button
             onClick={() => text.trim() && submit.mutate(text)}
             disabled={submit.isPending || !text.trim()}
-            className="btn-primary ml-auto px-5 py-2 text-sm"
+            className={`btn-primary px-5 py-2 text-sm${voiceOn ? "" : " ml-auto"}`}
           >
             {submit.isPending ? "Searching…" : "Find times"}
           </button>
@@ -138,6 +192,7 @@ export default function Console() {
             <button
               key={e}
               onClick={() => {
+                setSource("text");
                 setText(e);
                 submit.mutate(e);
               }}
@@ -251,7 +306,7 @@ export default function Console() {
           )}
 
           {/* 4. Evidence, one click away. */}
-          <RejectionLedger groups={decision.ledger} />
+          <RejectionLedger groups={decision.ledger} decisionId={decision.id} />
 
           {decision.fallback_fired.length > 0 && (
             <p className="text-[0.68rem]" style={{ color: "var(--ink-faint)" }}>

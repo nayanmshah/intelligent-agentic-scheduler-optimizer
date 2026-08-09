@@ -179,7 +179,7 @@ eval harness (§7 UC-13). **Every one of them is readable directly from the prod
 | # | Metric | Current State | Target | How Measured |
 | - | :----- | :------------ | :----- | :----------- |
 | 1 | **Confirm-without-investigating rate** — the booked slot was in the offered top 3 and no calendar grid was opened | Manual: 0% (the grid is always opened) | **≥ 85%** | **Offline proxy:** top-3 hit rate against the human-preferred slot on the ~40-request golden set. **In-session:** a counter increments on every manual-grid open; the target state is a session in which the operator never opens the grid. Both surfaced on the eval scorecard. |
-| 2 | **Time-to-offer** — request submitted → three ranked options rendered | Manual: 45–90 s | **~16 s live (measured, the shipped path); < 2 s degraded call** (p95 over the golden set) | Trace spans: `t(render) − t(submit)`, p50 and p95 reported per mode by the harness and shown in the trace panel per request. |
+| 2 | **Time-to-offer** — request submitted → three ranked options rendered | Manual: 45–90 s | **3.9 s p50 live (measured, the shipped path, ADR-21); < 2 s degraded call** (p95 over the golden set) | Trace spans: `t(render) − t(submit)`, p50 and p95 reported per mode by the harness and shown in the trace panel per request. |
 | 3 | **Schedule-quality delta vs. naive first-available** | Naive baseline computed by the harness over the same golden set | **Strictly better** on orphan-gap minutes created and on protected-block minutes consumed; **non-inferior** on human agreement | Harness runs both rankers over the golden set and emits a head-to-head table. **Where the delta is small for a request class, the harness reports it and names the class** — knowing where the product does not add value is part of the measurement, not an omission from it. |
 | 4 | **Consistency** — same request, same answer, every time | Staff-dependent; unmeasurable | **Byte-identical** | Harness runs the golden set twice in fixture mode and diffs the serialised `DecisionRecord`s; any diff fails the run. Also enforced in CI. |
 
@@ -305,12 +305,23 @@ model stays — see §8) · no-show-risk policy hook (FR-084, built behind a fla
 > FR-036) — the product must never return an empty list; **bump-candidate *suggestions* are
 > STRETCH** (FR-037). If FR-037 is deferred, FR-036 alone satisfies "never return nothing."
 
-#### Voice input — permanently cut ✅ DECIDED
+#### Voice input — shipped as a front door ✅ DECIDED *(reversed 2026-08-09)*
 
-The original product brief allows "text or speech." Voice is cut, deliberately and permanently.
-Transcription adds a runtime failure mode for **zero decision quality** — constraint extraction
-operates on text either way, so speech input would only change how the text arrives. The decision
-and its rationale are recorded on the known-limitations page.
+The original product brief allows "text or speech." This was cut on the grounds that transcription
+adds a runtime failure mode for **zero decision quality** — constraint extraction operates on text
+either way, so speech only changes how the text arrives.
+
+**That reasoning was right about the pipeline and wrong about the conclusion.** Precisely because
+speech only changes how the text arrives, it can be added as a *front door* that touches nothing
+downstream: the browser's Web Speech API writes a transcript into the same box, the operator
+confirms it, and `POST /api/requests` receives text exactly as it always did. The pipeline cannot
+tell the difference — FR-110 has a test asserting a dictated request and a typed one produce an
+identical decision.
+
+The failure mode named in the original cut is real and is handled rather than avoided: dictation
+**never submits**, so a mis-transcription is something an operator sees and corrects rather than
+something the audit trail records as the patient's words. See FR-110 and `known-limitations.md`
+for what speech still costs (accuracy on proper nouns, and where the audio goes).
 
 ### What's OUT of scope?
 
@@ -328,7 +339,7 @@ non-goal with a reason is a design decision.**
 | **ILP / OR-tools** | One request against a fixed schedule, hundreds of candidates — exhaustive enumeration is exact, sub-millisecond, and fully explainable. An ILP returns the same answer with less legibility. |
 | **CI beyond one test + eval workflow** | The one workflow that matters proves reproducibility; additional pipelines add maintenance for no verification gain. |
 | **Multi-tenancy — isolation only** *(rationale amended)* | The **isolation** half of tenancy is infrastructure and stays out of v1.0. The **policy-scoping** half is not, and the original rationale was wrong to fold the two together: at multi-practice scale a `WeightProfile` needs an owner and an inheritance chain — platform default → group policy → location override — and *who may override what* is a scheduling product decision, not a deployment one. v1.0 therefore ships the **scope field** (§8) and defers only the **resolution logic** (NFR-30). Adding a nullable field now costs nothing; adding an owner to a table that already has rows costs a migration plus a backfill of guesses. |
-| **Voice / speech input** | Adds a runtime failure mode for zero decision quality. |
+| ~~**Voice / speech input**~~ *(now in scope — FR-110)* | Shipped as a front door: the browser transcribes into the request box and the operator confirms. Kept honest by the rule that dictation never submits, so the pipeline, the provenance spans and the audit trail are all unchanged. |
 | **Global schedule re-optimisation** | Moving already-booked patients is a consent problem before it is a math problem. |
 | **Patient self-scheduling** | Different product, different liability; the human confirmation step is load-bearing by design. |
 | **Autonomous booking (no human confirm)** | The promise is "confirm, not investigate" — not "book without looking." A confidently-wrong date must have a human between it and the patient. |
@@ -344,7 +355,7 @@ non-goal with a reason is a design decision.**
 | UC-01 | Interpret an unstructured request | Front-Desk Operator | FR-001 … FR-008 | MUST |
 | UC-02 | Verify the interpretation; ask at most one question | Front-Desk Operator | FR-009 … FR-015 | SHOULD |
 | UC-03 | Enumerate candidates and apply hard feasibility | System (Schedule Reasoner) | FR-016 … FR-026 | MUST |
-| UC-04 | Show what was rejected and why | Front-Desk Operator | FR-027 … FR-031 | MUST |
+| UC-04 | Show what was rejected and why | Front-Desk Operator | FR-027 … FR-031, FR-109 | MUST |
 | UC-05 | Apply the urgency gate; never return nothing | Front-Desk Operator | FR-032 … FR-038 | MUST (FR-037 STRETCH) |
 | UC-06 | Score surviving candidates on four axes | System (Schedule Reasoner) | FR-039 … FR-047 | MUST |
 | UC-07 | Produce a stable, diverse, explained top 3 | Front-Desk Operator | FR-048 … FR-054 | MUST |
@@ -622,7 +633,7 @@ calendar — and so I can tell when the system is wrong.
 2. Operator expands a group.
     - System lists the specific candidates (day, time, provider, operatory) with the single cause.
 
-**Acceptance Criteria:** all of FR-027 … FR-031 pass.
+**Acceptance Criteria:** all of FR-027 … FR-031 and FR-109 pass.
 
 **Functional Requirements**
 
@@ -648,6 +659,17 @@ calendar — and so I can tell when the system is wrong.
   expandable in one click.
   **AC:** Default operator view shows three cards and a single summary line; expansion is one
   click and one scroll on a 1920×1080 display at 125–150% browser zoom. *(MUST)*
+- **FR-109 — Per-time lookup ("but isn't 3 o'clock free?").** For any decision, the system SHALL
+  report, for one (day, start time), how many candidates started at that time, how many were
+  bookable, and the plain-language cause of each rejection grouped by cause. Selectable times
+  SHALL be restricted to the search grid inside that day's business hours. "Bookable but not
+  offered" SHALL be reported distinctly from "nothing was bookable".
+  **Rationale:** FR-027 … FR-031 answer *"where did 13,000 candidates go?"*, which is the wrong
+  grain for the question an operator is actually asked. Aggregate causes cannot end a phone call
+  about one time.
+  **AC:** counts conserve at the slot grain (`bookable + Σ causes == considered`); every selectable
+  time is a multiple of `grid_granularity_min` within business hours; no cause string contains an
+  enum identifier. *(MUST)*
 
 ---
 
@@ -1298,17 +1320,26 @@ on a container runtime, or on what day it happens to be run.
   at startup.
   **AC:** Booting twice produces identical data digests; the generator script is not invoked by the
   boot command. *(MUST)*
-- **FR-104 — The reference `NOW` is visible in the UI.** The active `NOW` SHALL be displayed
-  persistently, labelled as the dataset's reference date.
-  **AC:** Visible on every screen in both normal and presentation mode. *(MUST)* — *Design
-  rationale: a user reading "Thursday the 13th" needs to know the dataset's today is Monday the
-  10th, or every date on screen looks wrong.*
+- **FR-104 — A simulated clock is visible in the UI; a real one is not.** When `NOW` comes from
+  the system clock — the default — the UI SHALL NOT display it: an application scheduling real days
+  runs on today's date, and announcing that is noise. When `NOW` is pinned (`SCHED_CLOCK=frozen`,
+  used by tests, evals and any demo outside the seeded window) the UI SHALL display it
+  persistently and label it as simulated.
+  **AC:** With the system clock, no date indicator appears on any screen. With the frozen clock, an
+  amber "Simulated clock · <date>" indicator is visible on every screen in both normal and
+  presentation mode. *(MUST)* — *Design rationale: the exception is what needs announcing. Under a
+  pinned clock a user reading "Thursday the 13th" would otherwise resolve it against the real
+  today and every date on screen would look wrong; under a real clock, saying "today is today"
+  is clutter. See also FR-102 (no inline clock reads) and ladder rule 0.*
 - **FR-105 — Full operation without the network.** The application SHALL boot and serve every MUST
   requirement with no network access. **Live is the default**; this requirement is about what
   survives when the model is unreachable, not about which path runs first.
-  **AC:** **Verified end to end with networking disabled** (`release-check.sh` Phase C). The UI
-  names which path answered on every screen, so a degraded run is never mistaken for a live
-  one. *(MUST)*
+  **AC:** **Verified end to end with networking disabled** (`release-check.sh` Phase C). A degraded
+  run is never mistaken for a live one: the UI raises an amber indicator when — and only when —
+  the deterministic fallbacks answered. The live path is the expected state and is deliberately
+  *not* announced; the guess this requirement forbids was only ever possible in the degraded
+  direction, which is the direction that speaks up. `make preflight` names the mode in words for
+  anyone who wants it stated. *(MUST)*
 - **FR-106 — One-command boot.** A single command (`make demo`) SHALL start everything needed.
   **AC:** Cold start from a clean machine state to a usable UI in **< 60 s**, executed as part of
   release verification. A pre-flight check reports backend, frontend, seed digest, reference clock,
@@ -1321,6 +1352,21 @@ on a container runtime, or on what day it happens to be run.
   and screen-share use.
   **AC:** All card content, funnel numbers and the stability indicator remain legible at 1920×1080
   with browser zoom at 125–150%. *(MUST)*
+- **FR-110 — Dictation as a front door.** The console SHALL accept the request by speech using the
+  browser's Web Speech API. The transcript SHALL be written into the request field and SHALL NOT be
+  submitted automatically; the operator submits it like any other text. The control SHALL be absent
+  entirely where the browser provides no speech API, and SHALL be suppressible by configuration
+  (`SCHED_VOICE_INPUT=false`) without a rebuild. Each decision SHALL record how its words arrived
+  (`source`: `text` | `voice`), and that value SHALL survive a clarifying-question re-run.
+  **Rationale:** FR-003 requires every extracted field to quote a verbatim span of `request_text`.
+  If speech submitted itself, those spans would quote the *transcriber* rather than the patient, and
+  a misheard "Tuesday" would enter the audit trail as something the patient said. Landing the
+  transcript in a field a human confirms keeps `request_text` exactly what a human agreed was said,
+  and leaves FR-003 true unchanged.
+  **AC:** A dictated request and a typed request with the same text produce an **identical**
+  decision — same offers, same interpretation (asserted, not assumed); an unknown `source` is
+  rejected with 422 rather than stored; a body omitting `source` is treated as `text`; the mic
+  control does not render when the API is missing. *(MUST)*
 
 ---
 
@@ -1374,7 +1420,7 @@ Multi-location **routing** stays STRETCH; the **model** stays.
 | `check_placement` | AppointmentType | Seed data | Yes when check required | `last_third` | `last_third` |
 | `unlock_rule` | ScheduleBlock | Seed data | No | `null` | `urgency >= urgent` |
 | `weights` | WeightProfile | Fitted (FR-098) / user | Yes | `0.35/0.25/0.25/0.15` | fitted vector |
-| `NOW` | Clock provider | Config | Yes | `2026-08-10T09:00−07:00` | reference date, injected |
+| `NOW` | Clock provider | Config | Yes | system clock (default) or `2026-08-10T09:00−07:00` when pinned | always injected, never read inline (FR-102) |
 
 ### What information is created/stored?
 
@@ -1547,7 +1593,7 @@ the operator will reopen the calendar grid.
 | ID | Requirement | Acceptance |
 | :- | :---------- | :--------- |
 | **NFR-01** | **Time-to-offer < 2 s p95 in the degraded (fixture/rules) path** | Measured by the harness over the golden set; enforced as a threshold in the scorecard |
-| **NFR-02** | **Time-to-offer.** Fixture path < 2 s p95. **Live path: measured, not met — ~16 s end to end.** | The 5 s target was set before the live path was built and measured; it is not achievable with a provenance-carrying extraction schema (see below). It is restated as measured rather than quietly dropped, because "beyond ~5 s the human opens the calendar anyway" remains true and is the strongest argument for the work named in `known-limitations.md` §12: stream the response, split provenance off the critical path, or run rules-first and call the model only on disagreement. **Live is still the shipped default** — a capability nobody sees working is a capability nobody believes — and the fallback ladder means a slow or failed call degrades rather than breaks |
+| **NFR-02** | **Time-to-offer.** Fixture path < 2 s p95. **Live path: 3.9 s p50 — inside the 5 s target.** | First measured at ~15.9 s, and recorded here as *not met* rather than quietly dropped, because "beyond ~5 s the human opens the calendar anyway" was the whole argument. Keeping the failure visible is what funded the work that closed it (ADR-21): latency tracked **output tokens** almost linearly, so the extraction schema became quotes with offsets computed locally; adaptive thinking was worth < 0.2 s and was not the lever; and verification does not gate the search, so it now runs in parallel with reason-and-explain. Provenance was never the cost — every field still carries a confidence, a rule and a verbatim span. Sub-2 s remains open and is priced in `known-limitations.md` §12 |
 | **NFR-03** | **Per-stage timeout and fallback ladder.** Every orchestrator stage has an explicit timeout; exceeding it triggers the deterministic fallback rather than failing the request | A forced-timeout test per LLM stage returns a complete response within the budget |
 | **NFR-04** | **Deterministic re-rank < 300 ms** (weight change, interpretation edit) with zero LLM calls | Measured; trace shows no LLM span |
 | **NFR-05** | **Rank-stability computation (200 samples) < 500 ms** | Measured |
@@ -1682,7 +1728,8 @@ feature** — each only fixes where a boundary sits.
 | 11 | **Eval scorecard** | Policy | Extraction accuracy (LLM vs. rules), top-1/top-3, baseline head-to-head, latency, sensitivity curve, determinism, **named failures visible by default** (FR-100) |
 | 12 | **Trace panel + replay** | Trace | Ordered spans with latency, model, cost, `fallback_fired`, `gate_fired`; Replay button with byte-equality assertion (FR-086, FR-088) |
 | 13 | **Manual-comparison grid** | Operator (comparison) | Six operatory columns as a staffer sees them today; time-on-task measurement; increments the manual-open counter (FR-107) |
-| 14 | **Reference-date indicator + mode indicator** | Global | Persistent: the dataset's reference date, network mode (offline/live), observability-backend status (FR-104, FR-105) |
+| 15 | **Dictation control** | Console | A mic button in the command bar: fills the request field, never submits. Absent where the browser has no speech API (FR-110) |
+| 14 | **Exception indicators** | Global | Nothing is shown for the expected state (live models, real clock). Amber pills appear only for a simulated clock (FR-104) or a degraded model path (FR-105); observability-backend status when tracing is local-only |
 | 15 | **Reset to reference data** | Global | One click, < 1 s, reachable everywhere (FR-071) |
 
 ### Interaction Patterns
@@ -1759,7 +1806,7 @@ verifies it.
 | **R-11** | **Staff may ignore the ranking entirely.** | Then the ranking is wrong, and the product should be the first to know. Every override is captured as a labelled counterexample that flows back into the golden set. **Designed in, not patched on** | FR-075; `DecisionRecord.override` in §8 |
 | **R-12** | **Nondeterminism makes behaviour unpredictable and untestable.** | Temperature 0, committed fixtures by default, and ranking that is a pure function of the extraction — **so the only variance sits upstream of the decision, and it is measured rather than assumed** | FR-054; FR-097; NFR-13 |
 | **R-13** | **The explainer may not need to be an LLM at all — a conceded weakness.** | Templates get roughly 90% of the value, and this stayed a theoretical concern for longer than it should have: the LLM explainer was built, unit-tested, and **never reached from a request** until the live-first change wired it in. | The LLM buys naturalness and avoids combinatorial template explosion as the number of rationale combinations grows. The template is always computed and always available as the fallback, so the LLM can be removed from this stage at any time without loss of function | FR-060 (both renderings returned); NFR-28 |
-| **R-14** | **Network or LLM API unavailable at runtime.** | Handled by a layered fallback rather than by avoiding the network. A stage that cannot reach the model drops to committed fixtures; a fixture miss drops to rules. Every MUST requirement is satisfied with networking disabled, and the eval harness reports **both** columns so the degraded path's quality is a known number rather than a hope. The header names which path answered, so the operator is never guessing | NFR-09; FR-005, FR-006, FR-105 |
+| **R-14** | **Network or LLM API unavailable at runtime.** | Handled by a layered fallback rather than by avoiding the network. A stage that cannot reach the model drops to committed fixtures; a fixture miss drops to rules. Every MUST requirement is satisfied with networking disabled, and the eval harness reports **both** columns so the degraded path's quality is a known number rather than a hope. The header raises an amber pill when the fallbacks answered, so a degraded run is never mistaken for a live one | NFR-09; FR-005, FR-006, FR-105 |
 | **R-15** | **Observability backend unavailable** (container runtime not running). | Opik is optional by construction. The replay panel reads the in-process store, emission is fire-and-forget behind a bounded queue, and failures are counted and swallowed. A non-blocking banner reports the state | NFR-10, NFR-12; FR-087, FR-089 |
 | **R-16** | **Relative-date resolution drifts as real time passes**, silently invalidating tests, evaluations and the reference dataset | Injectable reference clock, committed seed data, zero runtime generation. Verified explicitly with the machine clock set months forward of the reference date — a test that is run, not assumed | FR-102, FR-103; NFR-14, NFR-15 |
 

@@ -20,6 +20,24 @@ from app.domain.request import RequestConstraints
 
 
 @dataclass(frozen=True, slots=True)
+class SlotExplanation:
+    """Why one particular time was not offered (FR-109).
+
+    The rejection ledger answers "where did 13,000 candidates go?" in aggregate, which
+    is the wrong grain for the question an operator is actually asked: *"but isn't 3
+    o'clock free?"* That question is about one time, so this counts only the candidates
+    at that time -- and separates "nothing there was bookable" from "it was bookable and
+    simply outranked", because those are different answers to give a patient.
+    """
+
+    day: date
+    start_min: int
+    considered: int
+    bookable: int
+    causes: tuple[RejectionGroup, ...]
+
+
+@dataclass(frozen=True, slots=True)
 class Contribution:
     axis: str
     value: float
@@ -108,6 +126,12 @@ class DecisionRecord:
     now: datetime
     raw_text: Annotated[str, PHI]
     constraints: Annotated[RequestConstraints | None, PHI] = None
+
+    #: How the words reached the box: ``"text"`` typed, ``"voice"`` dictated and then
+    #: confirmed by the operator (FR-110). Recorded because it is the only thing an
+    #: eval or an audit needs to answer "is speech worse?" -- and because a transcript
+    #: is a *reading* of what the patient said, where typed text is what they said.
+    source: str = "text"
 
     scope: Scope = Scope.LOCATION  # [NFR-30]
     scope_ref: str = ""

@@ -98,6 +98,13 @@ eliminate.
 
 ## 5. Voice input is permanently cut
 
+> **Superseded 2026-08-09 — speech now ships (FR-110).** The reasoning below was right that
+> transcription only changes how the text arrives, and that is exactly what made it safe to add as
+> a *front door*: the browser transcribes into the request box, the operator confirms, and the
+> pipeline receives text as it always did. What speech still costs is recorded immediately after
+> this section. The original rationale is kept because the decision was reversed by an argument,
+> not by a whim.
+
 The original brief allowed "text or speech". Transcription adds a runtime failure mode
 for **zero decision quality** — constraint extraction operates on text either way, so
 speech would only change how the text arrives.
@@ -105,6 +112,57 @@ speech would only change how the text arrives.
 ---
 
 ## 6. Single timezone, and no DST day inside the seed window
+
+### The live verifier is not deterministic, and one test measures it
+
+`test_the_verifier_catches_a_symptom_treatment_mismatch` — *"my crown fell off, can I get a
+cleaning?"* — **failed once in 12 live runs** (11 passed, one release-check failure). The model
+simply did not raise the flag that time. Nothing else changed; the same request passed on the
+next eleven attempts.
+
+This is the honest shape of the claim elsewhere in these docs that the verifier "caught 4/4 seeded
+mismatches": it caught them on the runs that were measured, and it is a language model, so the rate
+is not 100%. The consequences are bounded by design — the verifier can only *add* a flag, so a miss
+is a missing warning, never a wrong booking, and the deterministic rules floor still runs
+underneath. But a live test asserting model behaviour will flake, and pretending otherwise by
+retrying until green would be the dishonest fix. It is left as-is, and named here.
+
+*Demo note: this is the beat where a live run can visibly not do the thing. Say what it is if it
+happens — an unflagged mismatch is exactly the failure mode the rules floor exists to bound.*
+
+### What dictation actually costs
+
+Speech ships (FR-110), and three things about it are worth stating plainly rather than discovering
+on a demo machine:
+
+- **The audio leaves the laptop.** Chrome's Web Speech API transcribes server-side, at Google. No
+  API key is involved, which is exactly why: the free tier *is* the tradeoff. That is acceptable
+  here because the dataset is synthetic and no real patient is ever dictated. It would not be
+  acceptable in a practice — a production build needs local Whisper or a vendor under a BAA, and
+  the `Transcriber` seam for that is a browser swap, not a pipeline change.
+- **Proper nouns are where it fails.** General-purpose ASR handles "next Thursday after three"
+  reliably and provider names much less so; "Dr. Okafor" is precisely the low-frequency proper noun
+  it gets wrong. The free browser API offers no vocabulary biasing, so this cannot be tuned — it can
+  only be *seen*, which is the argument for the transcript landing in an editable field.
+- **It is a browser feature, not a product.** Absent in Firefox, undocumented, no SLA, and it can
+  change without notice. The control is therefore absent rather than broken where the API is
+  missing, and one config flag removes it everywhere.
+
+No claim is made that speech improves decision quality. It does not — it changes how the words
+arrive, and the eval slice (`source: voice`) exists so that claim stays checkable.
+
+### The per-time lookup answers about *now*, not about *then*
+
+FR-109 answers "why wasn't 3 o'clock offered?" by re-running Layer 0 for the stored request. The
+constraints, the profile and `NOW` all come from the decision record, but **the schedule does
+not** — it is read live. If someone books that room in the meantime, the lookup will say so, and
+its answer will differ from the ledger the decision was rendered with.
+
+That is the more useful behaviour for the person on the phone, who is asking about the calendar in
+front of them. It is the wrong behaviour for an auditor asking what the system saw at 2:04 PM. The
+honest fix is to store the annotated candidate set per decision, at roughly 13 000 rows a request;
+it was not worth the memory for a demo, and the caveat is here rather than in a footnote because
+"re-runs deterministically" reads as a stronger guarantee than it is.
 
 The clock is **real by default** (`SCHED_CLOCK=system`); the injected-clock seam means
 frozen mode remains one env var for tests, evals and release checks, which pin it. The

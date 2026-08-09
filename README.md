@@ -56,6 +56,7 @@ The clock is *injected*, so tests, evals and release checks pin `SCHED_CLOCK=fro
 
 | | |
 | :-- | :-- |
+| **Takes it typed or spoken** | The request can be dictated: the browser transcribes into the box and the operator confirms before it runs. Speech never submits itself, so every quote below is still a quote of something a human agreed was said. |
 | **Reads the request** | Six typed fields — date range, time window, urgency, provider preference, appointment type, exclusions — each with a confidence and **the verbatim span of the patient's words it came from**. |
 | **Asks only when it matters** | Ambiguity triggers a question *only* if the readings produce different answers. *"My tooth's been bothering me"* runs as both a 30-minute exam and a 90-minute crown prep; the answers diverge, so it asks. When they agree, it proceeds. |
 | **Enumerates exhaustively** | Every (operatory × day × start minute) candidate, filtered through a two-phase rule ladder. Nothing is ever deleted — rejections are annotated and kept, and `enumerated = offered + rejected` is reconciled on every request. |
@@ -118,8 +119,9 @@ anything?"* unanswerable.
 
 Each of the four roles satisfies a `Protocol` with **two implementations**, one of
 which needs no network. That is what makes the offline guarantee structural rather than
-aspirational. The orchestrator between them is a plain state machine in 135 lines —
-deliberately not an agent framework.
+aspirational. The orchestrator between them is a plain state machine in ~150 lines —
+agentic by architecture, deliberately not by framework: the coordination is code you
+can read, not a library DAG.
 
 **Stack.** FastAPI + uvicorn (one process serves the API and the built SPA) · Python
 3.12 · React 19 + TypeScript + Vite + Tailwind · Pydantic v2 at the I/O boundary,
@@ -146,7 +148,7 @@ the socket layer** — the server, the harness, the CLI. "Works offline" is enfo
 the harness, not asserted by the author, and the guard itself is verified to bite.
 See [`docs/release-verification.md`](docs/release-verification.md).
 
-219 deterministic tests + 8 live · 78% line coverage · 53.1% mutation score over the
+241 deterministic tests + 8 live · 78% line coverage · 53.1% mutation score over the
 decision core · lint and types clean · zero known CVEs in either dependency tree
 (`make audit`) · determinism checked on every fixture-mode eval run.
 

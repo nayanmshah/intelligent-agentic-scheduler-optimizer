@@ -8,13 +8,13 @@ infeasible *booking*.
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import date, datetime
 from zoneinfo import ZoneInfo
 
 from app.config import Settings
 from app.data.repository import ScheduleRepository
 from app.domain.candidate import Candidate, CandidateSet, RejectionGroup
-from app.domain.decision import Contribution, Offer, ReasonerOutcome
+from app.domain.decision import Contribution, Offer, ReasonerOutcome, SlotExplanation
 from app.domain.entities import AppointmentType
 from app.domain.enums import AXIS_ORDER, OfferState, RejectionReason
 from app.domain.policy import WeightProfile
@@ -27,6 +27,31 @@ from app.reasoner.scoring.compose import ScoringResult, score_all
 from app.reasoner.tiers import TierOutcome
 
 _WHY = {r.code: r.why for r in RULES}
+
+#: Several reasons share one rule -- a provider is "not free" whether booked or on
+#: leave -- and the rule's wording is written for the common case. Left alone, the
+#: ledger prints the same sentence twice with different counts, which reads as a bug
+#: and, worse, tells a patient "Sarah is already booked" when Sarah is on holiday.
+#: A cause is only honest at the grain the operator reads it out at.
+_REASON_SENTENCE = {
+    RejectionReason.BEFORE_OPEN: "the practice was not open yet",
+    RejectionReason.PAST_CLOSE: "the practice had already closed",
+    RejectionReason.BLOCKED_LUNCH: "the practice is at lunch then",
+    RejectionReason.BLOCKED_HUDDLE: "the team huddle is then",
+    RejectionReason.BLOCKED_ADMIN: "that time is set aside for admin",
+    RejectionReason.OPERATORY_TURNOVER: (
+        "the room was still being turned over from the previous appointment"
+    ),
+    RejectionReason.PROVIDER_PTO: "the provider was off that day",
+}
+
+
+def sentence_for(reason: RejectionReason) -> str:
+    """The one plain-language cause an operator reads out (FR-028)."""
+    override = _REASON_SENTENCE.get(reason)
+    if override is not None:
+        return override
+    return _WHY.get(_REASON_TO_RULE.get(reason, ""), "it did not fit")
 _REASON_TO_RULE = {
     RejectionReason.IN_THE_PAST: "not_in_the_past",
     RejectionReason.BEFORE_OPEN: "within_business_hours",
@@ -81,6 +106,58 @@ class DeterministicReasoner:
         )
         gate = tiers.apply_gate(result.candidates, now, constraints)
         return result.candidates, gate, appointment_type
+
+    def explain_slot(
+        self,
+        constraints: RequestConstraints,
+        now: datetime,
+        day: date,
+        start_min: int,
+        request_id: str = "why",
+    ) -> SlotExplanation:
+        """FR-109. Re-runs Layer 0 and reports only the candidates starting at ``day``
+        and ``start_min``.
+
+        Re-running rather than caching the annotations is the honest choice and a cheap
+        one: ranking is a pure function of (constraints, schedule, profile, now), so the
+        answer given now is the answer that was given then -- byte for byte -- and 80 ms
+        is well inside the time it takes to ask the question out loud.
+        """
+        appointment_type = self._repo.seed.appointment_type(constraints.appointment_type.value)
+        result = run_layer0(
+            repo=self._repo,
+            index=self._index,
+            constraints=constraints,
+            appointment_type=appointment_type,
+            location=self._location,
+            tz=self._tz,
+            now=now.date(),
+            settings=self._settings,
+            request_id=request_id,
+            now_dt=now,
+        )
+        considered = bookable = 0
+        counts: dict[RejectionReason, int] = {}
+        for cand, ann in result.candidates.pairs():
+            if cand.day != day or cand.start_min != start_min:
+                continue
+            considered += 1
+            if ann.feasible:
+                bookable += 1
+            elif ann.rejection_reason is not None:
+                counts[ann.rejection_reason] = counts.get(ann.rejection_reason, 0) + 1
+        causes = tuple(
+            RejectionGroup(
+                reason=reason,
+                count=count,
+                sentence=sentence_for(reason),
+            )
+            for reason, count in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0].value))
+        )
+        return SlotExplanation(
+            day=day, start_min=start_min, considered=considered,
+            bookable=bookable, causes=causes,
+        )
 
     def run(
         self,
@@ -214,8 +291,9 @@ class DeterministicReasoner:
         for reason, count in sorted(
             cs.rejected_by_reason().items(), key=lambda kv: (-kv[1], kv[0].value)
         ):
-            stem = _WHY.get(_REASON_TO_RULE.get(reason, ""), "it did not fit")
-            groups.append(RejectionGroup(reason=reason, count=count, sentence=stem))
+            groups.append(
+                RejectionGroup(reason=reason, count=count, sentence=sentence_for(reason))
+            )
         return tuple(groups)
 
 

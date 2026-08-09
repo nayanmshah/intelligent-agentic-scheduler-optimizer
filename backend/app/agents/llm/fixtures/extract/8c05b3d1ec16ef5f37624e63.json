@@ -1,0 +1,71 @@
+{
+  "appointment_type": {
+    "confidence": 0.4,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "prophy_adult"
+  },
+  "date_range": {
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 24,
+      "start": 15,
+      "text": "next week"
+    },
+    "value": {
+      "end": "2026-08-16",
+      "start": "2026-08-10"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 47,
+      "start": 26,
+      "text": "I have PT on Tuesdays"
+    },
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": [
+        1
+      ]
+    }
+  },
+  "patient_ref": null,
+  "provider_preference": {
+    "confidence": 1.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": null
+  },
+  "request_text": "Whatever works next week, I have PT on Tuesdays",
+  "time_window": {
+    "confidence": 1.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "end_min": null,
+      "start_min": null
+    }
+  },
+  "urgency": {
+    "confidence": 0.85,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 14,
+      "start": 0,
+      "text": "Whatever works"
+    },
+    "value": "flexible"
+  }
+}

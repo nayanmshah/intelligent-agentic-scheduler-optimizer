@@ -1,0 +1,69 @@
+{
+  "appointment_type": {
+    "confidence": 0.4,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 15,
+      "start": 0,
+      "text": "Something short"
+    },
+    "value": "prophy_adult"
+  },
+  "date_range": {
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 28,
+      "start": 19,
+      "text": "Wednesday"
+    },
+    "value": {
+      "end": "2026-08-12",
+      "start": "2026-08-12"
+    }
+  },
+  "exclusions": {
+    "confidence": 1.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": null,
+  "provider_preference": {
+    "confidence": 0.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": null
+  },
+  "request_text": "Something short on Wednesday between my meetings",
+  "time_window": {
+    "confidence": 0.4,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 48,
+      "start": 29,
+      "text": "between my meetings"
+    },
+    "value": {
+      "end_min": null,
+      "start_min": null
+    }
+  },
+  "urgency": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "routine"
+  }
+}

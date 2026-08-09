@@ -1,0 +1,57 @@
+{
+  "appointment_type": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "limited_exam"
+  },
+  "date_range": {
+    "confidence": 1.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "end": "2026-08-24",
+      "start": "2026-08-10"
+    }
+  },
+  "exclusions": {
+    "confidence": 1.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": null,
+  "provider_preference": {
+    "confidence": 1.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": null
+  },
+  "request_text": "My tooth might need a filling or maybe a crown, I really don't know",
+  "time_window": {
+    "confidence": 1.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "end_min": null,
+      "start_min": null
+    }
+  },
+  "urgency": {
+    "confidence": 1.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "routine"
+  }
+}

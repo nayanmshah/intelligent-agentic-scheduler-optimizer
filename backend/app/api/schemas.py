@@ -7,7 +7,7 @@ line (FR-060) -- so the UI never has to ask a second question to show its work.
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -21,6 +21,10 @@ MAX_REQUEST_CHARS = 2000
 class SubmitRequest(BaseModel):
     text: str = Field(max_length=MAX_REQUEST_CHARS)
     patient_id: str | None = None
+    #: FR-110. The transcript is submitted as text like any other request -- this only
+    #: records *how it arrived*, so a scorecard can slice by input mode. A closed set,
+    #: because an open string here becomes an unqueryable field within a month.
+    source: Literal["text", "voice"] = "text"
 
     @field_validator("text")
     @classmethod
@@ -116,6 +120,7 @@ def decision_json(r: DecisionRecord) -> dict[str, Any]:
         "id": r.id,
         "trace_id": r.trace_id,
         "raw_text": r.raw_text,
+        "source": r.source,
         "origin_state": r.origin_state.value,
         "question": r.question_asked,
         "flags": list(r.flags),

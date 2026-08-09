@@ -7,6 +7,27 @@
 
 ---
 
+
+## Dictation sends audio to a third party (FR-110)
+
+**Finding.** The console's speech input uses the browser's Web Speech API. In Chromium this
+transcribes **server-side at Google**: the microphone stream leaves the machine. No API key or
+account is involved, which is precisely the point — the free tier is the tradeoff.
+
+**Assessment for v1.0: accepted, with the boundary named.** The dataset is synthetic, no real
+patient is ever dictated, and the feature is off with one flag (`SCHED_VOICE_INPUT=false`). No
+audio is recorded, stored or logged by this application at any point — the browser holds the
+stream and hands back text, and only the confirmed transcript is ever persisted, as `raw_text`,
+already marked PHI and already covered by the existing redaction path.
+
+**What production would require.** Real patient audio is PHI in transit, so a practice deployment
+needs local transcription (Whisper-class, on the machine) or a vendor under a BAA. That is a
+browser-layer swap: the pipeline receives text either way, so nothing downstream is affected. The
+`source` field already distinguishes dictated decisions, so any retrospective review can find them.
+
+**Also note:** the microphone is only ever active while the operator holds the control open — the
+button is an explicit toggle with a visible listening state, never an ambient listener.
+
 ## Findings fixed
 
 ### 1. The request boundary accepted anything — HIGH for correctness, not for exploit

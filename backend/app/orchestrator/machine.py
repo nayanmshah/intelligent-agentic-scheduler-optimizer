@@ -41,6 +41,10 @@ class IncomingRequest:
     text: str
     patient: Patient | None
     request_id: str = ""
+    #: "text" | "voice" (FR-110). The pipeline does not branch on it -- by design; a
+    #: transcript is text by the time it gets here, and the operator has confirmed it.
+    #: It exists to be *recorded*, so the question "is speech worse?" has a number.
+    source: str = "text"
 
 
 class Orchestrator:
@@ -114,18 +118,23 @@ class Orchestrator:
                 fallbacks.append("verify")
             question = fan.question(floor.hypotheses[0].field).text if fan.diverged else None
             return self._record(
-                rid, tracer, req, constraints, outcome, profile, fallbacks, stage.value,
+                rid, now, tracer, req, constraints, outcome, profile, fallbacks, stage.value,
                 question, gates, self.agents.llm_call_count() - calls_before,
             )
 
     def _record(
-        self, rid, tracer, req, constraints, outcome, profile, fallbacks, verdict,
+        self, rid, now, tracer, req, constraints, outcome, profile, fallbacks, verdict,
         question, gate_fired=0, llm_calls=0,
     ) -> DecisionRecord:  # type: ignore[no-untyped-def]
         record = DecisionRecord(
             id=rid,
+            source=req.source,
             trace_id=tracer.trace_id,
-            now=self.settings.reference_now,
+            # The instant this decision actually ran at -- NOT settings.reference_now.
+            # Replay re-runs the reasoner at record.now, so storing the config constant
+            # replayed a real-clock decision at the wrong instant. Invisible while the
+            # clock was frozen, because the two were the same value.
+            now=now,
             raw_text=req.text,
             constraints=constraints,
             scope=Scope.LOCATION,

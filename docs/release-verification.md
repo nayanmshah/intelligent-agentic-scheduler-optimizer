@@ -125,7 +125,8 @@ failing step inline, and the full log is on disk.
 - **A real practice's data.** The dataset is synthetic, generated from a committed
   seed, and its shape is the author's model of a practice — see
   [`known-limitations.md`](known-limitations.md).
-- **Any wall-clock date outside 2026-08-03…2026-08-28.** The clock is injected
-  (`SCHED_CLOCK=frozen` by default) precisely so this does not silently rot; a
-  `SystemClock` exists and is one config flag away, but the seeded window is what the
-  data covers.
+- **Any wall-clock date outside 2026-08-03…2026-08-28.** The product runs on the system
+  clock (ADR-22), so this is a real boundary rather than a hypothetical one: outside the
+  seeded window every search returns empty. It does not rot silently — pre-flight
+  **fails** with the remedy, and `SCHED_CLOCK=frozen` (what this suite and every eval
+  pin) restores a fixed today for verification.

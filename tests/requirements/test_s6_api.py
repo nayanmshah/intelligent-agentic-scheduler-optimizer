@@ -386,3 +386,157 @@ def test_a_blank_request_is_rejected_by_the_stream_too(client) -> None:
     """The boundary is the boundary. A second route into the pipeline must not be a
     way around the validation on the first."""
     assert client.post("/api/requests/stream", json={"text": "   "}).status_code == 422
+
+
+# ----------------------------------------------------------------- FR-109 ----
+class TestWhyNotThisTime:
+    """The per-slot answer. The ledger is aggregate, which is the wrong grain for the
+    only question a patient actually asks."""
+
+    def _decision(self, client):  # type: ignore[no-untyped-def]
+        r = client.post("/api/requests", json={
+            "text": "Can I come in next Thursday after 3? Prefer Sarah if she's around.",
+            "patient_id": "pat-000",
+        })
+        assert r.status_code == 200
+        return r.json()
+
+    def test_every_offered_option_is_on_the_real_grid(self, client) -> None:
+        """An operator must not be able to ask about 3:07 on a ten-minute grid --
+        a question with no honest answer is worse than no question box."""
+        d = self._decision(client)
+        opts = client.get(f"/api/requests/{d['id']}/why-options").json()
+        assert opts["days"], "no searchable days offered"
+        for day in opts["days"]:
+            times = opts["times"][day["value"]]
+            assert times
+            for t in times:
+                hh, mm = t["value"].split(":")
+                assert (int(hh) * 60 + int(mm)) % 10 == 0
+
+    def test_counts_at_one_time_conserve(self, client) -> None:
+        """The slot answer obeys the same invariant as the funnel: bookable plus every
+        rejection equals what was considered. Without this the number is decorative."""
+        d = self._decision(client)
+        opts = client.get(f"/api/requests/{d['id']}/why-options").json()
+        day = opts["days"][0]["value"]
+        url = f"/api/requests/{d['id']}/why"
+        for t in opts["times"][day][:6]:
+            a = client.get(url, params={"at": t["value"], "day": day}).json()
+            assert a["bookable"] + sum(c["count"] for c in a["causes"]) == a["considered"]
+
+    def test_a_busy_time_names_its_causes_in_plain_language(self, client) -> None:
+        """The demo moment: a time with nothing bookable must say why, in words that
+        can be read to a patient."""
+        d = self._decision(client)
+        opts = client.get(f"/api/requests/{d['id']}/why-options").json()
+        day = opts["days"][0]["value"]
+        url = f"/api/requests/{d['id']}/why"
+        answers = [
+            client.get(url, params={"at": t["value"], "day": day}).json()
+            for t in opts["times"][day]
+        ]
+        busy = [a for a in answers if a["considered"] and not a["bookable"]]
+        assert busy, "no fully-booked time in the seed; this test proves nothing"
+        for a in busy:
+            assert a["causes"], "a time with nothing bookable must name a cause"
+            for c in a["causes"]:
+                assert c["sentence"] and c["sentence"][0].islower()  # a clause, not a headline
+                assert "_" not in c["sentence"], "an enum leaked into operator-facing text"
+
+    def test_unknown_decision_is_404_not_a_guess(self, client) -> None:
+        assert client.get("/api/requests/nope/why", params={"at": "15:00"}).status_code == 404
+        assert client.get("/api/requests/nope/why-options").status_code == 404
+
+    def test_an_offered_time_is_never_called_outranked_or_held(self, client) -> None:
+        """Two bugs in one assertion, both of which reached the screen.
+
+        Asking about a time that is *in the top three* is the most natural thing an
+        operator does. It must report that slot as offered -- not as "outranked", and
+        not as "held for another patient", which is what happens when the lookup
+        forgets that a request never blocks its own holds [AR-03]."""
+        # A clean schedule, so the only holds in the system are the ones this very
+        # request placed -- which is what makes the SLOT_HELD assertion below sharp.
+        client.post("/api/session/reset")
+        d = self._decision(client)
+        top = d["offers"][0]
+        # Recover the offered start time in HH:MM from the 12-hour display. The day is
+        # left to the endpoint, which defaults to the day the offers are on.
+        hh, rest = top["start_display"].rstrip("apm").split(":")
+        hour = int(hh) % 12 + (12 if top["start_display"].endswith("pm") else 0)
+        at = f"{hour:02d}:{int(rest):02d}"
+
+        a = client.get(f"/api/requests/{d['id']}/why", params={"at": at}).json()
+        assert a["offered"] >= 1, "an offered time must be reported as offered"
+        assert a["bookable"] >= a["offered"], "an offered slot must also count as bookable"
+        assert not [c for c in a["causes"] if c["reason"] == "SLOT_HELD"], (
+            "the only holds on a freshly reset schedule are this request's own, and a "
+            "request never blocks its own holds -- so none may appear as a cause here"
+        )
+
+
+# ----------------------------------------------------------------- FR-110 ----
+class TestVoiceIsAFrontDoor:
+    """Voice must change *how the words arrive* and nothing else. These tests exist
+    to make that claim falsifiable rather than merely stated."""
+
+    TEXT = "Can I come in next Thursday after 3? Prefer Sarah if she's around."
+
+    def _submit(self, client, **extra):  # type: ignore[no-untyped-def]
+        body = {"text": self.TEXT, "patient_id": "pat-000", **extra}
+        r = client.post("/api/requests", json=body)
+        assert r.status_code == 200, r.text
+        return r.json()
+
+    def test_a_dictated_request_produces_the_same_decision_as_a_typed_one(self, client) -> None:
+        """The point of the design: the transcript is submitted as text, so the
+        pipeline cannot tell the difference and the answer cannot drift. If this ever
+        fails, voice has become a second pipeline and FR-110's premise is gone."""
+        client.post("/api/session/reset")
+        typed = self._submit(client)
+        client.post("/api/session/reset")
+        spoken = self._submit(client, source="voice")
+
+        key = lambda d: [(o["start_display"], o["provider_name"]) for o in d["offers"]]  # noqa: E731
+        assert key(typed) == key(spoken)
+        assert [f["value"] for f in typed["interpretation"]] == [
+            f["value"] for f in spoken["interpretation"]
+        ]
+
+    def test_the_record_says_how_the_words_arrived(self, client) -> None:
+        assert self._submit(client)["source"] == "text"
+        assert self._submit(client, source="voice")["source"] == "voice"
+
+    def test_source_defaults_to_text_for_older_clients(self, client) -> None:
+        """A body without the field is a typed request, not an error -- the field was
+        added after the endpoint shipped."""
+        r = client.post("/api/requests", json={"text": self.TEXT, "patient_id": "pat-000"})
+        assert r.status_code == 200
+        assert r.json()["source"] == "text"
+
+    def test_an_unknown_source_is_rejected_rather_than_stored(self, client) -> None:
+        """A closed set. An open string here becomes an unqueryable field within a
+        month, and the eval slice it exists for stops meaning anything."""
+        r = client.post(
+            "/api/requests",
+            json={"text": self.TEXT, "patient_id": "pat-000", "source": "telepathy"},
+        )
+        assert r.status_code == 422
+
+    def test_answering_a_question_keeps_the_original_source(self, client) -> None:
+        """The clarify turn re-runs the pipeline. Relabelling a dictated request as
+        typed there would quietly corrupt the one number voice exists to be measured by."""
+        # Deliberately not asserting that a question was asked. Whether a phrasing
+        # diverges depends on the *extractor's confidence*, and fixtures are recorded
+        # live -- re-recording them legitimately changes that. Tying this assertion to
+        # a model's confidence made it fail on a fixture refresh while the behaviour it
+        # exists to protect (source survives the re-run) was never broken.
+        d = self._submit(client, text="My tooth's been bothering me", source="voice")
+        answered = client.post(f"/api/requests/{d['id']}/answer", json={"choice": "emergency exam"})
+        assert answered.status_code == 200
+        assert answered.json()["source"] == "voice"
+
+    def test_the_ui_can_be_told_dictation_is_off(self, client) -> None:
+        """One flag, no rebuild -- the browser API is the one part of this product
+        that fails for reasons the code cannot see."""
+        assert client.get("/api/reference").json()["voice_input"] is True

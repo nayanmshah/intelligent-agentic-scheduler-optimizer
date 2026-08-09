@@ -1,0 +1,69 @@
+{
+  "appointment_type": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "prophy_adult"
+  },
+  "date_range": {
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 13,
+      "start": 0,
+      "text": "next Thursday"
+    },
+    "value": {
+      "end": "2026-08-13",
+      "start": "2026-08-13"
+    }
+  },
+  "exclusions": {
+    "confidence": 1.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.9,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 35,
+      "start": 23,
+      "text": "prefer Sarah"
+    },
+    "value": "prov-sarah"
+  },
+  "request_text": "next Thursday after 3, prefer Sarah",
+  "time_window": {
+    "confidence": 0.9,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 21,
+      "start": 14,
+      "text": "after 3"
+    },
+    "value": {
+      "end_min": null,
+      "start_min": 900
+    }
+  },
+  "urgency": {
+    "confidence": 1.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "routine"
+  }
+}

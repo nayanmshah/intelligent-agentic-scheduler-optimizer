@@ -16,6 +16,8 @@ from contextlib import contextmanager
 from dataclasses import dataclass, field
 from typing import Any, Protocol, runtime_checkable
 
+from app.trace import usage
+
 
 @dataclass
 class Span:
@@ -91,10 +93,18 @@ class Tracer:
             t_start=time.perf_counter(),
             attrs=dict(attrs),
         )
+        # Any model call made inside this span reports its tokens here (see
+        # app.trace.usage). Stages that call no model collect nothing and carry no
+        # ``usage`` attr, which is what keeps a fallback to the deterministic path
+        # from being priced as if the model had run.
+        calls: list[usage.LlmUsage] = []
         try:
-            yield s
+            with usage.collecting(calls):
+                yield s
         finally:
             s.t_end = time.perf_counter()
+            if calls:
+                s.attrs["usage"] = usage.merge(calls)
             self.spans.append(s)
             self.sink.emit(s)
 
