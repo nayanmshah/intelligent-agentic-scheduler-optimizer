@@ -210,8 +210,10 @@ export const AXIS_LABELS: Record<string, string> = {
 
 /** Distinguishable in greyscale, per NFR-24 -- the bar must not rely on colour. */
 export const AXIS_STYLE: Record<string, { fill: string; pattern: string }> = {
-  time_fit: { fill: "#1f5f8b", pattern: "solid" },
-  continuity: { fill: "#4d8fac", pattern: "solid" },
-  efficiency: { fill: "#8fb8c9", pattern: "solid" },
-  prime_time: { fill: "#c9dbe4", pattern: "solid" },
+  // A single-hue teal ramp: ordered lightness carries the identity, so the bar
+  // stays readable in greyscale (NFR-24) and matches the product accent.
+  time_fit: { fill: "#0d6a60", pattern: "solid" },
+  continuity: { fill: "#3d8c7f", pattern: "solid" },
+  efficiency: { fill: "#77afa3", pattern: "solid" },
+  prime_time: { fill: "#b5d3cb", pattern: "solid" },
 };

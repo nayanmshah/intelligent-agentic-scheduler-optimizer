@@ -38,8 +38,12 @@ export function SeatIndicator() {
 
   return (
     <span
-      className="flex items-center gap-1.5 rounded px-2 py-0.5 text-xs"
-      style={{ background: "var(--page)", color: "var(--ink-soft)" }}
+      className="flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs"
+      style={{
+        background: "rgba(255,255,255,0.07)",
+        border: "1px solid var(--bar-line)",
+        color: "var(--bar-soft)",
+      }}
       title={`${entry.does}\n\nScreens are separated by role, not by login — there is no authentication in v1.0.`}
     >
       {/* Decorative only: the seat name carries the meaning, so the dot must not be
@@ -47,10 +51,10 @@ export function SeatIndicator() {
       <span
         aria-hidden
         className="inline-block h-1.5 w-1.5 rounded-full"
-        style={{ background: "var(--accent)" }}
+        style={{ background: "#4ec9ab" }}
       />
       <span>
-        Seat: <strong className="font-semibold">{entry.seat}</strong>
+        Seat: <strong className="font-semibold" style={{ color: "var(--bar-ink)" }}>{entry.seat}</strong>
       </span>
     </span>
   );

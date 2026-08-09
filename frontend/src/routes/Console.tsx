@@ -20,7 +20,7 @@ const EXAMPLES = [
  * Information hierarchy, per development-plan §4: the three cards are the visual
  * centre, the evidence is exactly one click away and never on screen by default,
  * no number appears without its decomposition, and there is **no weight control on
- * this screen at any size** (FR-076) -- per-call fiddling would destroy the
+ * this screen at any size** (FR-076) — per-call fiddling would destroy the
  * consistency the product exists to provide.
  */
 export default function Console() {
@@ -95,72 +95,102 @@ export default function Console() {
   }, [text, decision, submit, book]);
 
   return (
-    <main className="mx-auto flex max-w-6xl flex-col gap-4 p-5">
-      {/* 1. Request box */}
-      <section className="flex gap-3">
+    <main className="mx-auto flex max-w-[1120px] flex-col gap-5 px-6 py-7">
+      {/* 1. The command bar — the patient's words, verbatim. */}
+      <section className="card command-card overflow-hidden" style={{ boxShadow: "var(--shadow-raised)" }}>
+        <div className="px-5 pt-4">
+          <span className="label-caps">Patient request</span>
+        </div>
         <textarea
           ref={inputRef}
           value={text}
           onChange={(e) => setText(e.target.value)}
           rows={2}
-          placeholder="Type the patient's own words…"
-          className="flex-1 rounded border p-2 text-sm"
-          style={{ borderColor: "var(--line)", background: "var(--surface)" }}
+          placeholder="Type the patient’s own words…"
+          className="w-full resize-none border-none bg-transparent px-5 py-3 text-[1.15rem] leading-relaxed outline-none placeholder:italic"
+          style={{ color: "var(--ink)" }}
         />
-        <button
-          onClick={() => text.trim() && submit.mutate(text)}
-          disabled={submit.isPending}
-          className="self-start rounded px-4 py-2 text-sm font-medium text-white"
-          style={{ background: "var(--accent)" }}
+        <div
+          className="flex items-center gap-3 border-t px-5 py-2.5"
+          style={{ borderColor: "var(--line)", background: "var(--page)" }}
         >
-          {submit.isPending ? "…" : "Find times"}
-        </button>
+          <span className="hidden items-center gap-3 text-[0.68rem] sm:flex" style={{ color: "var(--ink-faint)" }}>
+            <span><span className="kbd">E</span> focus</span>
+            <span><span className="kbd">↵</span> search</span>
+            <span><span className="kbd">1</span>–<span className="kbd">3</span> hold</span>
+            <span><span className="kbd">R</span> reset</span>
+          </span>
+          <button
+            onClick={() => text.trim() && submit.mutate(text)}
+            disabled={submit.isPending || !text.trim()}
+            className="btn-primary ml-auto px-5 py-2 text-sm"
+          >
+            {submit.isPending ? "Searching…" : "Find times"}
+          </button>
+        </div>
       </section>
 
-      <div className="flex flex-wrap gap-2 text-xs">
-        {EXAMPLES.map((e) => (
-          <button
-            key={e}
-            onClick={() => {
-              setText(e);
-              submit.mutate(e);
-            }}
-            className="rounded border px-2 py-1"
-            style={{ borderColor: "var(--line)", color: "var(--ink-soft)" }}
-          >
-            {e.length > 46 ? `${e.slice(0, 46)}…` : e}
-          </button>
-        ))}
-      </div>
+      {/* Example requests, one click from a cold start. */}
+      {!decision && !submit.isPending && (
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="label-caps">Try</span>
+          {EXAMPLES.map((e) => (
+            <button
+              key={e}
+              onClick={() => {
+                setText(e);
+                submit.mutate(e);
+              }}
+              className="btn-quiet px-3 py-1.5 text-xs"
+            >
+              “{e.length > 46 ? `${e.slice(0, 46)}…` : e}”
+            </button>
+          ))}
+        </div>
+      )}
 
       {submit.isPending && <StageProgress stages={stages} />}
 
       {submit.isError && (
-        <p className="text-sm" style={{ color: "var(--warn)" }}>
+        <p
+          className="card rise px-4 py-3 text-sm"
+          style={{ borderColor: "var(--warn-line)", background: "var(--warn-bg)", color: "var(--warn)" }}
+        >
           {String(submit.error)}
         </p>
       )}
 
       {decision && (
         <>
-          {/* 2. Interpretation strip */}
-          <InterpretationStrip fields={decision.interpretation} />
+          {/* 2. What the system understood, with provenance one click away. */}
+          <section className="rise flex flex-col gap-2">
+            <span className="label-caps">How the request was read</span>
+            <InterpretationStrip fields={decision.interpretation} />
+          </section>
 
           {decision.flags.map((f) => (
-            <p key={f} className="text-xs" style={{ color: "var(--warn)" }}>
-              {f}
+            <p
+              key={f}
+              className="rise flex items-start gap-2.5 rounded-xl border px-4 py-3 text-sm"
+              style={{ borderColor: "var(--warn-line)", background: "var(--warn-bg)", color: "var(--warn)" }}
+            >
+              <span aria-hidden className="mt-0.5 text-[0.8rem]">⚑</span>
+              <span className="font-medium">{f}</span>
             </p>
           ))}
 
-          {/* Clarifying question renders INLINE, never as a modal -- nothing on the
+          {/* Clarifying question renders INLINE, never as a modal — nothing on the
               request path is gated behind a dialog, because a patient is waiting. */}
           {decision.question && (
             <section
-              className="rounded border p-3"
-              style={{ borderColor: "var(--warn)", background: "var(--surface)" }}
+              className="rise rounded-xl border-2 px-4 py-3"
+              style={{ borderColor: "var(--accent)", background: "var(--accent-faint)" }}
             >
-              <p className="text-sm font-medium">{decision.question}</p>
-              <div className="mt-2 flex gap-2">
+              <span className="label-caps" style={{ color: "var(--accent-deep)" }}>
+                One question first
+              </span>
+              <p className="mt-1 text-[1.02rem] font-semibold">{decision.question}</p>
+              <div className="mt-2.5 flex gap-2">
                 {decision.question
                   .replace(/^.*?\s(?:mean|for)\s/i, "")
                   .replace("?", "")
@@ -169,8 +199,7 @@ export default function Console() {
                     <button
                       key={chip}
                       onClick={() => answer.mutate(chip.trim())}
-                      className="rounded border px-3 py-1 text-sm"
-                      style={{ borderColor: "var(--line)" }}
+                      className="btn-primary px-4 py-1.5 text-sm"
                     >
                       {chip.trim()}
                     </button>
@@ -179,17 +208,27 @@ export default function Console() {
             </section>
           )}
 
-          {/* 3. Funnel */}
-          {decision.funnel && <FunnelCounter funnel={decision.funnel} />}
-
           {confirmation && (
-            <p className="rounded border p-2 text-sm" style={{ borderColor: "var(--accent)" }}>
+            <p
+              className="rise flex items-center gap-2.5 rounded-xl border px-4 py-3 text-sm font-medium"
+              style={{ borderColor: "var(--ok-line)", background: "var(--ok-bg)", color: "var(--ok)" }}
+            >
+              <span aria-hidden>✓</span>
               {confirmation}
             </p>
           )}
 
-          {/* 4. The decision */}
-          <section className="grid grid-cols-3 gap-3">
+          {/* 3. The decision, with its funnel on the same line of sight. */}
+          <section className="rise mt-1 flex flex-wrap items-end justify-between gap-3">
+            <h2 className="text-[1.05rem] font-bold tracking-tight">
+              {decision.offers.length
+                ? `Top ${decision.offers.length} of ${decision.funnel?.feasible.toLocaleString() ?? "the"} bookable times`
+                : "No bookable times in the window"}
+            </h2>
+            {decision.funnel && <FunnelCounter funnel={decision.funnel} />}
+          </section>
+
+          <section className="grid grid-cols-3 gap-4">
             {decision.offers.map((o, i) => (
               <OfferCard
                 key={o.candidate_id}
@@ -202,20 +241,20 @@ export default function Console() {
           </section>
 
           {decision.limited_availability && (
-            <p className="text-xs" style={{ color: "var(--warn)" }}>
+            <p className="text-xs font-medium" style={{ color: "var(--warn)" }}>
               Limited availability — these are the only distinct options we found.
             </p>
           )}
 
           {decision.counterfactual && (
-            <p className="text-sm">{decision.counterfactual.sentence}</p>
+            <p className="read-aloud text-sm">{decision.counterfactual.sentence}</p>
           )}
 
-          {/* 5. Evidence, one click away */}
+          {/* 4. Evidence, one click away. */}
           <RejectionLedger groups={decision.ledger} />
 
           {decision.fallback_fired.length > 0 && (
-            <p className="text-[0.65rem]" style={{ color: "var(--ink-soft)" }}>
+            <p className="text-[0.68rem]" style={{ color: "var(--ink-faint)" }}>
               Deterministic fallback ran for: {decision.fallback_fired.join(", ")} — see Traces.
             </p>
           )}

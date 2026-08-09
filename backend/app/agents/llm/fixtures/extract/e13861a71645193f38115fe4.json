@@ -8,9 +8,13 @@
   },
   "date_range": {
     "confidence": 0.95,
-    "derived": true,
-    "derived_rule": "model-inferred",
-    "span": null,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 20,
+      "start": 11,
+      "text": "next week"
+    },
     "value": {
       "end": "2026-08-21",
       "start": "2026-08-17"
@@ -30,7 +34,7 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.0,
+    "confidence": 1.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -38,7 +42,7 @@
   },
   "request_text": "Book me in next week sometime",
   "time_window": {
-    "confidence": 0.0,
+    "confidence": 1.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -48,10 +52,10 @@
     }
   },
   "urgency": {
-    "confidence": 0.85,
+    "confidence": 1.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
-    "value": "flexible"
+    "value": "routine"
   }
 }

@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.5,
+    "confidence": 0.3,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -16,12 +16,12 @@
       "text": "a week on Monday"
     },
     "value": {
-      "end": "2026-08-23",
-      "start": "2026-08-17"
+      "end": "2026-08-16",
+      "start": "2026-08-10"
     }
   },
   "exclusions": {
-    "confidence": 0.5,
+    "confidence": 1.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -34,7 +34,7 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.5,
+    "confidence": 0.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,

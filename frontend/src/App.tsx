@@ -14,11 +14,12 @@ const NAV = [
 ] as const;
 
 /**
- * Persistent header (FR-104, FR-105, FR-108).
+ * Persistent header (FR-104, FR-105, FR-108) — a dark instrument band.
  *
  * A user reading "Thursday the 13th" needs to know the dataset's today is Monday
  * the 10th, or every date on screen looks wrong. The mode indicator is here for the
- * same reason: which path produced this answer is never a guess.
+ * same reason: which path produced this answer is never a guess. The dark band is
+ * deliberate framing: status lives up here, work happens on the paper below.
  */
 function ReferenceBar() {
   const { data } = useQuery({ queryKey: ["reference"], queryFn: api.reference });
@@ -35,34 +36,66 @@ function ReferenceBar() {
       })
     : "…";
 
+  const degraded = data?.network === "offline";
+
   return (
     <header
-      className="flex items-center gap-4 border-b px-5 py-2 text-sm"
-      style={{ borderColor: "var(--line)", background: "var(--surface)" }}
+      className="flex items-center gap-5 px-6 py-3"
+      style={{
+        background: "var(--bar)",
+        borderBottom: "1px solid var(--bar-line)",
+        color: "var(--bar-ink)",
+      }}
     >
-      <strong className="font-semibold">Reference date:</strong>
-      <span>{now}</span>
+      {/* Wordmark. One string; rename at will. */}
+      <div className="flex items-baseline gap-2">
+        <span className="text-[1.05rem] font-bold tracking-tight">Chairside</span>
+        <span
+          className="hidden text-[0.68rem] tracking-wide sm:inline"
+          style={{ color: "var(--bar-soft)" }}
+        >
+          agentic scheduling
+        </span>
+      </div>
 
-      {/* Which path answered, never a guess (FR-105). Live is the shipped default;
-          "Offline" means the model was unreachable and the deterministic fallbacks
-          answered instead -- a degraded state, so it is styled as one. */}
+      <span aria-hidden className="h-5 w-px" style={{ background: "var(--bar-line)" }} />
+
+      {/* The dataset's "today" — every date on screen is relative to this. */}
+      <div className="flex items-baseline gap-2 text-sm">
+        <span className="label-caps" style={{ color: "var(--bar-soft)" }}>
+          Reference
+        </span>
+        <span className="font-medium">{now}</span>
+      </div>
+
+      {/* Which path answered (FR-105). Degradation is amber, never hidden. */}
       <span
-        className="rounded px-2 py-0.5 text-xs"
+        className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium"
         style={
-          data?.network === "offline"
-            ? { background: "var(--warn-bg, #fdf3d7)", color: "var(--warn-ink, #6b4e00)" }
-            : { background: "var(--page)", color: "var(--ink-soft)" }
+          degraded
+            ? { background: "var(--warn-bg)", color: "var(--warn)" }
+            : { background: "rgba(80, 200, 175, 0.12)", color: "#7fd4c4" }
         }
         title={
-          data?.network === "offline"
+          degraded
             ? "No model in use: answers come from committed fixtures and deterministic rules."
             : "Extraction, verification and explanation are running against the live model."
         }
       >
-        {data?.network === "offline" ? "Offline · fixtures (degraded)" : "Live models"}
+        <span
+          aria-hidden
+          className={
+            degraded
+              ? "inline-block h-1.5 w-1.5 rounded-full"
+              : "breathe inline-block h-1.5 w-1.5 rounded-full"
+          }
+          style={{ background: degraded ? "var(--warn)" : "#4ec9ab" }}
+        />
+        {degraded ? "Offline · fixtures (degraded)" : "Live models"}
       </span>
+
       {data?.opik_enabled === false && (
-        <span className="text-xs" style={{ color: "var(--ink-soft)" }}>
+        <span className="text-xs" style={{ color: "var(--bar-soft)" }}>
           traces local
         </span>
       )}
@@ -70,29 +103,41 @@ function ReferenceBar() {
       {/* Which of the two jobs this screen is for. A label, never a login. */}
       <SeatIndicator />
 
-      <nav className="ml-auto flex items-center gap-3 text-xs">
+      <nav className="ml-auto flex items-center gap-1 text-sm">
         {NAV.map(({ to, label }) => (
           <NavLink
             key={to}
             to={to}
             end={to === "/"}
-            className={({ isActive }) => (isActive ? "font-semibold underline" : "")}
+            className="rounded-lg px-3 py-1.5 transition-colors"
+            style={({ isActive }) =>
+              isActive
+                ? { background: "rgba(255,255,255,0.10)", color: "#fff", fontWeight: 600 }
+                : { color: "var(--bar-soft)" }
+            }
           >
             {label}
           </NavLink>
         ))}
+
+        <span
+          aria-hidden
+          className="mx-2 h-5 w-px"
+          style={{ background: "var(--bar-line)" }}
+        />
+
         <button
           onClick={() => setPresentation((p) => !p)}
-          className="rounded border px-2 py-0.5"
-          style={{ borderColor: "var(--line)" }}
+          className="rounded-lg px-2.5 py-1.5 text-xs transition-colors"
+          style={{ color: "var(--bar-soft)", border: "1px solid var(--bar-line)" }}
           title="Increase type scale and contrast for a large display or screen-share"
         >
-          {presentation ? "Normal" : "Presentation"}
+          {presentation ? "Normal" : "Present"}
         </button>
         <button
           onClick={() => api.reset().then(() => window.location.reload())}
-          className="rounded border px-2 py-0.5"
-          style={{ borderColor: "var(--line)" }}
+          className="ml-1 rounded-lg px-2.5 py-1.5 text-xs transition-colors"
+          style={{ color: "var(--bar-soft)", border: "1px solid var(--bar-line)" }}
           title="Restore the reference dataset. Traces are kept."
         >
           Reset

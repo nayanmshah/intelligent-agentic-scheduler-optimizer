@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.95,
+    "confidence": 0.9,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -46,7 +46,7 @@
   },
   "request_text": "Quick cleaning Wednesday early afternoon",
   "time_window": {
-    "confidence": 0.75,
+    "confidence": 0.85,
     "derived": false,
     "derived_rule": null,
     "span": {

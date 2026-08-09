@@ -38,7 +38,7 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.5,
+    "confidence": 1.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -46,7 +46,7 @@
   },
   "request_text": "I'd like a cleaning this Friday",
   "time_window": {
-    "confidence": 0.5,
+    "confidence": 1.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -56,7 +56,7 @@
     }
   },
   "urgency": {
-    "confidence": 0.7,
+    "confidence": 1.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,

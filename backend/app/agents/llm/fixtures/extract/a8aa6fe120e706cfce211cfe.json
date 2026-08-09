@@ -5,8 +5,8 @@
     "derived_rule": null,
     "span": {
       "end": 21,
-      "start": 0,
-      "text": "I need a tooth pulled"
+      "start": 9,
+      "text": "tooth pulled"
     },
     "value": "extraction"
   },
@@ -21,7 +21,7 @@
     }
   },
   "exclusions": {
-    "confidence": 0.0,
+    "confidence": 1.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -34,7 +34,7 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.0,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -52,14 +52,10 @@
     }
   },
   "urgency": {
-    "confidence": 0.8,
-    "derived": false,
-    "derived_rule": null,
-    "span": {
-      "end": 21,
-      "start": 0,
-      "text": "I need a tooth pulled"
-    },
-    "value": "urgent"
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "routine"
   }
 }

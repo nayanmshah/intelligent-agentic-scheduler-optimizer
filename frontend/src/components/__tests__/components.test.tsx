@@ -69,8 +69,10 @@ describe("InterpretationStrip", () => {
   it("renders the resolved value and a confidence band", () => {
     render(<InterpretationStrip fields={fields} />);
     expect(screen.getByText("15:00 – close")).toBeInTheDocument();
-    expect(screen.getByText(/·high/)).toBeInTheDocument();
-    expect(screen.getByText(/·medium/)).toBeInTheDocument();
+    // The confidence *word* must be present — colour and the dot meter are
+    // reinforcement, never the only signal (NFR-24).
+    expect(screen.getByText("high")).toBeInTheDocument();
+    expect(screen.getByText("medium")).toBeInTheDocument();
   });
 });
 

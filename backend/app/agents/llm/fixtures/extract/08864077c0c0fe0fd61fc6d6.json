@@ -52,13 +52,13 @@
     }
   },
   "urgency": {
-    "confidence": 0.8,
+    "confidence": 0.7,
     "derived": false,
     "derived_rule": null,
     "span": {
       "end": 45,
-      "start": 11,
-      "text": "surgeon to look at this extraction"
+      "start": 0,
+      "text": "I want the surgeon to look at this extraction"
     },
     "value": "urgent"
   }

@@ -15,20 +15,27 @@ export function FunnelCounter({ funnel }: { funnel: Funnel }) {
     { label: "offered", value: funnel.offered },
   ];
   return (
-    <div className="flex items-center gap-2 text-xs" style={{ color: "var(--ink-soft)" }}>
+    <div className="flex items-center gap-3">
       {steps.map((s, i) => (
-        <span key={s.label} className="inline-flex items-center gap-2">
-          {i > 0 && <span aria-hidden>→</span>}
-          <span>
-            <strong className="font-semibold" style={{ color: "var(--ink)" }}>
+        <span key={s.label} className="flex items-center gap-3">
+          {i > 0 && (
+            <span aria-hidden className="text-sm" style={{ color: "var(--ink-faint)" }}>
+              →
+            </span>
+          )}
+          <span className="flex flex-col leading-tight">
+            <strong
+              className="text-[0.95rem] font-bold tabular-nums tracking-tight"
+              style={{ color: i === steps.length - 1 ? "var(--accent)" : "var(--ink)" }}
+            >
               {s.value.toLocaleString()}
-            </strong>{" "}
-            {s.label}
+            </strong>
+            <span className="label-caps">{s.label}</span>
           </span>
         </span>
       ))}
-      <span className="ml-2 text-[0.65rem]">
-        ({funnel.grid_slots.toLocaleString()} slots × eligible providers)
+      <span className="ml-2 self-end pb-0.5 text-[0.62rem]" style={{ color: "var(--ink-faint)" }}>
+        {funnel.grid_slots.toLocaleString()} slots × eligible providers
       </span>
     </div>
   );

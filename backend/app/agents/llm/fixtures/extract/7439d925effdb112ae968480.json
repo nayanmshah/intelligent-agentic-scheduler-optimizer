@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.95,
+    "confidence": 0.9,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -21,7 +21,7 @@
     }
   },
   "exclusions": {
-    "confidence": 1.0,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -56,7 +56,7 @@
     }
   },
   "urgency": {
-    "confidence": 0.9,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,

@@ -1,20 +1,17 @@
 import type { StageEvent } from "@/lib/api";
 
 /**
- * What the pipeline is doing, while it does it.
+ * What the pipeline is doing, while it does it — as a horizontal stepper.
  *
- * A live request is three sequential model calls and takes ~15 seconds. The console
- * used to show a "…" on the button for that whole time, which the first person to
- * use it reported as "stuck" — and they were right to: nothing on screen said
- * otherwise.
+ * A live request is a few seconds of sequential model calls. A button that only says
+ * "…" for that long reads as frozen — the first person to use it reported exactly
+ * that. So the wait *shows the pipeline working*: all four stages appear the moment
+ * the request starts, the running one pulses, and each fills in with its measured
+ * duration as it closes.
  *
- * So this is the honest fix for a latency complaint *and* the clearest demonstration
- * that there are agents here at all. Each row appears greyed the moment the request
- * starts and fills in with its real duration as that stage closes, so the wait reads
- * as progress rather than as a hang.
- *
- * The durations are measured, not animated. A stage that takes 10 seconds shows
- * 10 seconds.
+ * The durations are measured, not animated. A stage that takes 2.5 seconds shows
+ * 2.5 seconds, and the implementation that answered is named beside it — so a silent
+ * fallback is visible here, not only in the trace panel (NFR-16).
  */
 export function StageProgress({ stages }: { stages: StageEvent[] }) {
   if (stages.length === 0) return null;
@@ -23,33 +20,55 @@ export function StageProgress({ stages }: { stages: StageEvent[] }) {
 
   return (
     <section
-      className="flex flex-col gap-1 rounded border p-3 text-sm"
-      style={{ borderColor: "var(--line)", background: "var(--surface)" }}
+      className="card rise flex items-stretch overflow-hidden"
       aria-live="polite"
       aria-busy={firstPending !== -1}
     >
       {stages.map((s, i) => {
         const running = !s.done && i === firstPending;
         return (
-          <div key={s.stage} className="flex items-baseline gap-2">
+          <div
+            key={s.stage}
+            className="relative flex flex-1 flex-col gap-1 px-4 py-3"
+            style={{
+              borderLeft: i > 0 ? "1px solid var(--line)" : "none",
+              background: running ? "var(--accent-faint)" : "transparent",
+              transition: "background 200ms ease",
+            }}
+          >
+            {/* progress underline: done = full accent, running = pulsing */}
             <span
               aria-hidden
-              className="w-4 text-center"
-              style={{ color: s.done ? "var(--accent)" : "var(--ink-soft)" }}
-            >
-              {s.done ? "✓" : running ? "▸" : "·"}
-            </span>
-            <span
+              className={running ? "breathe absolute inset-x-0 top-0 h-0.5" : "absolute inset-x-0 top-0 h-0.5"}
               style={{
-                color: s.done || running ? "var(--ink)" : "var(--ink-soft)",
-                fontWeight: running ? 600 : 400,
+                background: s.done || running ? "var(--accent)" : "var(--line)",
+                opacity: s.done ? 1 : running ? undefined : 0.6,
               }}
-            >
-              {s.label}
-              {running && "…"}
+            />
+            <span className="flex items-center gap-1.5">
+              <span
+                aria-hidden
+                className="text-[0.72rem]"
+                style={{ color: s.done ? "var(--accent)" : "var(--ink-faint)" }}
+              >
+                {s.done ? "✓" : running ? "▸" : "·"}
+              </span>
+              <span
+                className="text-[0.8rem]"
+                style={{
+                  color: s.done || running ? "var(--ink)" : "var(--ink-faint)",
+                  fontWeight: running ? 600 : 500,
+                }}
+              >
+                {s.label}
+                {running && "…"}
+              </span>
             </span>
             {s.done && (
-              <span className="tabular-nums text-xs" style={{ color: "var(--ink-soft)" }}>
+              <span
+                className="pl-4 text-[0.68rem] tabular-nums"
+                style={{ color: "var(--ink-soft)", fontFamily: "var(--mono)" }}
+              >
                 {formatMs(s.ms ?? 0)}
                 {/* Which implementation answered, so a silent fallback is visible
                     here and not only in the trace panel (NFR-16). */}

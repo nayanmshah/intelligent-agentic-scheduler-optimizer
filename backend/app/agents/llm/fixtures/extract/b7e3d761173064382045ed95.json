@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.95,
+    "confidence": 1.0,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -34,10 +34,14 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.5,
-    "derived": true,
-    "derived_rule": "model-inferred",
-    "span": null,
+    "confidence": 1.0,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 36,
+      "start": 17,
+      "text": "not with Dr. Okafor"
+    },
     "value": null
   },
   "request_text": "Need a cleaning, not with Dr. Okafor please",

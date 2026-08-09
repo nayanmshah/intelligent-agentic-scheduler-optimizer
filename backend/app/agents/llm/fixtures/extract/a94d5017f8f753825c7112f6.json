@@ -7,7 +7,7 @@
     "value": "prophy_adult"
   },
   "date_range": {
-    "confidence": 1.0,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -17,7 +17,7 @@
     }
   },
   "exclusions": {
-    "confidence": 1.0,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -30,7 +30,7 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 1.0,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -38,7 +38,7 @@
   },
   "request_text": "Afternoon works best for me",
   "time_window": {
-    "confidence": 0.8,
+    "confidence": 0.75,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -48,14 +48,14 @@
     },
     "value": {
       "end_min": null,
-      "start_min": 720
+      "start_min": 1200
     }
   },
   "urgency": {
-    "confidence": 1.0,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
-    "value": "flexible"
+    "value": "routine"
   }
 }

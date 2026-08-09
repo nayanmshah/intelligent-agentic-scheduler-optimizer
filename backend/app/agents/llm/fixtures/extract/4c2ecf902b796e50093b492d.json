@@ -38,7 +38,7 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.5,
+    "confidence": 1.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -46,13 +46,13 @@
   },
   "request_text": "Cleaning Thursday, any time that afternoon",
   "time_window": {
-    "confidence": 0.85,
+    "confidence": 0.8,
     "derived": false,
     "derived_rule": null,
     "span": {
       "end": 42,
-      "start": 28,
-      "text": "that afternoon"
+      "start": 33,
+      "text": "afternoon"
     },
     "value": {
       "end_min": null,
@@ -60,7 +60,7 @@
     }
   },
   "urgency": {
-    "confidence": 0.7,
+    "confidence": 1.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,

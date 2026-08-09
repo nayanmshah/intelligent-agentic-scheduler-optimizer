@@ -21,7 +21,7 @@
     }
   },
   "exclusions": {
-    "confidence": 0.5,
+    "confidence": 1.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -60,6 +60,6 @@
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
-    "value": "routine"
+    "value": "flexible"
   }
 }

@@ -5,7 +5,8 @@ import { AXIS_LABELS, AXIS_STYLE, type Contribution } from "@/lib/api";
  * segments must sum to the total that is displayed.
  *
  * NFR-24: segments carry labels and a fixed order, so a greyscale screenshot stays
- * interpretable. Colour is reinforcement, never the only signal.
+ * interpretable. Colour is reinforcement, never the only signal — the ramp is a
+ * single teal hue ordered by lightness for exactly that reason.
  */
 export function ContributionBar({
   contributions,
@@ -18,7 +19,7 @@ export function ContributionBar({
   return (
     <div>
       <div
-        className="flex h-3 w-full overflow-hidden rounded-sm"
+        className="flex h-2 w-full gap-[2px] overflow-hidden rounded-full"
         role="img"
         aria-label={contributions
           .map((c) => `${AXIS_LABELS[c.axis]} ${Math.round((c.weighted / total) * 100)}%`)
@@ -27,6 +28,7 @@ export function ContributionBar({
         {contributions.map((c) => (
           <div
             key={c.axis}
+            className="rounded-full transition-all duration-300"
             title={`${AXIS_LABELS[c.axis]}: ${c.value.toFixed(2)} × ${c.weight.toFixed(2)} = ${c.weighted.toFixed(3)}`}
             style={{
               width: `${(c.weighted / total) * 100}%`,
@@ -35,18 +37,20 @@ export function ContributionBar({
           />
         ))}
       </div>
-      <div className="mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-[0.65rem]"
-           style={{ color: "var(--ink-soft)" }}>
+      <div
+        className="mt-1.5 flex flex-wrap gap-x-3 gap-y-0.5 text-[0.65rem]"
+        style={{ color: "var(--ink-soft)" }}
+      >
         {contributions.map((c) => (
           <span key={c.axis} className="inline-flex items-center gap-1">
             <span
-              className="inline-block h-2 w-2 rounded-[1px]"
+              className="inline-block h-2 w-2 rounded-[2px]"
               style={{ background: AXIS_STYLE[c.axis]?.fill ?? "#ccc" }}
             />
             {AXIS_LABELS[c.axis]} {c.weighted.toFixed(2)}
           </span>
         ))}
-        <span className="ml-auto font-semibold" style={{ color: "var(--ink)" }}>
+        <span className="ml-auto font-bold tabular-nums" style={{ color: "var(--ink)" }}>
           = {(score * 100).toFixed(0)}%
         </span>
       </div>
