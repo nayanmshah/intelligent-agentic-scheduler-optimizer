@@ -22,9 +22,15 @@ longer exists. Temperature was never what carried determinism anyway:
 | Injected clock, committed seed | Unchanged |
 | `temperature=0` | **Unavailable.** Removed from the design |
 
-**Consequence.** The determinism check (FR-097) runs in fixture mode, which is the
-demo path. Live mode is an explicit opt-in and carries this caveat. We do **not**
-claim temperature-based determinism the API cannot provide.
+**Consequence, and it is a real trade.** Live is now the shipped default, so **the demo
+path is not byte-reproducible**. The determinism check (FR-097) runs in fixture mode and
+is reported as *not applicable* on a live scorecard rather than as a pass — marking it
+green there would be the most misleading number on the card.
+
+What survives regardless: **ranking** is a pure function of
+`(constraints, schedule, profile, NOW)`, so two identical extractions always produce
+identical offers. The nondeterminism is confined to language in and language out. We do
+**not** claim temperature-based determinism the API cannot provide.
 
 ---
 
@@ -209,74 +215,75 @@ practising schedulers, written before either extractor is looked at.
 
 ---
 
-## 12. Live extraction does not fit the request-path latency budget
+## 12. The live path is slow, and it ships anyway
 
-NFR-02 gives the extract stage **2.2 seconds** — what an operator can afford while a
-patient is on the phone. Measured against the live API on eight golden requests:
+NFR-02 originally targeted a sub-5-second answer. Measured against the real API, a full
+live request takes **~16 seconds**: roughly 7s to extract, 4s to verify, 5s to explain,
+in sequence because each stage needs the previous one's output.
 
-| Model | p50 | p95 | Fits 2.2s? |
-| :---- | --: | --: | :--------- |
-| `claude-opus-5` (the configured extractor) | 7.3s | 9.1s | **No** |
-| `claude-sonnet-5` | 7.0s | 9.2s | **No** |
-| `claude-haiku-4-5` | — | — | rejects the `effort` parameter (400) |
+| Stage | Model | p50 |
+| :---- | :---- | --: |
+| extract | `claude-opus-5` | ~7.3s |
+| verify | `claude-sonnet-5` | ~4s |
+| explain | `claude-sonnet-5` | ~5s |
 
-**Adaptive thinking is not the cause.** Disabling it moved p50 from 7.3s to 7.2s. The
-cost is generating the response itself: six fields, each carrying a confidence, a
+**Adaptive thinking is not the cause.** Disabling it moved extraction from 7.3s to
+7.2s. The cost is producing the response: six fields, each carrying a confidence, a
 derivation rule and a verbatim source span. FR-003's provenance requirement is what
-makes the output large, and the provenance is not negotiable — it is the reason an
-operator can trust the interpretation strip.
+makes the payload large, and the interpretation strip is why it is worth paying for.
 
-**What this means.** Committed fixtures are not a demo convenience; they are what makes
-the stated latency target achievable at all. The shipped default is rules-mode
-extraction (sub-millisecond, 96.3% accurate) with fixtures behind it, and that is a
-design decision rather than a fallback.
+**Why it ships live regardless.** The alternative — defaulting to replayed fixtures —
+means the product's headline capability is the one thing nobody ever sees working, and
+"it would call a model in production" is a claim rather than a demonstration. The
+fallback ladder means the cost of the choice is bounded: a slow or failed call degrades
+to fixtures and then to rules rather than failing.
 
 **What would actually close it**, in the order worth trying:
 
-1. **Stream the response** and parse incrementally — the operator needs the *first*
-   fields (date, time) to render the strip, not the last.
-2. **Split the call.** Extract the six values in one small request; resolve spans in a
-   second, off the critical path. The strip can fill in provenance a beat later.
-3. **Run rules first and the model only on disagreement.** Rules answer instantly and
-   are right 96.3% of the time; spend the latency only where the two differ.
-4. Re-measure on Haiku once it accepts `effort`, or without structured outputs.
+1. **Stream and render progressively.** The interpretation strip needs the date and
+   time, which arrive first. Showing the pipeline working also *demonstrates* the
+   agents rather than hiding them behind a spinner — the better answer twice over.
+2. **Split provenance off the critical path.** Extract the six values in one small
+   call; resolve spans in a second, after the strip has rendered.
+3. **Run rules first, model only on disagreement.** Rules answer in under a
+   millisecond and are right 96.3% of the time; spend the latency only where the two
+   differ.
+4. **Drop the verify call when every field is high-confidence.** It is the least
+   valuable of the three on an unambiguous request.
 
-None of these are implemented. The number is stated because "we'd use the model live in
-production" is a claim that should come with a measurement, and this one does not
-currently support it.
+None of these are implemented. The number is stated because a latency claim without a
+measurement is worth nothing, and this measurement does not support the original one.
 
 ---
 
-## 13. Only one of the four roles carries a model in the demo
+## 13. Three of the four roles run on a model; the fourth never will
 
-The architecture is four agent roles, each behind a `Protocol` so the implementation is
-swappable by config (NFR-28). What actually runs on the demo path is narrower than
-"four agents" suggests, and it is worth saying before someone asks:
+| Role | Shipped implementation | Model? |
+| :--- | :--------------------- | :----- |
+| Intent Extractor | `llm` | **Yes** — live, every request |
+| Constraint Verifier | `llm` over a deterministic floor | **Yes** — live, every request |
+| Schedule Reasoner | deterministic | **No, permanently** |
+| Explainer | `llm` behind the faithfulness gate | **Yes** — live, every request |
 
-| Role | Demo implementation | Model involved? |
-| :--- | :------------------ | :-------------- |
-| Intent Extractor | `fixtures(llm)` | **Yes** — real Claude output, recorded once and replayed |
-| Constraint Verifier | `rules` | No — and no LLM implementation exists at all |
-| Schedule Reasoner | deterministic | No — **by design**, this is the thesis |
-| Explainer | `template` | No — `LlmExplainer` is built and tested, but activates only in live mode |
+**The reasoner is not a gap and never will be.** "LLMs at the edges, arithmetic in the
+middle" is the product's central claim. A model driving enumeration would miss
+candidates and make *"did it miss anything?"* unanswerable, which is the one question
+this product exists to answer.
 
-**The reasoner is not a gap.** "LLMs at the edges, arithmetic in the middle" is the
-product's central claim; a deterministic ranker is the feature.
+**The verifier's model output is bounded by design.** It may raise a flag and propose a
+question; it may not alter the constraints, and it never sees a candidate slot. The
+deterministic checks run first and its flags are merged in, so the model adds to the
+picture and cannot subtract from it. A wrong call costs a spurious question, never a
+wrong booking.
 
-**The explainer is a mode difference, not a missing piece.** `LlmExplainer` and its
-five-check faithfulness gate exist and are tested. In fixture mode the template renders
-instead — and the template cannot hallucinate by construction, since it only
-interpolates facts the scorer emitted. A consequence worth knowing: **the faithfulness
-gate never fires during the demo**, because there is no generated prose to check.
+**The explainer's output is gated, not trusted.** Six checks (FR-062) run over every
+generated sentence; a failure substitutes the template silently and records the firing.
+The rate is typically one rejection per three-card batch, which is the honest number —
+a gate that never fires is a gate that is not running.
 
-**The verifier is a real gap against NFR-28**, which asks every agent for two
-implementations. It has one. The reason is that its checks — is the date in the past?
-does this provider exist and hold this credential? — are lookups against a known world,
-where a model would add latency and a failure mode to answer *less* reliably. That is a
-defensible decision, but NFR-28 says "every agent" and this is an exception to it, so it
-is recorded here rather than left to be discovered. The `ConstraintVerifier` Protocol is
-in place, so the seam costs nothing to fill later.
-
-**What this means for the demo narration.** "Four agents, three of which can run without
-a model, and the one that decides never uses one" is accurate. "Four AI agents" is not,
-and will not survive the first follow-up question.
+> One of those six checks exists because of something found during live testing: the
+> model wrote *"You're booked for a Cleaning on Wednesday"* and every other check passed
+> it. Nothing was booked. An operator reading that aloud tells a patient they have an
+> appointment they do not have, so F6 now rejects any sentence asserting the booking
+> exists — in the gate, not only in the prompt, because a prompt is a request and a
+> gate is a guarantee.

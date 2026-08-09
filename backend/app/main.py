@@ -16,6 +16,7 @@ Two ordering details that are easy to get wrong and expensive to debug:
 
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI
@@ -27,10 +28,21 @@ from app.api import requests as request_routes
 from app.container import build_container
 
 
+@asynccontextmanager
+async def _lifespan(app: FastAPI):  # type: ignore[no-untyped-def]
+    """Hold the connection pool open for the process, then release it.
+
+    Without the close, every reload in development leaks the SDK's sockets.
+    """
+    yield
+    await app.state.container.agents.aclose()
+
+
 def create_app() -> FastAPI:
     container = build_container()
 
     app = FastAPI(
+        lifespan=_lifespan,
         title="Intelligent Agentic Scheduling Optimizer",
         version="1.0.0",
         docs_url="/api/docs",

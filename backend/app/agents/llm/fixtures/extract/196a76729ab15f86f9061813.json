@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.85,
+    "confidence": 0.82,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -13,7 +13,7 @@
   "date_range": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "No scheduling date stated; defaulted to reference date through +14 days ('since Friday' describes symptom onset, not availability)",
+    "derived_rule": "no date stated; default reference date through +14 days",
     "span": null,
     "value": {
       "end": "2026-08-24",
@@ -23,7 +23,7 @@
   "exclusions": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "No weekday exclusions stated",
+    "derived_rule": "no weekday exclusions stated",
     "span": null,
     "value": {
       "dates": [],
@@ -36,7 +36,7 @@
   "provider_preference": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "No provider mentioned",
+    "derived_rule": "no provider mentioned",
     "span": null,
     "value": null
   },
@@ -44,7 +44,7 @@
   "time_window": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "No time preference stated; open to full day",
+    "derived_rule": "no time preference stated; open to full day",
     "span": null,
     "value": {
       "end_min": null,
@@ -52,10 +52,14 @@
     }
   },
   "urgency": {
-    "confidence": 0.62,
-    "derived": true,
-    "derived_rule": "Ongoing tooth pain lasting several days implies urgent but not emergency",
-    "span": null,
+    "confidence": 0.68,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 41,
+      "start": 16,
+      "text": "bothering me since Friday"
+    },
     "value": "urgent"
   }
 }

@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.8,
+    "confidence": 0.85,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -11,7 +11,7 @@
     "value": "prophy_adult"
   },
   "date_range": {
-    "confidence": 0.4,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "No date stated; default reference date through +14 days",
     "span": null,
@@ -21,7 +21,7 @@
     }
   },
   "exclusions": {
-    "confidence": 0.5,
+    "confidence": 0.9,
     "derived": true,
     "derived_rule": "No day exclusions stated",
     "span": null,
@@ -34,7 +34,7 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.5,
+    "confidence": 0.9,
     "derived": true,
     "derived_rule": "No provider named",
     "span": null,
@@ -42,7 +42,7 @@
   },
   "request_text": "Time for my six month check-up",
   "time_window": {
-    "confidence": 0.4,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "No time preference stated; open to full day",
     "span": null,
@@ -52,7 +52,7 @@
     }
   },
   "urgency": {
-    "confidence": 0.7,
+    "confidence": 0.8,
     "derived": true,
     "derived_rule": "Routine recall check-up, no symptoms",
     "span": null,

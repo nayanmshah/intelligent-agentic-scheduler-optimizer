@@ -1,8 +1,8 @@
 {
   "appointment_type": {
-    "confidence": 0.25,
+    "confidence": 0.2,
     "derived": true,
-    "derived_rule": "no procedure or symptom stated; default routine cleaning",
+    "derived_rule": "no procedure or symptom stated; defaulted to routine cleaning",
     "span": null,
     "value": "prophy_adult"
   },
@@ -42,8 +42,8 @@
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 25,
-      "start": 14,
+      "end": 21,
+      "start": 10,
       "text": "before noon"
     },
     "value": {

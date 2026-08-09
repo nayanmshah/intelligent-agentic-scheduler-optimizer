@@ -229,6 +229,44 @@ advance.
 
 ---
 
+## The live-first change
+
+After this report was first written, the product's defaults moved: extraction,
+verification and explanation now run against a live model by default, with the
+deterministic implementations as a layered fallback. That change surfaced four defects
+that the offline-only suite could not have found, because it never ran the code.
+
+| | |
+| :-- | :-- |
+| **The LLM explainer was never invoked.** | The orchestrator called the template renderer unconditionally. `LlmExplainer` and its faithfulness gate were built, unit-tested, and unreachable from a request. `llm_calls` on the decision record is the number that now makes this impossible to miss. |
+| **No LLM verifier existed at all**, while the config advertised `llm \| rules` and the docs described the role as "cheap LLM". NFR-28 was unmet for that role. Now built, and it earns itself: it catches a symptom/treatment mismatch no lookup can. |
+| **The gate rejected almost everything.** F1 flagged any capitalised word not in the fact set — including the *first word of the sentence*. "Would Monday the 10th work for you?" failed for "naming" **Would**. Every well-formed question fell back to the template, which is why the model looked useless. |
+| **`reset()` split the object graph.** It dropped the cached reasoner but not the cached orchestrator holding a reference to it, so after any reset the two disagreed about the world and byte-identical replay (FR-088) failed. |
+
+One defect went the other way — the model wrote **"You're booked for a Cleaning on
+Wednesday"** and every gate check passed it. Nothing was booked. That is now check F6,
+in the gate rather than only in the prompt, because a prompt is a request and a gate is
+a guarantee.
+
+### What this says about the test strategy
+
+The deterministic suite was thorough and green throughout, and it was testing the safety
+net rather than the trapeze. Two structural changes followed:
+
+- **`tests/live/`**, marked `live`, excluded from the default run and executed by
+  `make test-live`. Eight tests, all asserting behaviour only a model produces.
+- **`scripts/release-check.sh` Phase B**, which runs the shipped configuration against
+  the real API before Phase C blocks the network and proves the degraded path. If no key
+  is present the summary says the live phase was skipped, so a green run never quietly
+  means "we verified half the product".
+
+> Writing those tests immediately produced a fifth defect of its own: a `conftest` that
+> set `SCHED_LLM_MODE=live` at import ran during *collection*, leaked into every module
+> imported afterwards, and turned the whole "deterministic" suite into a billed
+> four-minute API run. Live settings are now constructed explicitly and cannot leak.
+
+---
+
 ## Method
 
 - **Coverage measurement** — `pytest-cov` over the whole suite, read by module rather

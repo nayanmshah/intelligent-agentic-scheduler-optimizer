@@ -11,7 +11,7 @@
     "value": "crown_prep"
   },
   "date_range": {
-    "confidence": 0.95,
+    "confidence": 0.92,
     "derived": false,
     "derived_rule": null,
     "span": {

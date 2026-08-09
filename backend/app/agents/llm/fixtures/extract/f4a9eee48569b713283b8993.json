@@ -1,11 +1,11 @@
 {
   "appointment_type": {
-    "confidence": 0.75,
+    "confidence": 0.72,
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 24,
-      "start": 17,
+      "end": 22,
+      "start": 15,
       "text": "filling"
     },
     "value": "filling_1s"
@@ -13,7 +13,7 @@
   "date_range": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "No date stated; default reference date through +14 days",
+    "derived_rule": "no date stated; default reference date through +14 days",
     "span": null,
     "value": {
       "end": "2026-08-24",
@@ -23,7 +23,7 @@
   "exclusions": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "No weekday exclusions stated",
+    "derived_rule": "no weekday exclusions stated",
     "span": null,
     "value": {
       "dates": [],
@@ -36,7 +36,7 @@
   "provider_preference": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "No provider mentioned",
+    "derived_rule": "no provider named",
     "span": null,
     "value": null
   },
@@ -44,7 +44,7 @@
   "time_window": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "No time stated; open to full day",
+    "derived_rule": "no time stated; open to closing",
     "span": null,
     "value": {
       "end_min": null,
@@ -52,9 +52,9 @@
     }
   },
   "urgency": {
-    "confidence": 0.6,
+    "confidence": 0.55,
     "derived": true,
-    "derived_rule": "No urgency cues; non-painful cavity default routine",
+    "derived_rule": "no urgency cue; default routine",
     "span": null,
     "value": "routine"
   }

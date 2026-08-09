@@ -44,7 +44,7 @@
   "time_window": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "no time stated; open to full day",
+    "derived_rule": "no time preference stated; open to full day",
     "span": null,
     "value": {
       "end_min": null,
@@ -54,7 +54,7 @@
   "urgency": {
     "confidence": 0.6,
     "derived": true,
-    "derived_rule": "maintenance recall with mild symptom, no urgency language",
+    "derived_rule": "recall-style maintenance visit with mild symptom, no urgency language",
     "span": null,
     "value": "routine"
   }

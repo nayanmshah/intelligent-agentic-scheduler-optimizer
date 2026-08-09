@@ -56,7 +56,7 @@
     }
   },
   "urgency": {
-    "confidence": 0.7,
+    "confidence": 0.8,
     "derived": true,
     "derived_rule": "routine hygiene request with no urgency cues",
     "span": null,

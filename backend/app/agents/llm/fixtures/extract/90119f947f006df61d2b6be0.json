@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.62,
+    "confidence": 0.8,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -13,7 +13,7 @@
   "date_range": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "No date stated; defaulted to reference date through +14 days",
+    "derived_rule": "no date stated; default reference date through +14 days",
     "span": null,
     "value": {
       "end": "2026-08-24",
@@ -21,9 +21,9 @@
     }
   },
   "exclusions": {
-    "confidence": 0.5,
+    "confidence": 0.6,
     "derived": true,
-    "derived_rule": "No weekday exclusions stated",
+    "derived_rule": "no weekday exclusions stated",
     "span": null,
     "value": {
       "dates": [],
@@ -44,7 +44,7 @@
   "time_window": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "No time stated; open to full day",
+    "derived_rule": "no time stated; open to full day",
     "span": null,
     "value": {
       "end_min": null,
@@ -54,7 +54,7 @@
   "urgency": {
     "confidence": 0.45,
     "derived": true,
-    "derived_rule": "No urgency cue in text; default routine",
+    "derived_rule": "no urgency cue in text; default routine",
     "span": null,
     "value": "routine"
   }

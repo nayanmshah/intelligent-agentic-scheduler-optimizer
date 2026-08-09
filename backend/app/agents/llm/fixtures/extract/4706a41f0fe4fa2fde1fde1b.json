@@ -1,19 +1,19 @@
 {
   "appointment_type": {
-    "confidence": 0.94,
+    "confidence": 0.95,
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 10,
+      "end": 42,
       "start": 3,
-      "text": "denture"
+      "text": "denture is rubbing, can it be adjusted?"
     },
     "value": "denture_adjust"
   },
   "date_range": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "no date stated; default reference date through +14 days",
+    "derived_rule": "No date stated; defaulted to reference date through +14 days",
     "span": null,
     "value": {
       "end": "2026-08-24",
@@ -23,7 +23,7 @@
   "exclusions": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "no weekday exclusions stated",
+    "derived_rule": "No weekday exclusions stated",
     "span": null,
     "value": {
       "dates": [],
@@ -36,7 +36,7 @@
   "provider_preference": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "no provider named",
+    "derived_rule": "No provider named",
     "span": null,
     "value": null
   },
@@ -44,7 +44,7 @@
   "time_window": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "no time preference stated",
+    "derived_rule": "No time preference stated; open to full day",
     "span": null,
     "value": {
       "end_min": null,
@@ -52,9 +52,9 @@
     }
   },
   "urgency": {
-    "confidence": 0.55,
+    "confidence": 0.6,
     "derived": true,
-    "derived_rule": "minor discomfort, no urgency language",
+    "derived_rule": "Minor discomfort with no urgency language",
     "span": null,
     "value": "routine"
   }

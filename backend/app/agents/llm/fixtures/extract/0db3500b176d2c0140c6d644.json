@@ -7,7 +7,7 @@
     "value": "prophy_adult"
   },
   "date_range": {
-    "confidence": 0.9,
+    "confidence": 0.92,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -42,7 +42,7 @@
   },
   "request_text": "Something after 4 on Wednesday please",
   "time_window": {
-    "confidence": 0.85,
+    "confidence": 0.9,
     "derived": false,
     "derived_rule": null,
     "span": {

@@ -40,7 +40,7 @@
   "provider_preference": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "no provider mentioned",
+    "derived_rule": "no provider named",
     "span": null,
     "value": null
   },
@@ -62,7 +62,7 @@
   "urgency": {
     "confidence": 0.6,
     "derived": true,
-    "derived_rule": "no urgency stated; routine default",
+    "derived_rule": "no urgency cues; scheduled restorative work defaults to routine",
     "span": null,
     "value": "routine"
   }

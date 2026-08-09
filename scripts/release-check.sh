@@ -6,17 +6,20 @@
 # The run is split into two phases on purpose, because conflating them would let the
 # offline claim quietly become false:
 #
-#   Phase A -- toolchain install (uv sync, npm install). Needs the network. This is
-#              not part of NFR-09: fetching pinned dependencies is a build step, not
-#              a request path.
-#   Phase B -- everything the product actually does: preflight, tests, the eval
-#              scorecard, booting the server, answering real requests over HTTP.
-#              Runs with outbound connections *blocked at the socket layer*
-#              (scripts/offline/sitecustomize.py) and with ANTHROPIC_API_KEY unset.
+#   Phase A -- toolchain install (uv sync, npm install). Needs the network. Not part
+#              of NFR-09: fetching pinned dependencies is a build step, not a request
+#              path.
+#   Phase B -- THE SHIPPED CONFIGURATION. Live models for extraction, verification and
+#              explanation, against the real API. This is what a demo runs, so it is
+#              what the release check has to prove works. Skipped with a loud notice
+#              if no API key is present.
+#   Phase C -- THE DEGRADED PATH. The same product with outbound connections blocked at
+#              the socket layer (scripts/offline/sitecustomize.py) and no API key. It
+#              must still answer every request, from committed fixtures and rules.
 #
-# So "works with networking disabled" is enforced by the harness rather than asserted
-# by the author. A path that reaches out raises instead of silently succeeding
-# whenever the wifi happens to be up.
+# Both halves matter and neither substitutes for the other. Testing only Phase C
+# proves the safety net and never the trapeze; testing only Phase B means a network
+# blip on stage is an unrehearsed failure.
 #
 # Usage:  scripts/release-check.sh [runs]        # default 3
 #         COLD=0 scripts/release-check.sh 1      # skip the destructive rebuild
@@ -29,11 +32,19 @@ PORT="${PORT:-8099}"
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
+# The application reads .env; so must this script, or the live phase silently skips on
+# a machine that is perfectly capable of running it -- and the run reports "passed"
+# having verified only half the product.
+if [ -z "${ANTHROPIC_API_KEY:-}" ] && [ -f "$ROOT/.env" ]; then
+  ANTHROPIC_API_KEY="$(grep -E '^ANTHROPIC_API_KEY=' "$ROOT/.env" | head -1 | cut -d= -f2-)"
+  export ANTHROPIC_API_KEY
+fi
+
 OFFLINE_ENV=(env -u ANTHROPIC_API_KEY PYTHONPATH="$ROOT/scripts/offline" SCHED_LLM_MODE=fixtures)
 LOG_DIR="${LOG_DIR:-$ROOT/.release-check}"
 mkdir -p "$LOG_DIR"
 
-pass=0; fail=0; failures=()
+pass=0; fail=0; failures=(); skipped_live=0
 
 say()  { printf '\n\033[1m%s\033[0m\n' "$*"; }
 step() { printf '  %-46s' "$*"; }
@@ -62,9 +73,21 @@ for run in $(seq 1 "$RUNS"); do
   run_step "install toolchain (network allowed)"  "$L/install.log"  make install || { continue; }
   run_step "build SPA (network allowed)"          "$L/frontend.log" make frontend || { continue; }
 
-  # ---- Phase B: nothing below here may touch the network -------------------
+  # ---- Phase B: the shipped configuration, live ----------------------------
+  if [ -n "${ANTHROPIC_API_KEY:-}" ]; then
+    run_step "live pipeline [shipped config]" "$L/live.log" \
+      env SCHED_LLM_MODE=live uv run pytest -q -m live tests/live
+    step "live preflight reports the model path"
+    if env SCHED_LLM_MODE=live uv run python -m app.cli.preflight 2>&1 \
+         | tee "$L/preflight-live.log" | grep -qi "LIVE -- models in use"; then ok; else bad "preflight did not report live mode"; fi
+  else
+    printf '  %-46s\033[33mSKIPPED\033[0m no ANTHROPIC_API_KEY\n' "live pipeline [shipped config]"
+    skipped_live=1
+  fi
+
+  # ---- Phase C: the degraded path -- nothing below may touch the network ----
   run_step "preflight [NFR-12]"      "$L/preflight.log" "${OFFLINE_ENV[@]}" uv run python -m app.cli.preflight
-  run_step "test suite [offline]"    "$L/pytest.log"    "${OFFLINE_ENV[@]}" uv run pytest -q
+  run_step "test suite [degraded]"   "$L/pytest.log"    "${OFFLINE_ENV[@]}" uv run pytest -q -m "not live"
   run_step "structural guards"       "$L/structure.log" "${OFFLINE_ENV[@]}" uv run pytest -q tests/structure
   run_step "lint + types"            "$L/check.log"     make check
   run_step "eval scorecard [FR-092]" "$L/eval.log"      "${OFFLINE_ENV[@]}" uv run python -m app.eval.run
@@ -110,4 +133,8 @@ if [ "$fail" -gt 0 ]; then
   exit 1
 fi
 printf '  \033[32mRELEASE CHECK PASSED\033[0m -- %d cold starts, zero unrecovered failures.\n' "$RUNS"
+if [ "$skipped_live" = "1" ]; then
+  printf '  \033[33mNote:\033[0m the live phase was skipped (no ANTHROPIC_API_KEY), so the\n'
+  printf '        shipped configuration was NOT verified -- only the degraded path.\n'
+fi
 printf '  Logs: %s\n' "$LOG_DIR"

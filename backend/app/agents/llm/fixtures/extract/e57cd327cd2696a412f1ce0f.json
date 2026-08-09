@@ -21,7 +21,7 @@
     }
   },
   "exclusions": {
-    "confidence": 0.6,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "no weekday exclusions stated",
     "span": null,
@@ -34,7 +34,7 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.6,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "no provider named",
     "span": null,
@@ -44,7 +44,7 @@
   "time_window": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "no time stated; open to close",
+    "derived_rule": "no time stated; open window",
     "span": null,
     "value": {
       "end_min": null,
@@ -54,7 +54,7 @@
   "urgency": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "no urgency cue in text",
+    "derived_rule": "no urgency cue in text; default routine",
     "span": null,
     "value": "routine"
   }

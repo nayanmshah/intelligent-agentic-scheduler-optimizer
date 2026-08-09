@@ -44,7 +44,7 @@
   "time_window": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "no time stated; open window",
+    "derived_rule": "no time stated; open to full day",
     "span": null,
     "value": {
       "end_min": null,

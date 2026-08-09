@@ -6,7 +6,7 @@ import json
 import sys
 from pathlib import Path
 
-from app.config import get_settings
+from app.config import Settings, get_settings
 from app.eval.harness import run_evaluation
 
 
@@ -15,6 +15,7 @@ def render(card) -> str:  # type: ignore[no-untyped-def]
     L.append(f"  seed digest   {card.seed_digest[:16]}")
     L.append(f"  cases         {card.cases}")
     L.append(f"  labeler       {card.labeler}")
+    L.append(f"  mode          {card.mode}")
     L.append("")
     L.append("  Extraction accuracy (FR-093) -- the pair of numbers that decides")
     L.append("  whether the model earns its latency here")
@@ -60,10 +61,13 @@ def render(card) -> str:  # type: ignore[no-untyped-def]
     L.append("")
     L.append("  Checks")
     det = card.determinism
-    L.append(
-        f"    determinism (FR-097)  "
-        f"{'identical' if det['identical'] else 'DIFFERS: ' + ', '.join(det['differing'])}"
-    )
+    if det.get("not_applicable"):
+        L.append(f"    determinism (FR-097)  n/a -- {det['not_applicable']}")
+    else:
+        L.append(
+            f"    determinism (FR-097)  "
+            f"{'identical' if det['identical'] else 'DIFFERS: ' + ', '.join(det['differing'])}"
+        )
     L.append(f"    read-aloud lint       {card.lint['violations']} violations")
     L.append("")
 
@@ -90,7 +94,15 @@ def render(card) -> str:  # type: ignore[no-untyped-def]
 
 
 def main() -> int:
-    card = run_evaluation()
+    """``--live`` scores the shipped configuration against the real API.
+
+    Default is fixture mode: reproducible, free, and the only mode in which FR-097's
+    determinism check means anything. ``--live`` is the honest measurement of what a
+    demo actually runs, at the cost of 54 real calls.
+    """
+    live = "--live" in sys.argv
+    settings = Settings(llm_mode="live") if live else Settings(llm_mode="fixtures")
+    card = run_evaluation(settings)
     sys.stdout.write(render(card))
     out = Path(get_settings().seed_dir).parents[1] / "eval" / "scorecard.json"
     out.write_text(json.dumps(card.as_dict(), indent=2, sort_keys=True) + "\n")

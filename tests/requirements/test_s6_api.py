@@ -22,6 +22,17 @@ def client():  # type: ignore[no-untyped-def]
         yield c
 
 
+@pytest.fixture(autouse=True)
+def _fresh_schedule(client):  # type: ignore[no-untyped-def]
+    """Restore the dataset before each test.
+
+    The client is module-scoped for speed, so without this a test that books a slot
+    silently removes it from every test that follows -- and the failure lands on
+    whichever test happens to run next, not the one that caused it.
+    """
+    client.post("/api/session/reset")
+
+
 def submit(client, text: str, patient: str | None = "pat-000"):  # type: ignore[no-untyped-def]
     return client.post("/api/requests", json={"text": text, "patient_id": patient})
 
@@ -279,3 +290,21 @@ def test_the_traces_list_and_span_detail_are_reachable(client) -> None:
     spans = client.get(f"/api/traces/{decision['trace_id']}").json()
     assert spans["spans"], "a decision produced no spans"
     assert {s["stage"] for s in spans["spans"]} & {"extract", "verify", "reason"}
+
+
+def test_reset_does_not_split_the_object_graph(client) -> None:
+    """A decision made after a reset must still replay byte-identically.
+
+    ``reset()`` dropped the cached reasoner but not the cached orchestrator, which
+    holds a reference to it. So after any reset the orchestrator answered from the
+    pre-reset world while replay built a fresh reasoner from the new one, and FR-088
+    failed for reasons nothing in the replay path could explain.
+
+    Found by making these tests independent of each other, which is the sort of bug
+    that shared fixtures hide rather than cause.
+    """
+    client.post("/api/session/reset")
+    decision = submit(client, "Can I come in next Thursday after 3?").json()
+
+    replay = client.post(f"/api/traces/{decision['id']}/replay").json()
+    assert replay["identical"] is True, replay["diff"]

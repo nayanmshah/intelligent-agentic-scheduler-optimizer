@@ -3,10 +3,19 @@
 > Twelve minutes, six requests, three screens. Every line of output below is copied
 > from an actual run against the committed dataset — nothing here is illustrative.
 >
-> **Before you start:** `make demo`, then open `http://127.0.0.1:8000`.
-> The header must read **Reference date: Monday, August 10, 2026, 9:00 AM** and
-> **Offline · fixtures**. If it says *Live model*, unset `ANTHROPIC_API_KEY` — the
-> whole demo runs with no network.
+> **Before you start:** put an `ANTHROPIC_API_KEY` in `.env`, run `make demo`, and open
+> `http://127.0.0.1:8000`. The header must read **Reference date: Monday, August 10,
+> 2026, 9:00 AM** and **Live models**.
+>
+> If it says **Offline · fixtures (degraded)**, the key is missing or the network is
+> down. The demo still works — every request is still answered — but three of the four
+> agents are running their deterministic fallbacks, which is the opposite of the point.
+> Fix the key if you can; if you cannot, say so out loud and demo it as the resilience
+> story instead. **Do not let a degraded run pass as the live one.**
+>
+> **Each request takes 12–18 seconds.** That is three sequential model calls, and it is
+> real. Don't fill the silence apologising — narrate what is happening (§1 below), or
+> ask the room a question while it runs.
 
 **Keyboard.** `E` focuses the request box · `Enter` submits · `1` `2` `3` book that
 card · `R` resets the dataset. The front desk is a keyboard job; a mouse round-trip is
@@ -51,6 +60,15 @@ Can I come in next Thursday after 3? Prefer Sarah if she's around.
 [3] Nothing opened when you asked, but Wednesday August 12th at 4:00pm
     with Nia, outside the days you asked about.
 ```
+
+**While it runs, narrate the pipeline** — the wait is the demo, not an interruption to
+it:
+
+> "Three model calls are happening in order. One is reading the request into typed
+> constraints, with a source span for every field. One is checking that reading against
+> the world — it can flag a problem but it cannot change the answer. Then the ranking,
+> which is deterministic and never touches a model. Then a fourth call writes the
+> sentences, and a gate checks each one against the facts before you see it."
 
 **Say this:**
 
@@ -135,6 +153,39 @@ Answer either option and the results resolve in place.
 
 ---
 
+## 3b · The one that catches what no rule could
+
+```
+My crown fell off, can I get a cleaning?
+```
+
+**What appears** — above the offers, a flag:
+
+```
+You mentioned a fallen-off crown, so you likely need a crown fitting or exam,
+not a cleaning.
+```
+
+**Say this:**
+
+> "Nothing here is invalid. The date is fine, the provider exists, a cleaning is a real
+> appointment type — every deterministic check passes. And the request still doesn't
+> make sense, because a crown that fell off is not a hygiene visit. There's no list you
+> can check that against. That judgement is the whole reason this role runs on a model."
+
+**Then say what it is *not* allowed to do**, because it is the obvious next question:
+
+> "It raised a flag. It did not change the appointment type, and it never saw the
+> schedule. It can tell the operator something looks wrong; it cannot quietly rewrite
+> the request. Worst case it's wrong and the operator ignores one flag — it can't
+> produce a wrong booking."
+
+If someone asks whether it flags everything: try *"A cleaning on Thursday afternoon
+please"*. No flag. That contrast is the point — a field that is always full is a field
+an operator learns to ignore.
+
+---
+
 ## 4 · The hard constraint it will never relax
 
 ```
@@ -205,11 +256,20 @@ duration, and any fallback that fired.
 
 **Say this:**
 
-> "Every stage, its duration, whether a fallback fired and why. This whole demo ran
-> with the network physically blocked — the model calls are served from fixtures
-> recorded once and committed. When a stage falls back, the operator sees a normal
-> answer and the trace sees the truth. A fallback that's invisible in both places is
-> indistinguishable from a system that never fails."
+> "Every stage, its duration, which implementation ran, whether a fallback fired and
+> why. You can see the three model calls and how long each took — that's where the
+> fifteen seconds went."
+
+Point at **`gate_fired`** on the explain span:
+
+> "That's the faithfulness gate rejecting a sentence the model wrote and substituting
+> the template instead. It usually fires about once per three cards. The operator never
+> saw an error; they just got the plainer sentence. A gate that reports zero firings
+> forever isn't a perfect model — it's a gate that isn't running."
+
+If the network drops mid-demo, this screen is the recovery: the answers keep coming,
+`fallback_fired` names the stage, and the header flips to **Offline · fixtures
+(degraded)**. That is worth showing deliberately if you have time.
 
 ---
 
@@ -248,7 +308,9 @@ Head-to-head vs naive first-available (FR-095)
 
 | Symptom | Cause | Do this |
 | :------ | :---- | :------ |
-| Header says **Live model** | `ANTHROPIC_API_KEY` is set | `unset ANTHROPIC_API_KEY`, restart. Nothing else changes. |
+| Header says **Offline · fixtures (degraded)** | no key, or no network | Check `.env`. If it cannot be fixed, say so and demo the degradation deliberately — it still answers every request |
+| A request takes ~15s | three sequential model calls | Expected. Narrate the pipeline (§1); do not apologise for it |
+| One card reads plainer than the others | the faithfulness gate rejected that sentence | Working as designed — show it on the Traces screen (§6) |
 | Dates look wrong | Reading them against the real today | The dataset's today is **Monday 2026-08-10**, shown in the header |
 | A booking says the slot moved | Someone booked it earlier in the demo | Press `R` to restore the dataset. Traces are kept. |
 | Blank results panel | Request not submitted | The textarea needs `Enter`, not the send key of a different app |
@@ -260,6 +322,12 @@ the server, so a mis-click in front of an audience costs a second.
 
 ## What to skip if you have six minutes, not twelve
 
-Keep **§1** (understanding + leading with the gap), **§3** (asks only when it matters),
-and **§7** (the honest numbers). Those three carry the argument. §2, §4, §5 and §6 are
-depth on request.
+Keep **§1** (understanding + leading with the gap), **§3b** (the verifier catching what
+no rule could), and **§7** (the honest numbers). Those three carry the argument — one
+per agent role that runs on a model, plus the measurement.
+
+§3 is the next to keep if you have a spare two minutes; §2, §4, §5 and §6 are depth on
+request.
+
+**Budget the clock.** At ~15 seconds a request, six live requests is a minute and a half
+of waiting. Rehearse what you say during it.

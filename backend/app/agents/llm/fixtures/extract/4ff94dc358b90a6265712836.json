@@ -25,7 +25,7 @@
     }
   },
   "exclusions": {
-    "confidence": 0.9,
+    "confidence": 0.92,
     "derived": true,
     "derived_rule": "no weekday exclusions stated",
     "span": null,
@@ -40,15 +40,15 @@
   "provider_preference": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "no provider mentioned",
+    "derived_rule": "no provider named",
     "span": null,
     "value": null
   },
   "request_text": "My tooth is killing me, anything today?",
   "time_window": {
-    "confidence": 0.5,
+    "confidence": 0.8,
     "derived": true,
-    "derived_rule": "no time stated; open window",
+    "derived_rule": "no time stated; any time today",
     "span": null,
     "value": {
       "end_min": null,

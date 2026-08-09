@@ -7,7 +7,7 @@
     "value": "prophy_adult"
   },
   "date_range": {
-    "confidence": 0.3,
+    "confidence": 0.4,
     "derived": true,
     "derived_rule": "No date stated; default reference date through +14 days",
     "span": null,
@@ -17,7 +17,7 @@
     }
   },
   "exclusions": {
-    "confidence": 0.5,
+    "confidence": 0.9,
     "derived": true,
     "derived_rule": "No weekday exclusions stated",
     "span": null,
@@ -30,7 +30,7 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.5,
+    "confidence": 0.9,
     "derived": true,
     "derived_rule": "No provider mentioned",
     "span": null,
@@ -38,9 +38,9 @@
   },
   "request_text": "No rush at all, whenever suits you",
   "time_window": {
-    "confidence": 0.4,
+    "confidence": 0.5,
     "derived": true,
-    "derived_rule": "No time stated; open to any time",
+    "derived_rule": "No time preference stated; open to full day",
     "span": null,
     "value": {
       "end_min": null,
@@ -48,7 +48,7 @@
     }
   },
   "urgency": {
-    "confidence": 0.93,
+    "confidence": 0.95,
     "derived": false,
     "derived_rule": null,
     "span": {

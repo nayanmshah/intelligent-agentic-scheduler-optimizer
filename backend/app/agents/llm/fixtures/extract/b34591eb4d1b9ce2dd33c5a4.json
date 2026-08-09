@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.85,
+    "confidence": 0.9,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -13,7 +13,7 @@
   "date_range": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "no date stated; default reference date through +14 days",
+    "derived_rule": "no date stated; default reference date + 14 days",
     "span": null,
     "value": {
       "end": "2026-08-24",
@@ -34,17 +34,21 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.9,
-    "derived": true,
-    "derived_rule": "provider is negated (not with Dr. Okafor), so no preference recorded",
-    "span": null,
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 36,
+      "start": 17,
+      "text": "not with Dr. Okafor"
+    },
     "value": null
   },
   "request_text": "Need a cleaning, not with Dr. Okafor please",
   "time_window": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "no time preference stated; open to close",
+    "derived_rule": "no time stated; open to close",
     "span": null,
     "value": {
       "end_min": null,
@@ -52,9 +56,9 @@
     }
   },
   "urgency": {
-    "confidence": 0.7,
+    "confidence": 0.8,
     "derived": true,
-    "derived_rule": "routine hygiene request with no urgency language",
+    "derived_rule": "routine cleaning with no urgency cues",
     "span": null,
     "value": "routine"
   }

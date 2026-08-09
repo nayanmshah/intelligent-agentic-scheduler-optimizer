@@ -1099,11 +1099,17 @@ entirely is *not* used: it is capped at `effort: high` or below, and it carries 
 Model is a **per-stage** setting, not a global one. The registry already selects implementations per
 stage, so per-stage model costs nothing structurally.
 
-| Stage | Model | Effort | Timeout | Rationale |
-| :---- | :---- | :----- | :------ | :-------- |
-| Extraction | `claude-opus-5` | `low` | 2.2 s | The only stage where model quality is visible in the output. Shipped default pending measurement — see below |
-| Verification | `claude-sonnet-5` | `low` | 0.9 s | A handful of lookups against a fixed world (date in the past, provider exists, credentialed). Nothing here needs the top tier |
-| Explanation | `claude-sonnet-5` | `low` | 0.9 s | One sentence from a supplied fact set, and faithfulness-gated (FR-062) — a bad output is discarded rather than shipped |
+| Stage | Model | Effort | Timeout | Measured p50 | Rationale |
+| :---- | :---- | :----- | :------ | -----------: | :-------- |
+| Extraction | `claude-opus-5` | `low` | 20 s | ~7.3 s | The only stage where model quality is visible in the output |
+| Verification | `claude-sonnet-5` | `low` | 12 s | ~4 s | Judgement about *wording*, over a deterministic floor that runs first. Nothing here needs the top tier |
+| Explanation | `claude-sonnet-5` | `low` | 15 s | ~5 s | One sentence from a supplied fact set, faithfulness-gated (FR-062) — a bad output is discarded rather than shipped |
+
+> **The original budgets were 2.2 / 0.9 / 0.9 s and could not be met.** They were set
+> before the live path existed. Every live request timed out into the fallback, so the
+> ladder "worked" by never running the model — which is the most expensive kind of
+> passing test. The numbers above are the measured reality plus headroom; the honest
+> consequence is in `known-limitations.md` §12.
 
 Each model id is a `Settings` field and forms part of that stage's fixture cache key (FR-006), so
 changing one is a config edit that invalidates only its own fixtures.
@@ -1141,9 +1147,14 @@ client = AsyncAnthropic(max_retries=0, timeout=settings.timeout_default)
 asserts it:
 
 ```
-extract 2.2 s  +  verify 0.9 s  +  explain 0.9 s  +  deterministic 0.3 s  +  overhead 0.2 s
-= 4.5 s worst case  <  5.0 s  (NFR-02)
+extract 20 s  +  verify 12 s  +  explain 15 s  +  deterministic 0.3 s  +  overhead 0.2 s
+= 47.5 s worst case  <  50.0 s  (the configured ceiling)
 ```
+
+That ceiling is a **cap on the fallback ladder**, not a latency target. Typical is ~16 s;
+the ceiling exists so a hung stage degrades to its deterministic implementation instead
+of hanging the request. The original 5 s target from NFR-02 is not met and is restated
+as measured — see `known-limitations.md` §12 for what would actually close it.
 
 ### 15.5 Structured output and the error ladder
 
@@ -1423,6 +1434,43 @@ operator-facing copy, though they remain correct in code and in these documents:
 | Tracing and replay | FR-085 … FR-091 | `trace/` |
 | Eval | FR-092 … FR-101 | `eval/` |
 | Runtime | FR-102 … FR-108 | `clock.py`, `data/loader.py`, `api/system.py`, `Makefile` |
+
+---
+
+### ADR-20 — Ship live; degrade, don't default
+
+**Decision.** Extraction, verification and explanation call a model **by default**. The
+deterministic implementations are the fallback, not the shipped configuration.
+
+**Context.** The original design made committed fixtures the default and live access an
+explicit opt-in, on the reasoning that the demo must never depend on connectivity. That
+reasoning was sound about *reliability* and wrong about *purpose*: it produced a system
+in which the headline capability was the one thing a reader never saw working. Three of
+four agent roles ran deterministic code, and the fourth replayed a cached file. Worse,
+it hid real defects — the LLM explainer was built, unit-tested, and **never reached from
+a request**, which no offline test could have detected because none of them ran it.
+
+**Consequences, accepted:**
+
+- **Latency.** ~16 s per request against an original 5 s target. Bounded by the ladder
+  above, and named in `known-limitations.md` §12 with the four routes that would close
+  it.
+- **Determinism.** The demo path is no longer byte-reproducible. FR-097 runs in fixture
+  mode and reports *not applicable* on a live scorecard rather than a pass. Ranking
+  stays a pure function of `(constraints, schedule, profile, NOW)`, so the
+  nondeterminism is confined to language in and language out.
+- **Cost.** Real money per request, and `make eval-live` is 54 calls.
+
+**What makes it safe.** Degradation is layered and automatic: no key, no network, a
+timeout or a refusal drops a stage to committed fixtures; a fixture miss drops it to
+rules. Silent to the operator, loud in the trace (NFR-16), and the header names which
+path answered. `scripts/release-check.sh` proves **both** — Phase B runs the shipped
+configuration against the real API, Phase C blocks the network at the socket layer and
+proves the product still answers.
+
+**Rejected alternative:** keeping fixtures as the default and demoing live "when it
+matters". That is how the explainer stayed dead code, and it makes every claim about
+the agentic behaviour a promise rather than a demonstration.
 
 ---
 

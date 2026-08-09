@@ -40,6 +40,9 @@ class Scorecard:
     seed_digest: str
     cases: int
     labeler: str
+    #: Which configuration produced these numbers. A scorecard without it invites the
+    #: reader to assume the shipped one.
+    mode: str = "fixtures"
     extraction_rules: dict[str, Any] = field(default_factory=dict)
     extraction_llm: dict[str, Any] | None = None
     ranking: dict[str, Any] = field(default_factory=dict)
@@ -53,8 +56,11 @@ class Scorecard:
 
     @property
     def passed(self) -> bool:
+        # A live run cannot assert determinism, so it is excluded from the gate
+        # rather than counted as a failure.
+        deterministic = self.determinism.get("identical")
         return bool(
-            self.determinism.get("identical")
+            (deterministic is None or deterministic)
             and self.lint.get("violations") == 0
             and self.latency.get("pass")
         )
@@ -183,19 +189,26 @@ def _slot_cost(offer, reasoner, settings) -> tuple[int, int]:  # type: ignore[no
     return orphan, protected
 
 
-def _fixture_extractor(settings: Settings, bundle):  # type: ignore[no-untyped-def]
-    """The LLM extractor served from committed fixtures.
+def _llm_extractor(settings: Settings, bundle):  # type: ignore[no-untyped-def]
+    """The model-backed extractor for FR-093's second column.
 
-    Reproducible and offline, but the values are genuine model output -- which is
-    what makes the two-column comparison meaningful rather than a simulation.
+    In **live** mode this calls the API for all 54 cases: slower, billed, and the only
+    way to measure what the shipped configuration actually scores. Recording as it
+    goes means the next fixture-mode run reproduces exactly this.
+
+    In **fixture** mode it replays committed output -- reproducible and free, and still
+    genuine model output rather than a simulation, which is what makes the two-column
+    comparison meaningful.
     """
+    live = settings.llm_mode == "live"
     return FixtureCachedExtractor(
         LlmIntentExtractor(LlmClient(settings), bundle, settings),
         FixtureStore(settings.fixtures_dir),
         model=settings.model_extract,
         prompt_version=settings.prompt_version,
-        record=False,
-        allow_network=False,
+        record=live,
+        allow_network=live,
+        read_cache=not live,
     )
 
 
@@ -258,7 +271,7 @@ def run_evaluation(
     llm_score = ExtractionScore()
     # FR-093's second column. Served from committed fixtures, so the comparison is
     # reproducible and needs no network -- but the numbers are real model output.
-    llm_extractor = _fixture_extractor(s, bundle)
+    llm_extractor = _llm_extractor(s, bundle)
     ranking = RankingScore()
     baseline_ranking = RankingScore()
     quality = ScheduleQuality()
@@ -353,6 +366,7 @@ def run_evaluation(
         if a != b
     ]
 
+    card.mode = s.llm_mode
     card.extraction_rules = rules_score.as_dict()
     card.extraction_llm = llm_score.as_dict() if llm_score.per_field["urgency"].total else None
     card.ranking = ranking.as_dict()
@@ -374,6 +388,16 @@ def run_evaluation(
     card.quality = quality.as_dict()
     card.latency = latency.as_dict(ceiling_ms=2000.0)
     card.determinism = {"identical": not differing, "differing": differing}
+    if s.llm_mode == "live":
+        # Live extraction is not reproducible (known-limitations.md §1), so the check
+        # is reported as not-applicable rather than as a pass. Marking it green here
+        # would be the most misleading number on the card: the one that says the
+        # system is deterministic, produced by the run that proves it is not.
+        card.determinism = {
+            "identical": None,
+            "differing": [],
+            "not_applicable": "live mode; run in fixture mode for FR-097",
+        }
     card.lint = {"violations": len(lint_violations), "detail": lint_violations}
     card.telemetry = {
         "rules_fallback_rate_pct": 100.0,  # rules mode is the shipped default offline

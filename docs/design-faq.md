@@ -41,6 +41,19 @@ clinical intent from symptom language is the part that resists enumeration.
 The full two-column comparison, including where the model is *worse*, is in
 [`known-limitations.md` §11](known-limitations.md).
 
+### Which roles actually call a model?
+
+Three of four, on every request: the extractor, the verifier, and the explainer. The
+reasoner never does, permanently — that is the thesis, not a gap.
+
+Each is worth a model for a different reason. The extractor turns *"my kid gets out of
+school at 3, so after that"* into a time window. The verifier catches what no lookup
+can: given *"my crown fell off, can I get a cleaning?"* it returns "you mentioned a
+fallen-off crown, so you likely need a crown fitting or exam, not a cleaning" — the
+date is valid, the provider exists, the type is real, and the request still makes no
+sense. The explainer turns a score vector into a sentence a receptionist can read
+aloud.
+
 ### Why four agents rather than one big prompt?
 
 Because they have different failure modes and different blast radii, and merging them
@@ -221,17 +234,22 @@ into `agents/explainer/render.py` — the code changed, not the guard.
 
 ### Does the model actually fit the latency budget?
 
-**No, and that is measured rather than assumed.** Live extraction runs 7.0–7.3s at p50
-against NFR-02's 2.2s budget for the stage, on both Opus 5 and Sonnet 5. Disabling
-adaptive thinking changes it by 0.1s — the cost is producing six fields each carrying a
-confidence, a derivation rule and a verbatim span, and that provenance is the reason
-the interpretation strip is trustworthy.
+**No, and it ships live anyway — that is a decision, not an oversight.** A full live
+request takes ~16 seconds: ~7s extract, ~4s verify, ~5s explain, sequential because each
+stage needs the last one's output. Disabling adaptive thinking changes it by 0.1s; the
+cost is producing six fields each carrying a confidence, a derivation rule and a
+verbatim span, and that provenance is the reason the interpretation strip is
+trustworthy.
 
-So committed fixtures are **load-bearing, not a convenience**, and rules-mode is the
-shipped default on latency grounds. The routes that would actually close the gap
-(streaming, splitting provenance off the critical path, rules-first with the model only
-on disagreement) are named in
-[`known-limitations.md` §12](known-limitations.md) and none are implemented.
+The alternative was defaulting to replayed fixtures, which makes the product's headline
+capability the one thing nobody ever sees working. A demo of an agentic system that
+runs no agents is not a demo of an agentic system.
+
+The cost of the choice is bounded by the fallback ladder: a slow or failed call
+degrades to fixtures and then to rules rather than failing. The four routes that would
+actually close the gap — streaming, splitting provenance off the critical path,
+rules-first-then-model, dropping verify on high-confidence requests — are named in
+[`known-limitations.md` §12](known-limitations.md), and none are implemented.
 
 ### Why commit LLM fixtures instead of mocking?
 

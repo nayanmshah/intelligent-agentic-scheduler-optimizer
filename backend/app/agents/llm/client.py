@@ -41,6 +41,21 @@ class LlmClient:
 
     def __post_init__(self) -> None:
         self._client: Any = None
+        #: Real calls made. Surfaced per decision so "did the model run?" is a number
+        #: on the trace rather than an inference from the prose style.
+        self.calls = 0
+
+    async def aclose(self) -> None:
+        """Release the HTTP connection pool.
+
+        The SDK keeps sockets open between calls, which is what makes the second
+        request fast -- and what leaks a file descriptor per client if nobody closes
+        it. Harmless in a short script; in a server that rebuilds a registry it is an
+        fd leak with a long fuse.
+        """
+        client, self._client = self._client, None
+        if client is not None:
+            await client.close()
 
     def _ensure(self) -> Any:
         if self._client is not None:
@@ -69,6 +84,7 @@ class LlmClient:
         """
         client = self._ensure()
         s = self.settings
+        self.calls += 1
         try:
             response = await client.with_options(timeout=timeout).messages.create(
                 model=model,
@@ -101,6 +117,7 @@ class LlmClient:
         """One batched call for all three cards (ADR-09). Three sequential calls
         would triple tail latency on the most visible surface; three parallel calls
         would triple the failure surface for no quality gain."""
+        self.calls += 1
         schema = {
             "type": "object",
             "properties": {

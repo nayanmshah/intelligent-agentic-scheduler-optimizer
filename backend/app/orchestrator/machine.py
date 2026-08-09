@@ -16,7 +16,7 @@ import uuid
 from dataclasses import dataclass
 from datetime import datetime
 
-from app.agents.explainer.render import render_outcome
+from app.agents.explainer.render import explain_outcome
 from app.config import Settings
 from app.domain.decision import DecisionRecord
 from app.domain.entities import Patient, SeedBundle
@@ -50,6 +50,7 @@ class Orchestrator:
         rid = req.request_id or uuid.uuid4().hex[:12]
         tracer = Tracer(self.sink)
         fallbacks: list[str] = []
+        calls_before = self.agents.llm_call_count()
 
         with tracer.span("request", request_id=rid, mode=s.llm_mode):
             # 1. INTERPRET ----------------------------------------------------
@@ -89,24 +90,26 @@ class Orchestrator:
                 question = fan.question(verdict.hypotheses[0].field)
                 # The provisional offers are still on screen behind the question, so
                 # they still need readable reason lines.
-                with tracer.span("explain", offers=len(fan.resolved.offers)):
-                    provisional = render_outcome(fan.resolved)
+                provisional, gates = await explain_outcome(
+                    tracer, fan.resolved, self.agents.explainer
+                )
                 return self._record(
                     rid, tracer, req, constraints, provisional, profile,
-                    fallbacks, verdict, question.text
+                    fallbacks, verdict, question.text, gates,
+                    self.agents.llm_call_count() - calls_before,
                 )
 
             # 5. EXPLAIN -- renders a Rationale and can reach nothing else -------
-            outcome = fan.resolved
-            with tracer.span("explain", offers=len(outcome.offers)):
-                outcome = render_outcome(outcome)
+            outcome, gates = await explain_outcome(tracer, fan.resolved, self.agents.explainer)
 
             return self._record(
-                rid, tracer, req, constraints, outcome, profile, fallbacks, verdict, None
+                rid, tracer, req, constraints, outcome, profile, fallbacks, verdict,
+                None, gates, self.agents.llm_call_count() - calls_before,
             )
 
     def _record(
-        self, rid, tracer, req, constraints, outcome, profile, fallbacks, verdict, question,
+        self, rid, tracer, req, constraints, outcome, profile, fallbacks, verdict,
+        question, gate_fired=0, llm_calls=0,
     ) -> DecisionRecord:  # type: ignore[no-untyped-def]
         record = DecisionRecord(
             id=rid,
@@ -130,6 +133,10 @@ class Orchestrator:
             effective_weights=outcome.effective_weights,
             score_matrix=outcome.score_matrix,
             fallback_fired=tuple(fallbacks),
+            gate_fired_count=gate_fired,
+            # Per decision, not per process: a cumulative counter answers "how busy
+            # is the server", which is not the question the trace is asking.
+            llm_calls=llm_calls,
         )
         self.sink.record_decision(record)
         return record

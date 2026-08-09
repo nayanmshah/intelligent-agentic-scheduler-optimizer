@@ -27,7 +27,7 @@
   "exclusions": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "no weekday exclusions stated",
+    "derived_rule": "no exclusions stated",
     "span": null,
     "value": {
       "dates": [],
@@ -56,9 +56,9 @@
     }
   },
   "urgency": {
-    "confidence": 0.85,
+    "confidence": 0.8,
     "derived": true,
-    "derived_rule": "routine cleaning request with no urgency language",
+    "derived_rule": "routine cleaning with no urgency language",
     "span": null,
     "value": "routine"
   }

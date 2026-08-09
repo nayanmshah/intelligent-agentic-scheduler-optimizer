@@ -46,7 +46,7 @@
   },
   "request_text": "A cleaning on Thursday afternoon",
   "time_window": {
-    "confidence": 0.8,
+    "confidence": 0.85,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -62,7 +62,7 @@
   "urgency": {
     "confidence": 0.8,
     "derived": true,
-    "derived_rule": "routine cleaning with no urgency stated",
+    "derived_rule": "routine cleaning with no urgency language",
     "span": null,
     "value": "routine"
   }

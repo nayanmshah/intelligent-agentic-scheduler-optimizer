@@ -1,12 +1,12 @@
 {
   "appointment_type": {
-    "confidence": 0.5,
+    "confidence": 0.45,
     "derived": false,
     "derived_rule": null,
     "span": {
       "end": 6,
-      "start": 3,
-      "text": "kid"
+      "start": 0,
+      "text": "My kid"
     },
     "value": "prophy_child"
   },
@@ -21,7 +21,7 @@
     }
   },
   "exclusions": {
-    "confidence": 0.9,
+    "confidence": 0.8,
     "derived": true,
     "derived_rule": "no weekday exclusions stated",
     "span": null,
@@ -36,7 +36,7 @@
   "provider_preference": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "no provider named",
+    "derived_rule": "no provider mentioned",
     "span": null,
     "value": null
   },
@@ -56,7 +56,7 @@
     }
   },
   "urgency": {
-    "confidence": 0.6,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "no urgency cues; default routine",
     "span": null,

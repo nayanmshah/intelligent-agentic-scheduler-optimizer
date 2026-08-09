@@ -35,6 +35,9 @@ build-backend = "hatchling.build"
 packages = ["backend/app"]
 
 [tool.pytest.ini_options]
+markers = [
+    "live: hits the real Anthropic API; excluded from the default suite",
+]
 testpaths = ["tests"]
 pythonpath = ["backend"]
 asyncio_mode = "auto"

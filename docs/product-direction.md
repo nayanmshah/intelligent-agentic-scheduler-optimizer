@@ -77,13 +77,13 @@ not a failure.
 
 ## 2. Agent topology — ✅ DECIDED
 
-**Four roles. Three may use a model; the one that decides may not.** The critic sits over the
-extraction, not over the ranking.
+**Four roles. Three run on a model by default; the one that decides never does.** The critic sits
+over the extraction, not over the ranking.
 
 | # | Role | Implementation | Responsibility |
 | - | ---- | -------------- | -------------- |
 | 1 | **Intent Extractor** | LLM + deterministic fallback + cached fixtures | Request text + patient context → typed `RequestConstraints` (date range, time window, urgency, provider preference, appointment type, exclusions). **Every field carries a confidence and a verbatim source span from the request.** |
-| 2 | **Constraint Verifier / Clarifier** | Deterministic rules (no LLM implementation built — see below) | Does *not* see the schedule. Validates the extraction against the world: is the date in the past? does the provider exist and work at this location? is the type compatible with the stated symptom? is any low-confidence field one that would *change the answer*? Emits `proceed` / `proceed-with-flags` / `ask-one-question`. |
+| 2 | **Constraint Verifier / Clarifier** | LLM by default, deterministic rules as the floor and the fallback | Does *not* see the schedule. Validates the extraction against the world: is the date in the past? does the provider exist and work at this location? is the type compatible with the stated symptom? is any low-confidence field one that would *change the answer*? Emits `proceed` / `proceed-with-flags` / `ask-one-question`. |
 | 3 | **Schedule Reasoner** | **Deterministic, zero LLM** | Enumerate candidates → apply hard constraints, retaining rejections with reasons → score across four axes plus doctor-check and prime-time → apply urgency gate → rank → generate counterfactuals. |
 | 4 | **Explainer** | LLM phrasing over scorer-emitted facts, template fallback, faithfulness gate | Sees only the score components the reasoner produced. Structurally cannot invent a reason it was not given. |
 
@@ -108,18 +108,20 @@ quality?*
 | Component | Verdict |
 | --------- | ------- |
 | **Extractor** | **Yes** — and it is measured. The rules fallback scores materially lower than the LLM on the golden set; the eval reports exactly which phrasings it misses. |
-| **Verifier** | **No, as built.** It catches classes of error the extractor is blind to, but every check it performs is a lookup against a known world — is this date past? does this provider hold this credential? A model would answer those with more latency and less reliability, so only the deterministic implementation exists. |
+| **Verifier** | **Yes, and it is now measured.** The rules catch what can be enumerated — a past date, a provider who does not exist, a credential mismatch. They cannot catch a *semantic* mismatch, because there is no list to check it against. Live, the model reads *"my crown fell off, can I get a cleaning?"* and returns "you mentioned a fallen-off crown, so you likely need a crown fitting or exam, not a cleaning." No lookup finds that. The rules still run underneath as the floor, so the model can add to the picture and never subtract from it. |
 | **Explainer** | **Arguable.** Templates deliver roughly 90% of the value; the LLM buys naturalness and avoids combinatorial template explosion. The template always runs as fallback. |
 | **Reasoner** | **No** — it would be strictly worse. That is why it is not one. |
 
-**Implementation seam:** every agent is a `Protocol`, and the extractor and explainer each have two
-implementations — LLM and deterministic — so the system runs fully offline by swapping them, and the
-evaluation harness quantifies exactly what is lost when it does.
+**Implementation seam:** every agent is a `Protocol` with two implementations — LLM and
+deterministic — satisfying NFR-28 in full. The product **ships live**: extraction, verification and
+explanation all call a model by default, because a capability nobody sees working is a capability
+nobody believes.
 
-The verifier has **one**: the rules implementation, for the reason in the table above. That is an
-exception to NFR-28's "every agent", recorded in `known-limitations.md` §13 rather than papered
-over. The Protocol is in place, so the second implementation costs nothing to add if the checks ever
-stop being lookups.
+The deterministic implementations are the **fallback**, not the default. Degradation is automatic
+and layered: no key, no network, a timeout or a refusal drops a stage to committed fixtures, and a
+fixture miss drops it to rules. Silent to the operator, loud in the trace (NFR-16), and the header
+always names which path answered. So the offline guarantee survives without costing the demo its
+point.
 
 ---
 

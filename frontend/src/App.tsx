@@ -43,11 +43,23 @@ function ReferenceBar() {
       <strong className="font-semibold">Reference date:</strong>
       <span>{now}</span>
 
+      {/* Which path answered, never a guess (FR-105). Live is the shipped default;
+          "Offline" means the model was unreachable and the deterministic fallbacks
+          answered instead -- a degraded state, so it is styled as one. */}
       <span
         className="rounded px-2 py-0.5 text-xs"
-        style={{ background: "var(--page)", color: "var(--ink-soft)" }}
+        style={
+          data?.network === "offline"
+            ? { background: "var(--warn-bg, #fdf3d7)", color: "var(--warn-ink, #6b4e00)" }
+            : { background: "var(--page)", color: "var(--ink-soft)" }
+        }
+        title={
+          data?.network === "offline"
+            ? "No model in use: answers come from committed fixtures and deterministic rules."
+            : "Extraction, verification and explanation are running against the live model."
+        }
       >
-        {data?.network === "offline" ? "Offline · fixtures" : "Live model"}
+        {data?.network === "offline" ? "Offline · fixtures (degraded)" : "Live models"}
       </span>
       {data?.opik_enabled === false && (
         <span className="text-xs" style={{ color: "var(--ink-soft)" }}>

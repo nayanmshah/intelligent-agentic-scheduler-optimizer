@@ -1,13 +1,13 @@
 {
   "appointment_type": {
-    "confidence": 0.3,
+    "confidence": 0.2,
     "derived": true,
-    "derived_rule": "no procedure or symptom stated; default routine cleaning",
+    "derived_rule": "no procedure or symptom stated; defaulted to routine cleaning",
     "span": null,
     "value": "prophy_adult"
   },
   "date_range": {
-    "confidence": 0.5,
+    "confidence": 0.4,
     "derived": true,
     "derived_rule": "no date stated; default reference date through +14 days",
     "span": null,
@@ -45,9 +45,9 @@
   },
   "request_text": "I can't do Wednesdays or Fridays",
   "time_window": {
-    "confidence": 0.5,
+    "confidence": 0.4,
     "derived": true,
-    "derived_rule": "no time stated; open to close",
+    "derived_rule": "no time stated; open to full day",
     "span": null,
     "value": {
       "end_min": null,
@@ -57,7 +57,7 @@
   "urgency": {
     "confidence": 0.4,
     "derived": true,
-    "derived_rule": "no urgency cues in text; default routine",
+    "derived_rule": "no urgency cues in text",
     "span": null,
     "value": "routine"
   }

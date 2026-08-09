@@ -1,13 +1,9 @@
 {
   "appointment_type": {
     "confidence": 0.25,
-    "derived": false,
-    "derived_rule": null,
-    "span": {
-      "end": 15,
-      "start": 10,
-      "text": "short"
-    },
+    "derived": true,
+    "derived_rule": "'something short' names no procedure; defaulted to shortest exam slot",
+    "span": null,
     "value": "limited_exam"
   },
   "date_range": {
@@ -27,7 +23,7 @@
   "exclusions": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "No weekday exclusions stated",
+    "derived_rule": "no weekday exclusions stated",
     "span": null,
     "value": {
       "dates": [],
@@ -40,7 +36,7 @@
   "provider_preference": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "No provider mentioned",
+    "derived_rule": "no provider mentioned",
     "span": null,
     "value": null
   },
@@ -48,7 +44,7 @@
   "time_window": {
     "confidence": 0.3,
     "derived": true,
-    "derived_rule": "'between my meetings' gives no concrete clock times; left open",
+    "derived_rule": "'between my meetings' gives no concrete window; left open",
     "span": null,
     "value": {
       "end_min": null,
@@ -58,7 +54,7 @@
   "urgency": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "No urgency language; default routine",
+    "derived_rule": "no urgency language; defaulted to routine",
     "span": null,
     "value": "routine"
   }

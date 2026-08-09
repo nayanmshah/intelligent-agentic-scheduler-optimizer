@@ -12,6 +12,7 @@ Five checks, each with an id so a firing names *which* one failed:
   F3  <= 25 words
   F4  no banned hedge or negation tokens
   F5  the resolved date and time are echoed exactly
+  F6  the sentence does not claim the appointment is already booked
 
 On failure the template rendering is substituted **silently**, and the firing is
 logged (FR-063). The operator never sees an error; the trace panel shows it.
@@ -38,6 +39,17 @@ AXIS_CLAIMS: dict[Axis, tuple[str, ...]] = {
 
 _CAPITALISED = re.compile(r"\b[A-Z][a-z]{2,}\b")
 
+#: Phrases that assert the appointment exists. An offer is not a booking, and a
+#: coordinator reading "you're booked for Wednesday" has told a patient something
+#: untrue on the practice's behalf. Found live: the model wrote "You're booked for a
+#: Cleaning on Wednesday" and every other check passed it.
+_ASSERTS_BOOKED = re.compile(
+    r"\b(you(?:'re| are)\s+(?:booked|scheduled|all set|confirmed|in)"
+    r"|we(?:'ve| have)\s+(?:booked|scheduled|reserved)"
+    r"|your appointment is|see you (?:on|at))\b",
+    re.I,
+)
+
 
 @dataclass(frozen=True, slots=True)
 class GateResult:
@@ -55,7 +67,14 @@ def check(sentence: str, rationale: Rationale) -> GateResult:
     known |= {w.lower() for e in facts.entities() for w in e.split()}
     known |= {"i", "we", "you", "your", "the", "a", "an", "and", "but", "though",
               "at", "on", "in", "with", "for", "is", "it", "not", "am", "pm"}
-    for word in _CAPITALISED.findall(sentence):
+    # The first word of a sentence is capitalised because it starts a sentence, not
+    # because it names anything. Checking it rejected "Would Monday the 10th work for
+    # you?" for "naming" Would -- so almost every well-formed question failed, every
+    # sentence fell back to the template, and the model looked useless.
+    for match in _CAPITALISED.finditer(sentence):
+        if match.start() == 0:
+            continue
+        word = match.group(0)
         if word.lower() not in known:
             return GateResult(False, "F1", f"names {word!r}, which is not in the fact set")
 
@@ -85,5 +104,12 @@ def check(sentence: str, rationale: Rationale) -> GateResult:
     for required in (facts.weekday, facts.date_display, facts.start_display):
         if required.lower() not in low:
             return GateResult(False, "F5", f"missing {required!r}")
+
+    # F6 -- an offer is not a booking. The prompt forbids this too, but a prompt is a
+    # request and a gate is a guarantee; this is the one failure that reaches a
+    # patient as a false statement rather than an awkward one.
+    hit = _ASSERTS_BOOKED.search(sentence)
+    if hit:
+        return GateResult(False, "F6", f"claims the appointment exists: {hit.group(0)!r}")
 
     return GateResult(True)

@@ -15,8 +15,8 @@
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 39,
-      "start": 30,
+      "end": 40,
+      "start": 31,
       "text": "Wednesday"
     },
     "value": {
@@ -25,7 +25,7 @@
     }
   },
   "exclusions": {
-    "confidence": 0.9,
+    "confidence": 0.8,
     "derived": true,
     "derived_rule": "no exclusions stated",
     "span": null,
@@ -40,7 +40,7 @@
   "provider_preference": {
     "confidence": 0.4,
     "derived": true,
-    "derived_rule": "'usual hygienist' does not name a provider in the list",
+    "derived_rule": "'usual hygienist' not named; cannot map to a provider id",
     "span": null,
     "value": null
   },
@@ -48,7 +48,7 @@
   "time_window": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "no time stated; full day open",
+    "derived_rule": "no time stated; open to full day",
     "span": null,
     "value": {
       "end_min": null,

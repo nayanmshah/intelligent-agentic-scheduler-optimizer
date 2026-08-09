@@ -1,23 +1,27 @@
 {
   "appointment_type": {
-    "confidence": 0.25,
+    "confidence": 0.3,
     "derived": true,
     "derived_rule": "no procedure or symptom stated; defaulted to routine cleaning",
     "span": null,
     "value": "prophy_adult"
   },
   "date_range": {
-    "confidence": 0.3,
-    "derived": true,
-    "derived_rule": "'after the holidays' is vague with no holiday near the reference date; fell back to default 14-day window",
-    "span": null,
+    "confidence": 0.35,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 27,
+      "start": 9,
+      "text": "after the holidays"
+    },
     "value": {
-      "end": "2026-08-24",
-      "start": "2026-08-10"
+      "end": "2027-01-31",
+      "start": "2027-01-04"
     }
   },
   "exclusions": {
-    "confidence": 0.5,
+    "confidence": 0.9,
     "derived": true,
     "derived_rule": "no weekday exclusions stated",
     "span": null,
@@ -30,9 +34,9 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.5,
+    "confidence": 0.9,
     "derived": true,
-    "derived_rule": "no provider mentioned",
+    "derived_rule": "no provider named",
     "span": null,
     "value": null
   },
@@ -40,7 +44,7 @@
   "time_window": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "no time of day stated; open to any time",
+    "derived_rule": "no time stated; open to any time",
     "span": null,
     "value": {
       "end_min": null,

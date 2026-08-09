@@ -44,15 +44,19 @@ class Settings(BaseSettings):
     static_dir: Path = BACKEND_ROOT / "static"
 
     # -- agent implementations (ADR-03; one registry reads these) ---------------
-    llm_mode: str = "fixtures"  # fixtures | live | rules
+    # **Live by default.** Every role that a model makes better uses one, and the
+    # deterministic implementation is the *fallback* rather than the default. Running
+    # the model only when asked meant the product's headline capability was the one
+    # thing a reader never saw working.
+    #
+    # Degradation is automatic and layered, so this costs no reliability: no key, no
+    # network, a timeout or a refusal drops to committed fixtures, and a fixture miss
+    # drops to rules. Silent to the operator, loud in the trace (NFR-16), and the
+    # header always says which path answered.
+    llm_mode: str = "live"  # live | fixtures | rules
     extractor: str = "llm"  # llm | rules
-    # Rules only. The `ConstraintVerifier` Protocol admits an LLM implementation and
-    # none is built -- the checks it performs (is the date past? does this provider
-    # exist and hold this credential?) are lookups against the world, and a model
-    # would add latency and a failure mode to answer them less reliably. NFR-28 is
-    # therefore unmet for this one role, deliberately; see known-limitations.md §13.
-    verifier: str = "rules"
-    explainer: str = "template"  # llm | template
+    verifier: str = "llm"  # llm | rules
+    explainer: str = "llm"  # llm | template
     reasoner: str = "deterministic"  # deterministic | naive
 
     # -- models, per stage (ADR-15) ---------------------------------------------
@@ -63,13 +67,21 @@ class Settings(BaseSettings):
     llm_max_tokens: int = 8192  # sized for thinking + output together [AR-02]
     prompt_version: str = "v1"
 
-    # -- the timeout ladder. Sum + deterministic budget must stay under NFR-02. --
-    timeout_extract: float = 2.2
-    timeout_verify: float = 0.9
-    timeout_explain: float = 0.9
+    # -- the timeout ladder ------------------------------------------------------
+    # Measured, not guessed: live extraction runs ~7.3s at p50 against this schema
+    # (six fields, each with a confidence and a verbatim span -- FR-003 is what makes
+    # the payload large, and the interpretation strip is why it is worth it).
+    #
+    # The original 2.2s budget was set before that measurement and could not be met,
+    # so every live request timed out into the fallback -- the ladder "worked" by
+    # never running the model. These are the numbers that let it actually run; the
+    # honest cost is in known-limitations.md §12.
+    timeout_extract: float = 20.0
+    timeout_verify: float = 12.0
+    timeout_explain: float = 15.0
     deterministic_budget: float = 0.3
     overhead_budget: float = 0.2
-    live_latency_ceiling: float = 5.0
+    live_latency_ceiling: float = 50.0
 
     # -- scheduling policy ------------------------------------------------------
     search_horizon_days: int = 14  # [A-09]

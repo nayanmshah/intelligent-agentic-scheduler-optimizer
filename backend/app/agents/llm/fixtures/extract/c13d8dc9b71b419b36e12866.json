@@ -1,0 +1,65 @@
+{
+  "appointment_type": {
+    "confidence": 0.85,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 8,
+      "start": 0,
+      "text": "cleaning"
+    },
+    "value": "prophy_adult"
+  },
+  "date_range": {
+    "confidence": 0.85,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 40,
+      "start": 31,
+      "text": "Wednesday"
+    },
+    "value": {
+      "end": "2026-08-12",
+      "start": "2026-08-12"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.9,
+    "derived": true,
+    "derived_rule": "no exclusions stated",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.9,
+    "derived": true,
+    "derived_rule": "no provider named",
+    "span": null,
+    "value": null
+  },
+  "request_text": "cleaning ../../../../etc/passwd Wednesday",
+  "time_window": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "no time stated; open to full day",
+    "span": null,
+    "value": {
+      "end_min": null,
+      "start_min": null
+    }
+  },
+  "urgency": {
+    "confidence": 0.7,
+    "derived": true,
+    "derived_rule": "routine cleaning implies no urgency",
+    "span": null,
+    "value": "routine"
+  }
+}

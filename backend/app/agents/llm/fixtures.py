@@ -4,9 +4,15 @@ That keeps "which implementation ran?" a two-value question, and it means the fi
 path and the live path are byte-identical in everything except where the JSON came
 from.
 
-Fixture mode is the **default**, never an implicit fallback (FR-006): live access is
-an explicit opt-in. The cache key includes the request text, the model id and the
-prompt version, so changing any of the three invalidates only its own fixtures.
+**Live mode does not read this cache.** Serving a recorded answer while the header
+says "Live model" would make the product's headline capability invisible precisely when
+someone is watching it -- a demo request that happened to match a fixture would never
+reach the model. In live mode the cache is write-through: every call is real, and the
+recording is a by-product that keeps offline mode possible.
+
+Reading resumes in fixture mode, which is the degraded path (no key, no network) rather
+than the default. The cache key includes the request text, the model id and the prompt
+version, so changing any of the three invalidates only its own fixtures.
 """
 
 from __future__ import annotations
@@ -66,14 +72,18 @@ class FixtureCachedExtractor:
     """
 
     def __init__(self, inner: Any, store: FixtureStore, model: str, prompt_version: str,
-                 record: bool = False, allow_network: bool = False) -> None:
+                 record: bool = False, allow_network: bool = False,
+                 read_cache: bool = True) -> None:
         self._inner = inner
         self._store = store
         self._model = model
         self._prompt_version = prompt_version
         self._record = record
         self._allow_network = allow_network
-        self.name = f"fixtures({inner.name})"
+        self._read_cache = read_cache
+        #: What the header reports. In live mode the cache is write-only, so calling
+        #: this "fixtures(llm)" would misdescribe which path answered.
+        self.name = inner.name if not read_cache else f"fixtures({inner.name})"
         self.misses = 0
 
     async def extract(
@@ -83,9 +93,10 @@ class FixtureCachedExtractor:
             stage="extract", text=text, model=self._model,
             prompt_version=self._prompt_version, patient=patient.id if patient else None,
         )
-        cached = self._store.get("extract", key)
-        if cached is not None:
-            return RequestConstraints(**cached)
+        if self._read_cache:
+            cached = self._store.get("extract", key)
+            if cached is not None:
+                return RequestConstraints(**cached)
 
         self.misses += 1
         if not self._allow_network:

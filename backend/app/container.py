@@ -86,10 +86,18 @@ class AppContainer:
             sink=self.sink,
         )
 
+    #: Cached properties that close over session state. Every one of them must be
+    #: dropped on reset, or the object graph splits: the orchestrator keeps the
+    #: pre-reset reasoner while a fresh one is built for replay, and the two disagree
+    #: about the world. That is exactly how byte-identical replay (FR-088) started
+    #: failing -- caught by making the API tests independent, not by a replay test.
+    _STATE_DEPENDENT = ("reasoner", "orchestrator")
+
     def reset(self) -> None:
         """Restore the reference dataset. Traces deliberately survive (FR-072)."""
         self.state.reset()
-        self.__dict__.pop("reasoner", None)
+        for name in self._STATE_DEPENDENT:
+            self.__dict__.pop(name, None)
 
     def describe(self) -> dict[str, object]:
         """What pre-flight reports. Any red item is named, never merely counted."""

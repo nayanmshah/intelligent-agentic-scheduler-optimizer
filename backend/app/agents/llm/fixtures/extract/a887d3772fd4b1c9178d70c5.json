@@ -2,7 +2,7 @@
   "appointment_type": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "no procedure named; hygienist requested suggests routine cleaning",
+    "derived_rule": "No procedure stated; hygienist preference implies routine cleaning",
     "span": null,
     "value": "prophy_adult"
   },
@@ -23,7 +23,7 @@
   "exclusions": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "no exclusions stated",
+    "derived_rule": "No exclusions stated",
     "span": null,
     "value": {
       "dates": [],
@@ -62,7 +62,7 @@
   "urgency": {
     "confidence": 0.6,
     "derived": true,
-    "derived_rule": "no urgency cues; default routine",
+    "derived_rule": "No urgency cues; default routine",
     "span": null,
     "value": "routine"
   }

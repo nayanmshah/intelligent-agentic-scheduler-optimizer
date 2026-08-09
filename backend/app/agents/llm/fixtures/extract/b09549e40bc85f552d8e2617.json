@@ -42,7 +42,7 @@
   },
   "request_text": "I need something first thing tomorrow, it's urgent",
   "time_window": {
-    "confidence": 0.8,
+    "confidence": 0.75,
     "derived": false,
     "derived_rule": null,
     "span": {

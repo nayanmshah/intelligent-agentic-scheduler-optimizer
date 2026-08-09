@@ -1,4 +1,4 @@
-.PHONY: demo dev test coverage mutants eval fit seed check audit preflight install frontend fixtures release clean
+.PHONY: demo dev test test-live coverage mutants eval eval-live fit seed check audit preflight install frontend fixtures release clean
 
 UV      ?= uv
 PY      ?= $(UV) run python
@@ -22,9 +22,15 @@ demo: install frontend
 dev: install
 	$(UV) run uvicorn app.main:app --reload --host 127.0.0.1 --port $(PORT)
 
-## test --- the full suite, offline
+## test --- the deterministic suite. Fast, free, no network. Excludes `live`.
 test: install
-	$(UV) run pytest -q
+	$(UV) run pytest -q -m "not live"
+
+## test-live --- the shipped configuration, against the real API. Costs money.
+##   The product runs live-first, so this is the suite that tests what ships.
+test-live: install
+	@test -n "$$ANTHROPIC_API_KEY" || { echo "  ANTHROPIC_API_KEY is not set"; exit 1; }
+	$(UV) run pytest -q -m live tests/live
 
 ## check --- lint + types + structural guards
 check: install
@@ -35,6 +41,11 @@ check: install
 ## eval --- golden-set harness -> scorecard + exit code (FR-092..FR-101)
 eval: install
 	$(PY) -m app.eval.run
+
+## eval-live --- the scorecard against the real API. 54 calls, billed.
+eval-live: install
+	@test -n "$$ANTHROPIC_API_KEY" || { echo "  ANTHROPIC_API_KEY is not set"; exit 1; }
+	$(PY) -m app.eval.run --live
 
 ## fit --- fit the weight vector to the golden labels (FR-098)
 fit: install

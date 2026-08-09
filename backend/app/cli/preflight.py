@@ -63,7 +63,14 @@ def run_preflight(container: AppContainer | None = None) -> PreflightReport:
     r = PreflightReport()
 
     r.add("reference clock", OK, s.reference_now.isoformat())
-    r.add("network mode", OK, "offline (fixtures)" if s.offline else "LIVE -- opt-in")
+    # Live is the shipped default; fixtures are the fallback. The wording used to say
+    # "LIVE -- opt-in", which was true when offline was the default and is now exactly
+    # backwards -- and this line is the one an operator reads to know which is running.
+    r.add(
+        "network mode",
+        OK,
+        "LIVE -- models in use" if not s.offline else "offline (fixtures) -- degraded",
+    )
 
     if s.offline:
         r.add("api key", OK, "not required offline")

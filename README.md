@@ -22,13 +22,17 @@ explainable.
 make demo          # cold start to a usable UI at http://127.0.0.1:8000
 ```
 
-One command. No API key, no network, no manual steps — the model calls are served from
-fixtures recorded once and committed. Everything below is optional.
+One command. **Set `ANTHROPIC_API_KEY` and three of the four agent roles run against a
+live model** — extraction, verification and explanation. Without a key it still boots
+and answers every request, degrading to committed fixtures and then to deterministic
+rules, with the header naming which path answered.
 
 ```bash
-make test          # the full suite, offline
+make test          # the deterministic suite: fast, free, no network
+make test-live     # the shipped configuration, against the real API
 make check         # lint + types + structural guards
-make eval          # golden-set scorecard, with an exit code
+make eval          # golden-set scorecard (fixtures: reproducible, free)
+make eval-live     # the same scorecard against the real API
 make release       # 3 cold starts with the network blocked (see below)
 make audit         # known-CVE scan over both dependency trees
 make coverage      # line coverage by module
@@ -36,7 +40,8 @@ make mutants       # mutation testing over the decision core
 make fixtures      # re-record LLM fixtures. Online, deliberate, once.
 ```
 
-**Requires** `uv` (pins Python 3.12) and Node 20+. Nothing else.
+**Requires** `uv` (pins Python 3.12) and Node 20+. An `ANTHROPIC_API_KEY` in `.env`
+enables the live path; nothing else is needed.
 
 **The dataset's today is Monday 2026-08-10**, shown in the header on every screen.
 `NOW` is injected rather than read from the system clock — the seed covers
@@ -78,16 +83,16 @@ much closer to *earliest-first* than to a weighted trade-off. The reasoning, and
 honest fix, are in [`docs/known-limitations.md`](docs/known-limitations.md) rather than
 omitted.
 
-**Extraction** is 96.3% (rules) vs 94.8% (LLM) overall — close, and they fail
+**Extraction** is 96.3% (rules) vs 93.8% (LLM, measured live) overall — close, and they fail
 differently: the model is 7.4 points better at reading clinical intent from symptom
 language, and worse at citing provenance for what it inferred. Full table and the
 convention bias in the same document.
 
-**Live extraction takes 7.3s at p50 against a 2.2s budget for that stage** (measured,
-on both Opus 5 and Sonnet 5; adaptive thinking accounts for 0.1s of it). Committed
-fixtures are therefore load-bearing rather than a convenience, and rules-mode is the
-shipped default on latency grounds. What would actually close the gap is written down
-rather than hand-waved.
+**A live request takes ~16 seconds** — ~7s extract, ~4s verify, ~5s explain, sequential
+because each stage needs the last one's output. That misses the original sub-5s target,
+and it ships live regardless: a demo of an agentic system that runs no agents is not a
+demo of an agentic system. The four routes that would actually close the gap are written
+down rather than hand-waved.
 
 ---
 
@@ -95,12 +100,16 @@ rather than hand-waved.
 
 ```
 request text
-   ↓  Intent Extractor      LLM  +  deterministic fallback  +  committed fixtures
-   ↓  Constraint Verifier   validates against the world, never sees the schedule
+   ↓  Intent Extractor      LLM   → fixtures → rules
+   ↓  Constraint Verifier   LLM   → rules            (never sees the schedule)
    ↓  Schedule Reasoner     DETERMINISTIC, zero LLM — enumerate, filter, score, rank
-   ↓  Explainer             LLM phrasing over scorer-emitted facts, gated + linted
+   ↓  Explainer             LLM   → template          (behind a 6-check faithfulness gate)
 three ranked offers
 ```
+
+Three of the four roles call a model on every request. The fourth never does, and that
+is the point: a model driving enumeration would miss candidates and make *"did it miss
+anything?"* unanswerable.
 
 Each of the four roles satisfies a `Protocol` with **two implementations**, one of
 which needs no network. That is what makes the offline guarantee structural rather than
@@ -132,9 +141,9 @@ the socket layer** — the server, the harness, the CLI. "Works offline" is enfo
 the harness, not asserted by the author, and the guard itself is verified to bite.
 See [`docs/release-verification.md`](docs/release-verification.md).
 
-218 tests · 78% line coverage · 53.1% mutation score over the decision core · lint and
-types clean · zero known CVEs in either dependency tree (`make audit`) · determinism
-checked on every eval run.
+219 deterministic tests + 8 live · 78% line coverage · 53.1% mutation score over the
+decision core · lint and types clean · zero known CVEs in either dependency tree
+(`make audit`) · determinism checked on every fixture-mode eval run.
 
 ---
 
