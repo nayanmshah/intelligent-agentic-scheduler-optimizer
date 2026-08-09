@@ -27,6 +27,7 @@ from app.domain.policy import WeightProfile
 from app.domain.request import RequestConstraints
 from app.orchestrator.stages import run_stage
 from app.reasoner.hypotheses import run_fanout
+from app.trace import payloads
 from app.trace.sink import FanOutTraceSink, Tracer
 
 
@@ -57,9 +58,8 @@ class Orchestrator:
         profile: WeightProfile,
         progress: Any = None,
     ) -> DecisionRecord:
-        """``progress``: an extra ``TraceSink`` that sees each span as it closes, so a
-        caller can show the pipeline working during the ~15s a live request takes.
-        Reuses the existing spans; nothing changes when it is None."""
+        """``progress``: an extra ``TraceSink`` seeing each span as it closes, so a
+        caller can stream the pipeline's progress. Nothing changes when it is None."""
         s = self.settings
         rid = req.request_id or uuid.uuid4().hex[:12]
         tracer = Tracer(FanOutTraceSink(self.sink, progress) if progress else self.sink)
@@ -75,15 +75,17 @@ class Orchestrator:
                 timeout=s.timeout_extract,
                 implementation=self.agents.extractor.name,
                 model=s.model_extract,
+                input={"request": req.text},
+                describe=payloads.constraints_out,
             )
             constraints: RequestConstraints = stage.value
             if stage.fallback_fired:
                 fallbacks.append("extract")
 
-            # 2. VERIFY, split in two (ADR-21). The deterministic floor answers
-            # everything the *reasoner* needs (hypotheses, world-validity flags) in
-            # under a millisecond; the model's semantic pass only ADDS flags, so it
-            # runs concurrently with reason+explain instead of gating them.
+            # 2. VERIFY, split in two (ADR-21). The deterministic floor answers what
+            # the *reasoner* needs -- hypotheses, world-validity flags -- in under a
+            # millisecond; the model's semantic pass only ADDS flags, so it runs
+            # concurrently with reason+explain rather than gating them.
             floor = await self.agents.rules_verifier.verify(constraints, self.world, now)
             verify_task = asyncio.create_task(run_stage(
                 tracer, "verify",
@@ -92,26 +94,27 @@ class Orchestrator:
                 timeout=s.timeout_verify,
                 implementation=self.agents.verifier.name,
                 model=s.model_verify,
+                input=payloads.constraints_in(constraints),
+                describe=payloads.verdict_out,
             ))
 
             # 3. REASON -- deterministic, once per hypothesis, sharing Layer 0 --
             with tracer.span("reason", hypotheses=len(floor.hypotheses)) as span:
+                span.attrs["input"] = payloads.constraints_in(constraints)
                 fan = run_fanout(
                     self.reasoner, constraints, floor.hypotheses, now, profile, rid
                 )
                 span.attrs["shared_layer0"] = fan.shared_layer0
-                span.attrs["diverged"] = fan.diverged
+                span.attrs["output"] = payloads.reason_out(fan)
 
             # 4+5. EXPLAIN, with the model verify landing in parallel ------------
             outcome, gates = await explain_outcome(tracer, fan.resolved, self.agents.explainer)
             stage = await verify_task
-            verdict = stage.value
             if stage.fallback_fired:
                 fallbacks.append("verify")
-
             question = fan.question(floor.hypotheses[0].field).text if fan.diverged else None
             return self._record(
-                rid, tracer, req, constraints, outcome, profile, fallbacks, verdict,
+                rid, tracer, req, constraints, outcome, profile, fallbacks, stage.value,
                 question, gates, self.agents.llm_call_count() - calls_before,
             )
 

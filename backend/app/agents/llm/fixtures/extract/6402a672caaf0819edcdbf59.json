@@ -7,14 +7,10 @@
     "value": "prophy_adult"
   },
   "date_range": {
-    "confidence": 0.95,
-    "derived": false,
-    "derived_rule": null,
-    "span": {
-      "end": 24,
-      "start": 15,
-      "text": "next week"
-    },
+    "confidence": 0.9,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
     "value": {
       "end": "2026-08-21",
       "start": "2026-08-17"
@@ -34,13 +30,13 @@
       "provider_ids": [],
       "time_ranges": [],
       "weekdays": [
-        1
+        2
       ]
     }
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 1.0,
+    "confidence": 0.9,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -48,7 +44,7 @@
   },
   "request_text": "Whatever works next week, I have PT on Tuesdays",
   "time_window": {
-    "confidence": 1.0,
+    "confidence": 0.9,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,

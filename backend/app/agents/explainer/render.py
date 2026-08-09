@@ -16,6 +16,7 @@ from dataclasses import replace
 from app.agents.explainer import template
 from app.domain.candidate import RejectionGroup
 from app.domain.decision import Offer, ReasonerOutcome
+from app.trace import payloads
 
 
 def render_offer(offer: Offer) -> Offer:
@@ -56,11 +57,16 @@ async def explain_outcome(tracer, outcome: ReasonerOutcome, explainer):  # type:
         span.attrs["model"] = getattr(explainer, "model_id", None)
         outcome = render_outcome(outcome)
         span.attrs["implementation"] = explainer.name
+        # The facts the explainer may use, shown beside the sentences it wrote, so
+        # the faithfulness claim is checkable by eye and not only by the gate.
+        span.attrs["input"] = payloads.rationales_in(outcome)
         if explainer.name == "template":
             span.attrs["gate_fired"] = 0
+            span.attrs["output"] = payloads.sentences_out(outcome, 0)
             return outcome, 0
 
         outcome, fired = await apply_llm_prose(outcome, explainer)
+        span.attrs["output"] = payloads.sentences_out(outcome, fired)
         # Loud in the trace, silent to the operator (NFR-16). A firing rate of exactly
         # zero forever means the gate is not running, not that the model is perfect.
         span.attrs["gate_fired"] = fired

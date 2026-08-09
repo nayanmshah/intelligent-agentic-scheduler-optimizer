@@ -1,14 +1,14 @@
 {
   "appointment_type": {
-    "confidence": 0.85,
+    "confidence": 0.7,
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 17,
-      "start": 3,
-      "text": "crown fell off"
+      "end": 39,
+      "start": 19,
+      "text": "can I get a cleaning"
     },
-    "value": "crown_seat"
+    "value": "prophy_adult"
   },
   "date_range": {
     "confidence": 0.5,
@@ -21,7 +21,7 @@
     }
   },
   "exclusions": {
-    "confidence": 1.0,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -57,8 +57,8 @@
     "derived_rule": null,
     "span": {
       "end": 17,
-      "start": 3,
-      "text": "crown fell off"
+      "start": 0,
+      "text": "My crown fell off"
     },
     "value": "urgent"
   }

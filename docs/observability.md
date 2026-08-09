@@ -43,7 +43,7 @@ looking at.
 | **output** | the offers (when, provider, reason, score), any flags, any question |
 | **metadata** | funnel counts, `llm_calls`, `gate_fired`, weight profile, origin state |
 | **tags** | `fallback:<stage>`, `gate-fired`, `asked-a-question`, `limited-availability`, the origin state |
-| **spans** | `extract` · `verify` · `reason` · `explain`, each with duration and implementation |
+| **spans** | `extract` · `verify` · `reason` · `explain`, each with its **real input and output** |
 
 Model stages are typed `llm` and carry the model id, so Opik's own cost and latency
 views work without being told anything extra. `reason` is typed `general` — it is
@@ -52,6 +52,27 @@ deterministic and calls nothing.
 The tags are chosen to be *worth filtering by*: degradation, gate firings, and
 questions are the three things you would actually pull up on their own. A tag that is
 always present is a tag nobody uses.
+
+### What each span carries
+
+Built by [`app/trace/payloads.py`](../backend/app/trace/payloads.py) — summaries, not
+dumps, and cheap enough to sit on the request path.
+
+| Span | Input | Output |
+| :--- | :---- | :----- |
+| `extract` | the patient's words | the six resolved fields, plus **which of them were quoted** from the request rather than inferred (FR-003) |
+| `verify` | the words *and* the reading, because the verifier's job is to compare them | outcome, flags, hypotheses, any question |
+| `reason` | the reading | the **funnel** (`3348 → 13392 → 128 → 3`) and the top rejection causes |
+| `explain` | the facts the explainer was allowed to use — and nothing else (FR-059) | each sentence with its `source`: `model` if the gate accepted the rewrite, `template` if it rejected it |
+
+> The first version put a *description of the stage* in `input` and the *name of the
+> implementation* in `output`. That is a label and a config value: instrumented-looking
+> and useless. Four tests now assert each span records what it actually received and
+> produced, and a fifth asserts the summarisers tolerate a stage that failed — which is
+> when its span matters most.
+
+Putting the explainer's fact set beside its sentences is the part worth demoing: it
+makes the faithfulness claim checkable **by eye**, not only by the gate.
 
 ### Why spans are buffered
 

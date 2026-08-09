@@ -31,7 +31,8 @@ from app.trace.sink import Span
 #: Stages that call a model. Typed ``llm`` in Opik so its cost/latency views light up.
 _LLM_STAGES = {"extract", "verify", "explain"}
 
-#: What each stage is doing, for a reader who has never seen this codebase.
+#: Fallback only: used when a stage has not been taught to summarise its own
+#: payloads. Real input/output comes from ``app.trace.payloads``.
 _STAGE_DESCRIPTIONS = {
     "extract": "patient's words -> typed constraints with source spans",
     "verify": "checks the reading against the world; never sees the schedule",
@@ -190,6 +191,16 @@ class OpikTraceSink:
         for s in spans:
             end = cursor + timedelta(milliseconds=s.duration_ms)
             attrs = dict(s.attrs)
+            # The stage's real payloads (see app.trace.payloads). An "input" that
+            # describes the stage and an "output" naming the implementation are a
+            # label and a config value -- not input and output. The descriptions
+            # below are a fallback for any stage not yet taught to summarise itself.
+            span_in = attrs.pop("input", None) or {
+                "stage": _STAGE_DESCRIPTIONS.get(s.stage, s.stage)
+            }
+            span_out = attrs.pop("output", None) or {
+                "implementation": attrs.get("implementation")
+            }
             # start_time and end_time are supplied at creation, so no .end() call is
             # needed -- and calling it here would risk the batcher shipping an update
             # for a span it has not yet created (the SDK warns about exactly this).
@@ -199,8 +210,8 @@ class OpikTraceSink:
                 start_time=cursor,
                 end_time=end,
                 model=attrs.get("model"),
-                input={"description": _STAGE_DESCRIPTIONS.get(s.stage, s.stage)},
-                output={"implementation": attrs.get("implementation")},
+                input=span_in,
+                output=span_out,
                 metadata={"duration_ms": round(s.duration_ms, 1), **attrs},
             )
             cursor = end

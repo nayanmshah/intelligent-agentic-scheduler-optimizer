@@ -317,3 +317,82 @@ def test_an_ordinary_decision_carries_no_alarming_tags() -> None:
 
     tags = _decision_tags(_decision(origin_state=OfferState.OFFERED))
     assert tags == ["offered"]
+
+
+# ----------------------------------------------------------------- FR-086 ----
+# Span payloads. Every stage must record what it RECEIVED and what it PRODUCED.
+# The first version recorded a description of the stage as "input" and the name of
+# the implementation as "output" — a label and a config value, which is exactly the
+# shape that looks instrumented and tells you nothing.
+
+
+async def test_every_stage_span_records_real_input_and_output(container) -> None:
+    record = await container.orchestrator.run(
+        IncomingRequest(text="Whatever works next week, I have PT on Tuesdays", patient=None),
+        container.clock.now(),
+        container.state.active_profile,
+    )
+    spans = {s.stage: s for s in container.trace_store.spans_for(record.trace_id)}
+    assert {"extract", "verify", "reason", "explain"} <= set(spans)
+
+    for stage in ("extract", "verify", "reason", "explain"):
+        attrs = spans[stage].attrs
+        assert attrs.get("input"), f"{stage} span has no input payload"
+        assert attrs.get("output"), f"{stage} span has no output payload"
+
+
+async def test_the_extract_span_shows_the_words_in_and_the_reading_out(container) -> None:
+    """Including which fields were *quoted* from the request rather than inferred —
+    the whole claim of FR-003, visible in the trace instead of only in the strip."""
+    text = "Whatever works next week, I have PT on Tuesdays"
+    record = await container.orchestrator.run(
+        IncomingRequest(text=text, patient=None),
+        container.clock.now(),
+        container.state.active_profile,
+    )
+    span = next(s for s in container.trace_store.spans_for(record.trace_id) if s.stage == "extract")
+    assert span.attrs["input"] == {"request": text}
+    out = span.attrs["output"]
+    assert out["appointment_type"] and out["urgency"]
+    assert "quoted_from_the_request" in out
+
+
+async def test_the_reason_span_shows_the_funnel(container) -> None:
+    """The funnel is the product's answer to "did it miss anything?" — the reason
+    this span is worth opening at all."""
+    record = await container.orchestrator.run(
+        IncomingRequest(text="a cleaning on Thursday afternoon", patient=None),
+        container.clock.now(),
+        container.state.active_profile,
+    )
+    span = next(s for s in container.trace_store.spans_for(record.trace_id) if s.stage == "reason")
+    funnel = span.attrs["output"]["funnel"]
+    assert funnel["enumerated"] >= funnel["feasible"] >= funnel["offered"]
+    assert span.attrs["output"]["top_rejections"], "no rejection causes recorded"
+
+
+async def test_the_explain_span_shows_the_facts_beside_the_sentences(container) -> None:
+    """What makes the faithfulness claim checkable by eye and not only by the gate:
+    the facts the explainer was allowed to use, next to what it wrote, with the
+    source of each sentence named."""
+    record = await container.orchestrator.run(
+        IncomingRequest(text="a cleaning on Thursday afternoon", patient=None),
+        container.clock.now(),
+        container.state.active_profile,
+    )
+    span = next(s for s in container.trace_store.spans_for(record.trace_id) if s.stage == "explain")
+    assert span.attrs["input"]["facts_available"], "the explainer's fact set was not recorded"
+    sentences = span.attrs["output"]["sentences"]
+    assert sentences and all(s["text"] for s in sentences)
+    assert {s["source"] for s in sentences} <= {"model", "template"}
+
+
+def test_payload_helpers_tolerate_a_failed_stage() -> None:
+    """A stage that produced nothing is exactly when its span matters most, so the
+    summarisers must never be the thing that raises."""
+    from app.trace import payloads
+
+    assert "error" in payloads.constraints_out(None)
+    assert "error" in payloads.verdict_out(None)
+    assert payloads.constraints_in(None) == {}
+    assert "error" in payloads.reason_out(object())

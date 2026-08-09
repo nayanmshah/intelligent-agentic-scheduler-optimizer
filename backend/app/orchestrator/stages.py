@@ -32,6 +32,7 @@ async def run_stage[T](
     primary: Callable[[], Awaitable[T]],
     fallback: Callable[[], Awaitable[T]] | None,
     timeout: float,
+    describe: Callable[[T], Any] | None = None,
     **attrs: Any,
 ) -> StageResult:
     """Try the primary within its budget; fall back deterministically on any failure.
@@ -40,15 +41,25 @@ async def run_stage[T](
     refusal and a connection error all mean the same thing to the operator -- the
     request still needs answering -- and all mean the same thing to the trace: the
     deterministic path ran instead.
+
+    ``describe`` turns the stage's result into the span's ``output``. Without it a
+    span records only *that* a stage ran; with it, the trace shows what the stage
+    produced -- which is the only reason to open one.
     """
     with tracer.span(name, **attrs) as span:
+
+        def record(value: T) -> T:
+            if describe is not None:
+                span.attrs["output"] = describe(value)
+            return value
+
         if fallback is None:
             span.attrs["fallback_fired"] = False
-            return StageResult(await primary(), False, None)
+            return StageResult(record(await primary()), False, None)
         try:
             value = await asyncio.wait_for(primary(), timeout=timeout)
             span.attrs["fallback_fired"] = False
-            return StageResult(value, False, None)
+            return StageResult(record(value), False, None)
         except TimeoutError:
             reason = "timeout"
         except Exception as exc:
@@ -56,4 +67,4 @@ async def run_stage[T](
 
         span.attrs["fallback_fired"] = True
         span.attrs["fallback_reason"] = reason
-        return StageResult(await fallback(), True, reason)
+        return StageResult(record(await fallback()), True, reason)
