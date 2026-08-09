@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.9,
+    "confidence": 0.88,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -40,7 +40,7 @@
   "provider_preference": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "no provider named",
+    "derived_rule": "no provider mentioned",
     "span": null,
     "value": null
   },
@@ -60,9 +60,9 @@
     }
   },
   "urgency": {
-    "confidence": 0.8,
+    "confidence": 0.7,
     "derived": true,
-    "derived_rule": "routine hygiene request with no urgency language",
+    "derived_rule": "no urgency cues; routine cleaning default",
     "span": null,
     "value": "routine"
   }

@@ -259,11 +259,15 @@ verbatim before it is written (`make fixtures` refuses to record a fabricated sp
 The cache key includes the request text, the model id and the prompt version, so
 bumping any of the three invalidates only its own entries.
 
-This is also what makes the offline guarantee real: fixtures are the **default** source,
-not a fallback. A cache miss raises rather than silently reaching for the network —
-which it used to do, making "Offline · fixtures" on screen quietly untrue.
+Fixtures are the **fallback**, not the default — that inverted with ADR-20, and live mode
+deliberately does not read the cache at all. Serving a recording while the header says
+"Live models" would make the capability invisible exactly when someone is watching.
 
-### How do you know it really works offline?
+What the cache still guarantees is the degraded path: when the model is unreachable, a
+miss raises rather than silently reaching for the network — which it used to do, making
+"Offline · fixtures" on screen quietly untrue.
+
+### How do you know it still works when the model is unreachable?
 
 It is enforced, not asserted. `scripts/release-check.sh` runs the entire product —
 preflight, test suite, eval scorecard, HTTP server, real requests — with outbound

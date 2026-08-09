@@ -2,12 +2,12 @@
   "appointment_type": {
     "confidence": 0.5,
     "derived": true,
-    "derived_rule": "urgent unspecified need defaults to limited exam",
+    "derived_rule": "no treatment named; urgent same-day request defaults to limited exam",
     "span": null,
     "value": "limited_exam"
   },
   "date_range": {
-    "confidence": 0.97,
+    "confidence": 0.96,
     "derived": false,
     "derived_rule": null,
     "span": {

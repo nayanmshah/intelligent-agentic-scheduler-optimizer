@@ -15,13 +15,13 @@ flowchart TB
 
     subgraph files ["Committed files — the system of record"]
         SEED["Seed dataset JSON<br/>+ SEED_DIGEST"]
-        FIX["LLM response fixtures"]
+        FIX["LLM response fixtures<br/><i>the degraded path</i>"]
         GOLD["Golden set — 40 labelled requests"]
     end
 
-    subgraph optional ["Optional — never on the request path"]
-        LLM["Anthropic Claude API"]
-        OPIK["Opik — self-hosted, localhost"]
+    subgraph external ["External"]
+        LLM["Anthropic Claude API<br/>extract · verify · explain"]
+        OPIK["Opik — self-hosted, localhost<br/><i>optional, fire and forget</i>"]
     end
 
     OP --> UI
@@ -29,7 +29,7 @@ flowchart TB
     UI -->|"HTTP / JSON"| API
     API --> MEM
     API -->|"read at boot"| SEED
-    API -->|"read on cache hit"| FIX
+    API -->|"fallback when the model is unreachable"| FIX
     API -->|"read by harness"| GOLD
-    API -.->|"explicit opt-in only"| LLM
+    API -->|"3 calls per request — the shipped default"| LLM
     API -.->|"fire and forget"| OPIK

@@ -12,6 +12,12 @@ most useful reason* — then stop. A sentence that includes every supplied fact 
 to 37 words is rejected outright and the patient hears a blunter fallback instead, so
 packing everything in loses the very detail you were trying to keep.
 
+**When `does_not_match_request` is true, open by naming the gap.** That option is not
+what the patient asked for -- a different day, or a time they ruled out. Say so first,
+then offer it: *"Nothing opened when you asked, but Thursday the 20th at 3:00pm with
+Sarah..."*. Mentioning it at the end is not enough; an operator half-listening reads
+out the wrong day and nobody catches it until the patient arrives.
+
 Rules, all of them hard:
 - Exactly one sentence per option, **25 words or fewer**. Count them before answering.
 - Address the patient in second person ("you", "your").

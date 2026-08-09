@@ -81,7 +81,9 @@ async def apply_llm_prose(outcome: ReasonerOutcome, explainer) -> tuple[Reasoner
     if not cards:
         return outcome, 0
 
-    results = await explainer.render_with_gate([c.rationale for c in cards])
+    results = await explainer.render_with_gate(
+        [c.rationale for c in cards], [c.is_overflow for c in cards]
+    )
     fired = sum(1 for _, verdict in results if not verdict.ok)
 
     rewritten = [

@@ -179,7 +179,7 @@ eval harness (§7 UC-13). **Every one of them is readable directly from the prod
 | # | Metric | Current State | Target | How Measured |
 | - | :----- | :------------ | :----- | :----------- |
 | 1 | **Confirm-without-investigating rate** — the booked slot was in the offered top 3 and no calendar grid was opened | Manual: 0% (the grid is always opened) | **≥ 85%** | **Offline proxy:** top-3 hit rate against the human-preferred slot on the ~40-request golden set. **In-session:** a counter increments on every manual-grid open; the target state is a session in which the operator never opens the grid. Both surfaced on the eval scorecard. |
-| 2 | **Time-to-offer** — request submitted → three ranked options rendered | Manual: 45–90 s | **< 2 s in offline/fixture mode; < 5 s with a live LLM call** (p95 over the golden set) | Trace spans: `t(render) − t(submit)`, p50 and p95 reported per mode by the harness and shown in the trace panel per request. |
+| 2 | **Time-to-offer** — request submitted → three ranked options rendered | Manual: 45–90 s | **~16 s live (measured, the shipped path); < 2 s degraded call** (p95 over the golden set) | Trace spans: `t(render) − t(submit)`, p50 and p95 reported per mode by the harness and shown in the trace panel per request. |
 | 3 | **Schedule-quality delta vs. naive first-available** | Naive baseline computed by the harness over the same golden set | **Strictly better** on orphan-gap minutes created and on protected-block minutes consumed; **non-inferior** on human agreement | Harness runs both rankers over the golden set and emits a head-to-head table. **Where the delta is small for a request class, the harness reports it and names the class** — knowing where the product does not add value is part of the measurement, not an omission from it. |
 | 4 | **Consistency** — same request, same answer, every time | Staff-dependent; unmeasurable | **Byte-identical** | Harness runs the golden set twice in fixture mode and diffs the serialised `DecisionRecord`s; any diff fails the run. Also enforced in CI. |
 
@@ -206,8 +206,11 @@ Done is the conjunction of all of the following. Each is independently checkable
    the observability backend stopped.
 7. **The documentation package exists:** one architecture diagram, a demo script covering the
    reference scenarios, a design-rationale FAQ, and a known-limitations page.
-8. **Nothing that can fail independently is on the request path:** no network, no container, no
-   machine-clock dependency, no runtime data generation — and one command to boot.
+8. **Everything that can fail independently has a fallback on the request path.** The model is
+   called three times per request and any stage that fails drops to committed fixtures and then
+   to deterministic rules; no container, no machine-clock dependency, no runtime data generation
+   — and one command to boot. *(Restated with ADR-20. The original read "nothing that can fail
+   is on the request path", which was true when the model was opt-in and is not now.)*
 
 ---
 
@@ -274,7 +277,7 @@ IDs are added for traceability.
 | FastAPI endpoints + React three-card UI + editable interpretation strip + funnel counter | UC-01, UC-04, UC-07; §12 |
 | In-process trace store + replay panel | UC-12 |
 | Golden dataset (~40) + eval harness producing the scorecard | UC-13 |
-| One-command boot; runs fully offline | UC-14; NFR-08, NFR-09 |
+| One-command boot; live by default, still answers with no network | UC-14; NFR-08, NFR-09 |
 | Architecture diagram, demo script, design-rationale FAQ, known-limitations page | §13 deliverables; §14 |
 
 #### SHOULD — what makes it governable and provable
@@ -420,8 +423,9 @@ search that follows, and correct it in one click when it is wrong.
   schema-valid object. The harness reports rules-mode vs. LLM-mode per-field accuracy **as two
   numbers** (this comparison is the evidence for "why an LLM here at all"). *(MUST)*
 - **FR-006 — Cached fixtures.** Golden-set and demo-script requests SHALL have committed,
-  keyed LLM-response fixtures, used by default in offline mode.
-  **AC:** Fixture mode is the default; live LLM access is an explicit opt-in toggle, never implicit.
+  keyed LLM-response fixtures, used automatically when the model is unreachable.
+  **AC:** Live is the default; a fixture is served only when a live call fails, and the UI
+  names which path answered. *(Inverted from the original draft — see ADR-20.)*
   Cache key includes request text, model version string, and prompt version. *(MUST)*
 - **FR-007 — Editable interpretation strip.** The operator SHALL be able to edit any extracted
   field; editing SHALL re-run the deterministic pipeline only.
@@ -1299,10 +1303,12 @@ on a container runtime, or on what day it happens to be run.
   **AC:** Visible on every screen in both normal and presentation mode. *(MUST)* — *Design
   rationale: a user reading "Thursday the 13th" needs to know the dataset's today is Monday the
   10th, or every date on screen looks wrong.*
-- **FR-105 — Full offline operation by default.** The application SHALL boot and serve every MUST
-  requirement with no network access.
-  **AC:** **Verified end to end with networking disabled.** Live LLM access is a single explicit
-  opt-in; the UI shows which mode is active. *(MUST)*
+- **FR-105 — Full operation without the network.** The application SHALL boot and serve every MUST
+  requirement with no network access. **Live is the default**; this requirement is about what
+  survives when the model is unreachable, not about which path runs first.
+  **AC:** **Verified end to end with networking disabled** (`release-check.sh` Phase C). The UI
+  names which path answered on every screen, so a degraded run is never mistaken for a live
+  one. *(MUST)*
 - **FR-106 — One-command boot.** A single command (`make demo`) SHALL start everything needed.
   **AC:** Cold start from a clean machine state to a usable UI in **< 60 s**, executed as part of
   release verification. A pre-flight check reports backend, frontend, seed digest, reference clock,
@@ -1540,7 +1546,7 @@ the operator will reopen the calendar grid.
 
 | ID | Requirement | Acceptance |
 | :- | :---------- | :--------- |
-| **NFR-01** | **Time-to-offer < 2 s p95 in offline/fixture mode** | Measured by the harness over the golden set; enforced as a threshold in the scorecard |
+| **NFR-01** | **Time-to-offer < 2 s p95 in the degraded (fixture/rules) path** | Measured by the harness over the golden set; enforced as a threshold in the scorecard |
 | **NFR-02** | **Time-to-offer.** Fixture path < 2 s p95. **Live path: measured, not met — ~16 s end to end.** | The 5 s target was set before the live path was built and measured; it is not achievable with a provenance-carrying extraction schema (see below). It is restated as measured rather than quietly dropped, because "beyond ~5 s the human opens the calendar anyway" remains true and is the strongest argument for the work named in `known-limitations.md` §12: stream the response, split provenance off the critical path, or run rules-first and call the model only on disagreement. **Live is still the shipped default** — a capability nobody sees working is a capability nobody believes — and the fallback ladder means a slow or failed call degrades rather than breaks |
 | **NFR-03** | **Per-stage timeout and fallback ladder.** Every orchestrator stage has an explicit timeout; exceeding it triggers the deterministic fallback rather than failing the request | A forced-timeout test per LLM stage returns a complete response within the budget |
 | **NFR-04** | **Deterministic re-rank < 300 ms** (weight change, interpretation edit) with zero LLM calls | Measured; trace shows no LLM span |
@@ -1717,7 +1723,7 @@ feature** — each only fixes where a boundary sits.
 
 | Dependency | Type | Status |
 | :--------- | :--- | :----- |
-| Anthropic API key in a gitignored `.env` | Needed by (live-LLM mode only; the offline path does not require it) | Available; supplied at runtime, never committed |
+| Anthropic API key in a gitignored `.env` | **Needed for the shipped configuration**; without it the app still boots and answers, on the degraded path | Available; supplied at runtime, never committed |
 | `uv` + Python 3.12 toolchain | Blocks this work | Available |
 | Node 25.x + Vite | Blocks this work | Available |
 | Container runtime (observability backend only) | **Optional — must never block** | NFR-10 makes its absence a non-issue by design |
@@ -1915,7 +1921,7 @@ Passed forward from the pipeline definition; **this PRD does not produce diagram
    labelled** — the labels reference specific seeded slots (§13 *Constraints*).
 10. **Hypothesis fan-out cost** — FR-014 now covers relative-date ambiguity as well as type
     ambiguity, so the decision-relevance test may run the deterministic pipeline twice per request.
-    Confirm this fits inside NFR-01 (< 2 s p95 offline) or design the shared-work optimisation.
+    Confirm this fits inside NFR-01 (< 2 s p95 on the degraded path) or design the shared-work optimisation.
 
 ---
 

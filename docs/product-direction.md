@@ -33,7 +33,7 @@ exam *inside* the appointment window.
 | Rank | Metric | Target |
 | ---- | ------ | ------ |
 | 1 | **Confirm-without-investigating rate** — booked slot was in the offered top 3, no calendar manually opened | ≥ 85% |
-| 2 | **Time-to-offer** — request → three options | < 2s offline, < 5s with live LLM |
+| 2 | **Time-to-offer** — request → three options | ~16s live (measured); < 2s on the degraded path |
 | 3 | **Schedule-quality delta** — production per chair-hour and unusable-gap minutes created, vs. a naive first-available baseline | positive, measured |
 | 4 | **Consistency** — same request, same answer, every time | byte-identical |
 
@@ -233,7 +233,7 @@ than arbitrary-looking:
    (provider, day, time, operatory, duration) exists in the fact set, and that no non-contributing
    fact was introduced. On failure it falls back to the template and **logs the gate firing to the
    trace**, so gate activations are observable rather than silent.
-4. **The template is always computed regardless**, so offline operation is not a degraded surface —
+4. **The template is always computed regardless**, so losing the model costs plainer prose, not an empty screen —
    same content, plainer prose.
 
 **Supporting layers:** why-not text on rejected slots (templated; each rejection has a single
@@ -348,7 +348,7 @@ handles two operators racing for the same slot.
 - FastAPI endpoints + React three-card UI + editable interpretation strip + funnel counter
 - In-process trace store + replay panel
 - Golden dataset (~40) + evaluation harness producing the scorecard
-- One-command boot; fully functional with no network
+- One-command boot; live models by default, fully functional without the network
 
 ### SHOULD
 
@@ -398,7 +398,7 @@ no-show-risk policy hook.
 | **R-09** | *"Is this just a fancy first-available?"* | Head-to-head against a naive first-available baseline over the golden set, reporting human agreement and fragmentation minutes created. Where the delta is small for a request class, report that too | Baseline comparison |
 | **R-10** | Operators ignore the ranking | Then the ranking is wrong and we need to know. Every override is captured as a labeled counterexample flowing back into the golden set — designed in, not patched on | Override capture |
 | **R-11** | Nondeterminism | Temperature 0, fixtures by default, and the ranking is deterministic given the extraction — so the only variance sits upstream of the decision, and it is measured | Reproducibility test |
-| **R-12** | External dependency failure | The system runs fully offline by default; the network is opt-in. Opik is optional and never on the critical path — the replay panel reads the in-process store | Offline test suite |
+| **R-12** | External dependency failure | The model is called on every request, and every stage falls back — to committed fixtures, then to deterministic rules — so an outage degrades the answer rather than removing it. The header names which path answered. Opik is optional and never on the critical path — the replay panel reads the in-process store | Offline test suite |
 
 ---
 

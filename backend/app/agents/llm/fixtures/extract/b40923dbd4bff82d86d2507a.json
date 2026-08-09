@@ -27,7 +27,7 @@
   "exclusions": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "no exclusions stated",
+    "derived_rule": "No exclusions stated",
     "span": null,
     "value": {
       "dates": [],
@@ -40,7 +40,7 @@
   "provider_preference": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "no provider named",
+    "derived_rule": "No provider mentioned",
     "span": null,
     "value": null
   },
@@ -62,7 +62,7 @@
   "urgency": {
     "confidence": 0.8,
     "derived": true,
-    "derived_rule": "routine cleaning with no urgency cues",
+    "derived_rule": "Routine cleaning with no urgency language",
     "span": null,
     "value": "routine"
   }

@@ -1,13 +1,13 @@
 {
   "appointment_type": {
-    "confidence": 0.3,
+    "confidence": 0.35,
     "derived": true,
-    "derived_rule": "no procedure or symptom named; default routine cleaning",
+    "derived_rule": "no procedure or symptom stated; defaulted to routine cleaning",
     "span": null,
     "value": "prophy_adult"
   },
   "date_range": {
-    "confidence": 0.6,
+    "confidence": 0.55,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -23,7 +23,7 @@
   "exclusions": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "no exclusions stated",
+    "derived_rule": "no weekday exclusions stated",
     "span": null,
     "value": {
       "dates": [],
@@ -36,7 +36,7 @@
   "provider_preference": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "no provider mentioned",
+    "derived_rule": "no provider named",
     "span": null,
     "value": null
   },
@@ -56,7 +56,7 @@
     }
   },
   "urgency": {
-    "confidence": 0.5,
+    "confidence": 0.6,
     "derived": true,
     "derived_rule": "no urgency cues; default routine",
     "span": null,

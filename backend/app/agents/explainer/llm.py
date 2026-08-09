@@ -24,9 +24,13 @@ from app.domain.rationale import Rationale
 PROMPT_DIR = Path(__file__).resolve().parent.parent / "llm" / "prompts"
 
 
-def _describe(r: Rationale) -> dict:  # type: ignore[type-arg]
+def _describe(r: Rationale, is_alternative: bool = False) -> dict:  # type: ignore[type-arg]
     f = r.facts
     return {
+        # FR-038. Without this the model has no way to know the slot misses the
+        # request, and it writes "Thursday the 20th with Sarah, the provider you asked
+        # for" for a patient who asked for the 13th -- true, and read aloud as a match.
+        "does_not_match_request": is_alternative,
         "weekday": f.weekday,
         "date": f.date_display,
         "time": f.start_display,
@@ -77,19 +81,25 @@ class LlmExplainer:
         return out
 
     async def render_with_gate(
-        self, rationales: list[Rationale]
+        self, rationales: list[Rationale], alternatives: list[bool] | None = None
     ) -> list[tuple[str, gate.GateResult]]:
         """Same, but reporting which check fired -- the harness needs the rate."""
         if not rationales:
             return []
-        fallback = [template.render(r) for r in rationales]
+        alt = alternatives or [False] * len(rationales)
+        fallback = [
+            template.render(r, is_alternative=a)
+            for r, a in zip(rationales, alt, strict=True)
+        ]
         try:
             import json
 
             sentences = await self._client.sentences(
                 model=self._settings.model_explain,
                 system=self._prompt,
-                user=json.dumps({"options": [_describe(r) for r in rationales]}),
+                user=json.dumps({
+                    "options": [_describe(r, a) for r, a in zip(rationales, alt, strict=True)]
+                }),
                 timeout=self._settings.timeout_explain,
                 count=len(rationales),
             )
@@ -97,7 +107,9 @@ class LlmExplainer:
             return [(s, gate.GateResult(False, "unavailable", str(exc))) for s in fallback]
 
         out = []
-        for sentence, rationale, safe in zip(sentences, rationales, fallback, strict=True):
-            verdict = gate.check(sentence, rationale)
+        for sentence, rationale, safe, is_alt in zip(
+            sentences, rationales, fallback, alt, strict=True
+        ):
+            verdict = gate.check(sentence, rationale, is_alternative=is_alt)
             out.append((sentence if verdict.ok else safe, verdict))
         return out

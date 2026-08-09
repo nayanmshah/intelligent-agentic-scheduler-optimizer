@@ -23,7 +23,7 @@
   "exclusions": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "no stated exclusions",
+    "derived_rule": "no exclusions stated",
     "span": null,
     "value": {
       "dates": [],
@@ -36,7 +36,7 @@
   "provider_preference": {
     "confidence": 0.9,
     "derived": true,
-    "derived_rule": "no provider named",
+    "derived_rule": "no provider mentioned",
     "span": null,
     "value": null
   },

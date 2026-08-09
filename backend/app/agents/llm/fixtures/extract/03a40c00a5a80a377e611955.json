@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.9,
+    "confidence": 0.85,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -11,7 +11,7 @@
     "value": "prophy_adult"
   },
   "date_range": {
-    "confidence": 0.55,
+    "confidence": 0.6,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -60,10 +60,10 @@
     }
   },
   "urgency": {
-    "confidence": 0.7,
+    "confidence": 0.55,
     "derived": true,
-    "derived_rule": "no urgency cues; routine cleaning request",
+    "derived_rule": "casual phrasing 'any chance', routine cleaning request with no urgency stated",
     "span": null,
-    "value": "routine"
+    "value": "flexible"
   }
 }

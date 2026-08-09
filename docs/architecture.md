@@ -29,8 +29,8 @@ Nine requirements drive nearly every structural decision. Everything else follow
 | 4 | **Ranking is a pure function** (FR-054) | The LLM sits strictly upstream of `RequestConstraints` and strictly downstream of `Rationale`. Nothing in `reasoner/` imports `agents/`. |
 | 5 | **Every agent is a `Protocol` with two implementations** (NFR-28) | Implementation choice is a config lookup in one registry. This is what makes FR-093's LLM-vs-rules number obtainable at all. |
 | 6 | **Orchestrator under ~150 lines** (NFR-27) | The orchestrator owns sequencing, timeouts, fallback, and trace emission — nothing else. All domain logic lives in the packages it calls. |
-| 7 | **No network, no container on the request path** (NFR-09, NFR-10) | `TraceSink` fans out; the Opik leg is a bounded queue drained by a worker thread. Fixtures are the default extraction source, not the fallback. |
-| 8 | **< 2 s p95 offline, < 300 ms re-rank, < 500 ms stability** (NFR-01, NFR-04, NFR-05) | Axis evaluation is separated from weight application, so re-ranking is a matrix-by-vector product over values already computed. Availability lookups are O(1). |
+| 7 | **Every stage on the request path has a deterministic fallback; no container** (NFR-09, NFR-10) | `TraceSink` fans out; the Opik leg is a bounded queue drained by a worker thread. Fixtures are the default extraction source, not the fallback. |
+| 8 | **< 2 s p95 on the degraded path, < 300 ms re-rank, < 500 ms stability** (NFR-01, NFR-04, NFR-05) | Axis evaluation is separated from weight application, so re-ranking is a matrix-by-vector product over values already computed. Availability lookups are O(1). |
 | 9 | **Byte-identical output** (NFR-13) | No `set` iteration, no dict-order dependence, no floats in identity, no wall clock, no RNG without a fixed seed, canonical JSON serialisation everywhere. |
 
 > **The one-sentence version of the architecture:** *language at the edges, arithmetic in the
@@ -56,11 +56,11 @@ flowchart TB
 
     subgraph files ["Committed files (repository)"]
         SEED["Seed dataset JSON<br/>+ SEED_DIGEST"]
-        FIX["LLM response fixtures"]
+        FIX["LLM response fixtures<br/>the degraded path"]
         GOLD["Golden set (40 labelled requests)"]
     end
 
-    subgraph optional ["Optional, never on the request path"]
+    subgraph external ["External"]
         LLM["Anthropic Claude API"]
         OPIK["Opik (self-hosted, localhost)"]
     end
@@ -72,7 +72,7 @@ flowchart TB
     API -->|"read at boot"| SEED
     API -->|"read on cache hit"| FIX
     API -->|"read by harness"| GOLD
-    API -.->|"opt-in only"| LLM
+    API -->|"3 calls per request"| LLM
     API -.->|"fire and forget"| OPIK
 ```
 
@@ -233,8 +233,8 @@ sequenceDiagram
     ORC->>TS: span open "request"
 
     ORC->>EX: extract(text, patient)
-    alt fixture hit or rules mode
-        EX-->>ORC: RequestConstraints (no network)
+    alt live model call — the default
+        EX-->>ORC: RequestConstraints
     else live LLM, within timeout
         EX-->>ORC: RequestConstraints
     else timeout, schema violation, or refusal
@@ -354,10 +354,26 @@ and one place to read it.
 
 ## 6. Agent seams
 
-Three LLM-capable roles, each a `Protocol` with two implementations, selected by config in one
-registry `[ADR-03]`. The fourth role in the topology — the Schedule Reasoner — is deliberately not
-LLM-capable, and its "second implementation" is the naive first-available baseline the eval harness
-needs anyway (FR-095). That is a genuine second implementation of the same protocol, not a stub:
+Four roles. **Three call a model on every request; the one that decides never does** `[ADR-20]`.
+Each is a `Protocol` with two implementations, selected by config in one registry `[ADR-03]`.
+
+```mermaid
+flowchart LR
+    A["1 · Extractor<br/><b>claude-opus-5</b>"] --> B["2 · Verifier<br/><b>claude-sonnet-5</b>"]
+    B --> C["3 · Reasoner<br/><i>no model, ever</i>"]
+    C --> D["4 · Explainer<br/><b>claude-sonnet-5</b><br/>+ faithfulness gate"]
+    A -. "timeout · refusal · no key" .-> A2["fixtures, then rules"]
+    B -. "any failure" .-> B2["rules — always run as the floor"]
+    D -. "gate rejects" .-> D2["template"]
+```
+
+Full version, with the models and every fallback edge:
+[`diagrams/agent-topology.mmd`](diagrams/agent-topology.mmd).
+
+The reasoner is the exception on purpose: a model driving enumeration would miss candidates and
+make *"did it miss anything?"* unanswerable, which is the one question this product exists to
+answer. Its "second implementation" is the naive first-available baseline the eval harness needs
+anyway (FR-095) — a genuine control, not a stub:
 
 ```python
 class ScheduleReasoner(Protocol):
@@ -374,11 +390,13 @@ class ScheduleReasoner(Protocol):
 | Explainer | `Explainer` | `LlmExplainer` (gated) | `TemplateExplainer` | `settings.explainer` |
 | Schedule Reasoner | `ScheduleReasoner` | `DeterministicReasoner` | `NaiveFirstAvailableReasoner` | `settings.reasoner` |
 
-**Fixtures are a decorator, not a third implementation** `[ADR-04]`. `FixtureCache(inner, store)`
+**Fixtures are a decorator, not a third implementation** `[ADR-04]`. In live mode the decorator
+is **write-through only** — it records but does not read, so a demo request that happens to match
+a recording still reaches the model `[ADR-20]`. `FixtureCache(inner, store)`
 implements the same protocol and wraps the LLM one:
 
 ```python
-extractor = FixtureCache(LlmIntentExtractor(client), store)      # offline default
+extractor = FixtureCache(LlmIntentExtractor(client), store)   # write-through when live
 ```
 
 Cache key = `sha256(stage | prompt_version | model_id | canonical(request_text, patient_ref))`
@@ -1064,14 +1082,15 @@ This does not weaken the determinism guarantee, because temperature was never wh
 
 | Determinism mechanism | Status |
 | :-------------------- | :----- |
-| Committed fixtures are the **default** source, not a fallback (FR-006) | Unchanged — this is the actual guarantee |
+| Committed fixtures, now the **fallback** rather than the default `[ADR-20]` | Still the guarantee for the degraded path; live mode does not read them |
 | Ranking is a pure function of `(RequestConstraints, schedule, profile, NOW)` (FR-054) | Unchanged — the LLM cannot reach it |
 | `NOW` injected, seed committed (FR-102, FR-103) | Unchanged |
 | Temperature 0 | **Not available. Removed from the design.** |
 
 **Consequence for the record:** in *live* mode, two identical requests may produce different
 extractions. That was already true at temperature 0 (which never guaranteed identical outputs), and
-it is why fixture mode is the default and why FR-097's determinism check runs in fixture mode. The
+it is why FR-097's determinism check runs in fixture mode, and why a live scorecard reports that
+check as *not applicable* rather than as a pass. The
 known-limitations page must state this plainly rather than claiming temperature-based determinism
 the API cannot provide. R-12's wording is superseded by this section.
 
@@ -1262,8 +1281,9 @@ ladder (§15.4), which is asserted by a test rather than hoped for.
 **Index construction** (~50 ms) is off the request path entirely: once at boot, then on confirm and
 reset only.
 
-The offline headroom is deliberate. NFR-01 is a demonstration-day guarantee, and the margin is what
-makes it one.
+That headroom is for the *deterministic* work, and it is why the degraded path answers in under
+two seconds. The live path is dominated by three sequential model calls (~16 s, §15.4) — the
+arithmetic below it is not the constraint and never was.
 
 ---
 
@@ -1278,7 +1298,7 @@ makes it one.
 | Hash randomisation | `candidate_id` is a sha1 of the canonical tuple, not `hash()` |
 | Sampling (rank stability, fitting) | Seeded RNG, seed committed in config (`[A-15]`) |
 | JSON key order | One canonical serialiser used for digests, fixtures, and the determinism diff |
-| LLM sampling | Fixtures are the default (§15.1) |
+| LLM sampling | Live by default; determinism comes from fixture mode, used for FR-097 (§15.1) |
 
 CI runs the golden set twice and diffs the serialised `DecisionRecord`s; any difference fails the
 run and prints the differing path (FR-097).
@@ -1327,7 +1347,7 @@ build and Vitest.
 | :------ | :--- |
 | `make demo` | Pre-flight, `uv sync`, build the SPA, start one process, open the browser. Cold start < 60 s (FR-106, NFR-11) |
 | `make dev` | Backend with reload + Vite dev server |
-| `make test` | The full suite, offline |
+| `make test` | The deterministic suite — fast, free, no network |
 | `make eval` | Harness → scorecard JSON + exit code |
 | `make fit` | Weight fitting → the shipped `General Practice` default (FR-098) |
 | `make seed` | Regenerates the seed dataset. **Never invoked by `make demo`** (FR-103) |
@@ -1516,7 +1536,7 @@ Each of these cost approximately nothing now and would have been structural late
 | **Auth** | None; the operator/manager split is a route, and NFR-19 says so explicitly | A real boundary. A front-desk user who can reach `/policy` is precisely the consistency destruction the product exists to eliminate |
 | **PHI** | Synthetic; redactor is a no-op; local store deliberately unredacted | `raw_text` is PHI at rest — encryption, retention, access control. **Replay becomes a permissioned, audited action**, because replaying a decision means reading a patient's words. The `[AR-06]` placement argument is demo-specific and inverts here |
 | **Index memory** | ~160 k ints, one location, always resident | Per-location, lazily built, LRU-evicted. 1 000 locations resident is several GB |
-| **LLM economics** | Pennies; fixtures are the default path | Hundreds of thousands of calls/day. Per-stage model choice becomes material, prompt caching becomes per-tenant, rate-limit queuing and per-tenant fairness become real, and — with **no fixtures in production** — the rules extractor *is* the degraded mode, so FR-093's second column becomes a service level |
+| **LLM economics** | Pennies; 3 calls per request | Hundreds of thousands of calls/day. Per-stage model choice becomes material, prompt caching becomes per-tenant, rate-limit queuing and per-tenant fairness become real, and — with **no fixtures in production** — the rules extractor *is* the degraded mode, so FR-093's second column becomes a service level |
 | **Telemetry** | Opik optional, never on the request path | Non-optional metrics and structured logs. The "observability is optional" guarantee is a demo-resilience property, not an operations posture |
 | **Eval** | 40 cases on a thread | Continuous, per-tenant, offline batch |
 

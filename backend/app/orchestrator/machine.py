@@ -15,6 +15,7 @@ from __future__ import annotations
 import uuid
 from dataclasses import dataclass
 from datetime import datetime
+from typing import Any
 
 from app.agents.explainer.render import explain_outcome
 from app.config import Settings
@@ -25,7 +26,7 @@ from app.domain.policy import WeightProfile
 from app.domain.request import RequestConstraints
 from app.orchestrator.stages import run_stage
 from app.reasoner.hypotheses import run_fanout
-from app.trace.sink import Tracer
+from app.trace.sink import FanOutTraceSink, Tracer
 
 
 @dataclass(frozen=True, slots=True)
@@ -44,11 +45,18 @@ class Orchestrator:
         self.sink = sink
 
     async def run(
-        self, req: IncomingRequest, now: datetime, profile: WeightProfile
+        self,
+        req: IncomingRequest,
+        now: datetime,
+        profile: WeightProfile,
+        progress: Any = None,
     ) -> DecisionRecord:
+        """``progress``: an extra ``TraceSink`` that sees each span as it closes, so a
+        caller can show the pipeline working during the ~15s a live request takes.
+        Reuses the existing spans; nothing changes when it is None."""
         s = self.settings
         rid = req.request_id or uuid.uuid4().hex[:12]
-        tracer = Tracer(self.sink)
+        tracer = Tracer(FanOutTraceSink(self.sink, progress) if progress else self.sink)
         fallbacks: list[str] = []
         calls_before = self.agents.llm_call_count()
 

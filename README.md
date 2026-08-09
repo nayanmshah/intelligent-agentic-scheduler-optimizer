@@ -65,7 +65,8 @@ request to produce the same answer twice.
 
 ## What the numbers say
 
-Measured on 54 hand-labelled requests, reproducibly, offline (`make eval`).
+Measured on 54 hand-labelled requests. `make eval-live` scores the shipped configuration;
+`make eval` replays committed fixtures for a reproducible, free run.
 
 **Against a naive first-available baseline**, on measures taken from the schedule
 itself rather than from either ranker's own output:

@@ -268,7 +268,7 @@ reorder to protect a favourite feature**:
 | 6 | LLM explainer + gate (SHOULD) | Template still renders every line. **Costs the "verify the LLM" story** |
 | 7 | Weight fitting (FR-098, SHOULD) | Ship hand-set defaults **and say so** — do not present chosen weights as fitted |
 
-**Never cut, at any cost:** the MUST core, the eval harness, offline operation, the read-aloud
+**Never cut, at any cost:** the MUST core, the eval harness, the fallback ladder, the read-aloud
 lint. A build that demos beautifully with no numbers behind it has lost the argument it exists to
 make.
 

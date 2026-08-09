@@ -13,6 +13,7 @@ Five checks, each with an id so a firing names *which* one failed:
   F4  no banned hedge or negation tokens
   F5  the resolved date and time are echoed exactly
   F6  the sentence does not claim the appointment is already booked
+  F7  an offer that misses the request says so, instead of reading like a match
 
 On failure the template rendering is substituted **silently**, and the firing is
 logged (FR-063). The operator never sees an error; the trace panel shows it.
@@ -58,7 +59,17 @@ class GateResult:
     detail: str = ""
 
 
-def check(sentence: str, rationale: Rationale) -> GateResult:
+#: Ways a sentence can concede that the slot is not what was asked for. Any one of
+#: them is enough; the wording is the model's business, the concession is not.
+_CONCEDES = (
+    "nothing opened", "outside the", "not the time", "instead of", "closest",
+    "although", "though", "but ", "however", "unfortunately", "could not find",
+    "couldn't find", "nothing available", "no openings", "isn't available",
+    "is not available", "rather than", "alternative", "next best",
+)
+
+
+def check(sentence: str, rationale: Rationale, *, is_alternative: bool = False) -> GateResult:
     facts = rationale.facts
     low = sentence.lower()
 
@@ -111,5 +122,13 @@ def check(sentence: str, rationale: Rationale) -> GateResult:
     hit = _ASSERTS_BOOKED.search(sentence)
     if hit:
         return GateResult(False, "F6", f"claims the appointment exists: {hit.group(0)!r}")
+
+    # F7 -- FR-038. An offer that does not do what was asked must say so. The model
+    # wrote "Thursday the 20th with Sarah, the provider you asked for" for a patient
+    # who asked for the 13th: true, and an operator half-listening reads it as a match.
+    # The template leads with the gap; a rewrite that drops it is a regression the
+    # operator cannot see.
+    if is_alternative and not any(token in low for token in _CONCEDES):
+        return GateResult(False, "F7", "reads as a match but does not meet the request")
 
     return GateResult(True)

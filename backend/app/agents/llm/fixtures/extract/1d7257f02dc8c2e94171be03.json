@@ -2,12 +2,12 @@
   "appointment_type": {
     "confidence": 0.3,
     "derived": true,
-    "derived_rule": "no procedure or symptom mentioned; defaulted to routine cleaning",
+    "derived_rule": "no procedure or symptom stated; defaulted to routine cleaning",
     "span": null,
     "value": "prophy_adult"
   },
   "date_range": {
-    "confidence": 0.85,
+    "confidence": 0.9,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -25,8 +25,8 @@
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 47,
-      "start": 39,
+      "end": 46,
+      "start": 38,
       "text": "Tuesdays"
     },
     "value": {
@@ -48,7 +48,7 @@
   },
   "request_text": "Whatever works next week, I have PT on Tuesdays",
   "time_window": {
-    "confidence": 0.8,
+    "confidence": 0.9,
     "derived": true,
     "derived_rule": "no time stated; open to any time",
     "span": null,
@@ -58,7 +58,7 @@
     }
   },
   "urgency": {
-    "confidence": 0.8,
+    "confidence": 0.85,
     "derived": false,
     "derived_rule": null,
     "span": {

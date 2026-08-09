@@ -9,22 +9,28 @@ sequenceDiagram
     participant VF as Constraint Verifier
     participant RS as Schedule Reasoner
     participant XP as Explainer
+    participant LLM as Claude API
     participant TS as TraceSink
 
     UI->>ORC: "Can I come in next Thursday after 3?"
     ORC->>TS: span open
 
     ORC->>EX: extract(text, patient, NOW)
-    alt fixture hit or rules mode — no network
+    alt live model call within timeout — the default
+        EX->>LLM: claude-opus-5, structured output
+        LLM-->>EX: typed fields + confidence + source spans
         EX-->>ORC: RequestConstraints
-    else live call within timeout
-        EX-->>ORC: RequestConstraints
-    else timeout, schema violation, or refusal
-        ORC->>EX: deterministic rules fallback
+    else timeout, schema violation, refusal, or no key
+        ORC->>EX: committed fixtures, then deterministic rules
         EX-->>ORC: RequestConstraints, fallback_fired
     end
 
     ORC->>VF: verify against the world, not the schedule
+    Note over VF: rules run first as the floor —<br/>the model may add a flag, never remove one
+    alt live model call within timeout — the default
+        VF->>LLM: claude-sonnet-5
+        LLM-->>VF: semantic flags, optional question
+    end
     VF-->>ORC: proceed, flags, or 2 hypotheses
 
     ORC->>RS: run per hypothesis
@@ -37,9 +43,12 @@ sequenceDiagram
     end
 
     ORC->>XP: render 3 rationales in one call
-    XP-->>ORC: 3 sentences
-    ORC->>ORC: faithfulness gate + read-aloud lint
-    Note over ORC: any failure substitutes the template<br/>silently, and logs gate_fired
+    Note over XP: the template is ALWAYS computed first,<br/>so a sentence exists whatever happens next
+    XP->>LLM: claude-sonnet-5, one batched call
+    LLM-->>XP: 3 sentences
+    XP->>XP: faithfulness gate, per sentence
+    Note over XP: any of 7 checks fails and the template stands,<br/>silently to the operator, logged as gate_fired
+    XP-->>ORC: 3 reason lines
 
     ORC->>TS: spans closed, DecisionRecord written
     ORC-->>UI: three explained offers, funnel, ledger, counterfactual

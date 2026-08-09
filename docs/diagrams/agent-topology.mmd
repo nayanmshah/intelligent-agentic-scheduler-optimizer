@@ -1,0 +1,54 @@
+---
+title: Agent topology — three roles run on a model, the one that decides does not
+---
+flowchart TB
+    REQ["Patient's own words<br/><i>“first thing tomorrow, it's urgent”</i>"]
+
+    subgraph ex ["1 · Intent Extractor"]
+        direction LR
+        EXA["<b>LlmIntentExtractor</b><br/>claude-opus-5"]
+        EXF["fixture replay"]
+        EXB["RuleIntentExtractor"]
+        EXA -. "timeout · refusal · no key" .-> EXF
+        EXF -. "cache miss" .-> EXB
+    end
+
+    subgraph vf ["2 · Constraint Verifier — reads the world, never the schedule"]
+        direction LR
+        VFA["<b>LlmConstraintVerifier</b><br/>claude-sonnet-5"]
+        VFB["RuleConstraintVerifier<br/><i>always runs, as the floor</i>"]
+        VFA -. "any failure" .-> VFB
+    end
+
+    subgraph rs ["3 · Schedule Reasoner — no model, permanently"]
+        direction LR
+        RSA["<b>DeterministicReasoner</b><br/>enumerate · ladder · tier · score · select"]
+        RSB["NaiveFirstAvailableReasoner<br/><i>eval control, not a fallback</i>"]
+    end
+
+    subgraph xp ["4 · Explainer — sees only scorer-emitted facts"]
+        direction LR
+        XPA["<b>LlmExplainer</b><br/>claude-sonnet-5"]
+        GATE{{"faithfulness gate<br/>7 checks"}}
+        XPB["TemplateExplainer"]
+        XPA --> GATE
+        GATE -. "any check fails" .-> XPB
+    end
+
+    OUT["Three ranked offers<br/>each with a reason read aloud"]
+
+    REQ --> ex
+    ex -->|"RequestConstraints<br/>+ confidence + source span"| vf
+    vf -->|"proceed · flags · one question"| rs
+    rs -->|"offers + Rationale + funnel + ledger"| xp
+    xp --> OUT
+
+    classDef model fill:#1e3a5f,stroke:#0d1f33,color:#fff
+    classDef det fill:#e8eef4,stroke:#8fa8bf,color:#12212f
+    classDef gate fill:#fdf3d7,stroke:#b8912a,color:#4a3a00
+    classDef io fill:#fff,stroke:#5a6b7a,color:#12212f
+
+    class EXA,VFA,XPA model
+    class EXF,EXB,VFB,RSA,RSB,XPB det
+    class GATE gate
+    class REQ,OUT io
