@@ -5,8 +5,9 @@ import { ContributionBar } from "../ContributionBar";
 import { FunnelCounter } from "../FunnelCounter";
 import { InterpretationStrip } from "../InterpretationStrip";
 import { SeatIndicator } from "../SeatIndicator";
+import { StageProgress } from "../StageProgress";
 import { StabilityIndicator } from "../StabilityIndicator";
-import type { Contribution, InterpretationField } from "@/lib/api";
+import type { Contribution, InterpretationField, StageEvent } from "@/lib/api";
 
 const CONTRIBUTIONS: Contribution[] = [
   { axis: "time_fit", value: 1.0, weight: 0.35, weighted: 0.35 },
@@ -122,5 +123,52 @@ describe("SeatIndicator", () => {
   it("renders nothing on a route with no seat", () => {
     const { container } = at("/somewhere-else");
     expect(container).toBeEmptyDOMElement();
+  });
+});
+
+describe("StageProgress", () => {
+  const stage = (s: string, label: string, done: boolean, ms?: number) =>
+    ({ stage: s, label, done, ms }) as StageEvent;
+
+  it("shows every stage up front, so the wait has a visible end", () => {
+    render(
+      <StageProgress
+        stages={[
+          stage("extract", "Reading the request", false),
+          stage("verify", "Checking it against the practice", false),
+          stage("reason", "Searching every room and provider", false),
+          stage("explain", "Writing the reasons", false),
+        ]}
+      />,
+    );
+    for (const label of ["Reading the request", "Writing the reasons"]) {
+      expect(screen.getByText(new RegExp(label))).toBeInTheDocument();
+    }
+  });
+
+  it("reports the real duration once a stage finishes", () => {
+    render(<StageProgress stages={[stage("extract", "Reading the request", true, 10315)]} />);
+    // Measured, never animated: 10.3s means it took 10.3 seconds.
+    expect(screen.getByText(/10\.3s/)).toBeInTheDocument();
+  });
+
+  it("uses ms below a second rather than a misleading 0.0s", () => {
+    render(<StageProgress stages={[stage("reason", "Searching", true, 79)]} />);
+    expect(screen.getByText(/79ms/)).toBeInTheDocument();
+  });
+
+  it("renders nothing before the first event, so no empty box flashes", () => {
+    const { container } = render(<StageProgress stages={[]} />);
+    expect(container).toBeEmptyDOMElement();
+  });
+
+  it("marks itself busy for screen readers while a stage is outstanding", () => {
+    const { rerender, container } = render(
+      <StageProgress stages={[stage("extract", "Reading the request", false)]} />,
+    );
+    expect(container.querySelector("[aria-busy='true']")).not.toBeNull();
+
+    rerender(<StageProgress stages={[stage("extract", "Reading the request", true, 10)]} />);
+    expect(container.querySelector("[aria-busy='false']")).not.toBeNull();
   });
 });

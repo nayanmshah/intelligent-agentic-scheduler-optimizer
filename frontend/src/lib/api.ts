@@ -97,6 +97,60 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ text, patient_id: patientId }),
     }),
+
+  /**
+   * The same decision, with each stage reported as it finishes.
+   *
+   * A live request is three sequential model calls and takes ~15 seconds. Without
+   * this the console shows a "…" for that long, which reads as frozen — and hides
+   * the one thing worth seeing.
+   *
+   * Server-Sent Events over `fetch` rather than `EventSource`, because the request
+   * carries a body and `EventSource` is GET-only.
+   */
+  submitStream: async (
+    text: string,
+    patientId: string | null,
+    onStage: (s: StageEvent) => void,
+  ): Promise<Decision> => {
+    const res = await fetch("/api/requests/stream", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ text, patient_id: patientId }),
+    });
+    if (!res.ok || !res.body) throw new Error(await res.text().catch(() => res.statusText));
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let decision: Decision | null = null;
+
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      // Frames are separated by a blank line; a partial frame stays in the buffer
+      // until the rest of it arrives.
+      const frames = buffer.split("\n\n");
+      buffer = frames.pop() ?? "";
+      for (const frame of frames) {
+        let event = "message";
+        let data = "";
+        for (const line of frame.split("\n")) {
+          if (line.startsWith("event: ")) event = line.slice(7);
+          else if (line.startsWith("data: ")) data += line.slice(6);
+        }
+        if (!data) continue;
+        const payload = JSON.parse(data);
+        if (event === "pending" || event === "stage") onStage({ ...payload, done: event === "stage" });
+        else if (event === "decision") decision = payload as Decision;
+        else if (event === "error") throw new Error(payload.detail ?? "request failed");
+      }
+    }
+    if (!decision) throw new Error("the stream ended before a decision arrived");
+    return decision;
+  },
   answer: (id: string, choice: string) =>
     json<Decision>(`/api/requests/${id}/answer`, {
       method: "POST",
@@ -135,6 +189,16 @@ export const api = {
     json<{ trace_id: string; spans: Record<string, unknown>[] }>(`/api/traces/${traceId}`),
   replay: (decisionId: string) =>
     json<{ identical: boolean; diff: unknown }>(`/api/traces/${decisionId}/replay`, { method: "POST" }),
+};
+
+export type StageEvent = {
+  stage: string;
+  label: string;
+  /** True once the stage has finished; false while it is still announced-but-pending. */
+  done: boolean;
+  ms?: number;
+  implementation?: string | null;
+  fallback_fired?: boolean;
 };
 
 export const AXIS_LABELS: Record<string, string> = {

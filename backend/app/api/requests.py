@@ -2,9 +2,13 @@
 
 from __future__ import annotations
 
+import asyncio
+import json
+from collections.abc import AsyncIterator
 from typing import Any
 
 from fastapi import APIRouter, HTTPException, Request
+from fastapi.responses import StreamingResponse
 
 from app.api.schemas import (
     AnswerRequest,
@@ -43,6 +47,96 @@ async def submit(body: SubmitRequest, request: Request) -> dict[str, Any]:
     )
     _place_holds(c, record)
     return decision_json(record)
+
+
+#: What each stage is called on screen. The trace keeps the internal names; an
+#: operator watching a 15-second wait needs to know what is happening to *them*.
+STAGE_LABELS = {
+    "extract": "Reading the request",
+    "verify": "Checking it against the practice",
+    "reason": "Searching every room and provider",
+    "explain": "Writing the reasons",
+}
+
+
+class _QueueSink:
+    """A ``TraceSink`` that forwards closed spans to one request's stream.
+
+    Not registered on the container: it exists for the life of a single request, so a
+    slow client cannot make the server hold spans for anybody else.
+    """
+
+    def __init__(self, queue: asyncio.Queue) -> None:  # type: ignore[type-arg]
+        self._queue = queue
+
+    def emit(self, span: Any) -> None:
+        if span.stage in STAGE_LABELS:
+            self._queue.put_nowait(span)
+
+    def record_decision(self, record: Any) -> None:  # pragma: no cover - not used here
+        pass
+
+
+@router.post("/requests/stream")
+async def submit_stream(body: SubmitRequest, request: Request) -> StreamingResponse:
+    """The same decision as ``POST /requests``, with the stages narrated as they close.
+
+    A live request is three sequential model calls and takes ~15 seconds. A button that
+    only says "…" for that long reads as frozen -- that is how the first person to use
+    it described it. The stages already emit spans; this streams them, so the wait
+    *shows the pipeline working* rather than hiding it.
+
+    Which is the better answer twice over: the honest fix for the latency complaint is
+    also the clearest demonstration that there are agents here at all.
+    """
+    c = _c(request)
+    patient = c.load.bundle.patient(body.patient_id) if body.patient_id else None
+    queue: asyncio.Queue = asyncio.Queue()
+
+    async def events() -> AsyncIterator[str]:
+        def sse(event: str, data: dict) -> str:  # type: ignore[type-arg]
+            return f"event: {event}\ndata: {json.dumps(data)}\n\n"
+
+        task = asyncio.create_task(
+            c.orchestrator.run(
+                IncomingRequest(text=body.text, patient=patient),
+                c.clock.now(),
+                c.state.active_profile,
+                progress=_QueueSink(queue),
+            )
+        )
+        for stage, label in STAGE_LABELS.items():
+            yield sse("pending", {"stage": stage, "label": label})
+
+        # Drain as stages close. The timeout is a poll, not a deadline: without it a
+        # request whose last span has already been emitted would block here forever.
+        while not task.done() or not queue.empty():
+            try:
+                span = await asyncio.wait_for(queue.get(), timeout=0.2)
+            except TimeoutError:
+                continue
+            yield sse("stage", {
+                "stage": span.stage,
+                "label": STAGE_LABELS[span.stage],
+                "ms": round(span.duration_ms),
+                "implementation": span.attrs.get("implementation"),
+                "fallback_fired": bool(span.attrs.get("fallback_fired")),
+            })
+
+        try:
+            record = await task
+        except Exception as exc:  # the client gets a named failure, never a hung stream
+            yield sse("error", {"detail": str(exc)})
+            return
+        _place_holds(c, record)
+        yield sse("decision", decision_json(record))
+
+    return StreamingResponse(
+        events(),
+        media_type="text/event-stream",
+        # Proxies and browsers will otherwise buffer an event stream into uselessness.
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
 
 
 @router.post("/requests/{decision_id}/answer")

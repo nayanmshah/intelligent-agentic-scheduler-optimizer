@@ -308,3 +308,77 @@ def test_reset_does_not_split_the_object_graph(client) -> None:
 
     replay = client.post(f"/api/traces/{decision['id']}/replay").json()
     assert replay["identical"] is True, replay["diff"]
+
+
+# ---------------------------------------------------------------- progress ----
+# A live request is ~15s of three sequential model calls. Streaming the stages is
+# what stops that reading as frozen -- the first person to use it reported "stuck".
+
+
+def _sse(raw: str) -> list[tuple[str, dict]]:
+    """Parse an event stream into (event, payload) pairs."""
+    import json as _json
+
+    out = []
+    for frame in raw.split("\n\n"):
+        event, data = "message", ""
+        for line in frame.split("\n"):
+            if line.startswith("event: "):
+                event = line[7:]
+            elif line.startswith("data: "):
+                data += line[6:]
+        if data:
+            out.append((event, _json.loads(data)))
+    return out
+
+
+def test_the_stream_announces_every_stage_before_any_of_them_finish(client) -> None:
+    """The operator sees the whole pipeline immediately, then watches it fill in. A
+    list that grows one row at a time cannot show how much is left."""
+    r = client.post("/api/requests/stream", json={"text": "a cleaning on Thursday afternoon"})
+    assert r.status_code == 200
+    assert r.headers["content-type"].startswith("text/event-stream")
+
+    events = _sse(r.text)
+    pending = [d for e, d in events if e == "pending"]
+    assert [p["stage"] for p in pending] == ["extract", "verify", "reason", "explain"]
+    for p in pending:
+        assert p["label"] and not p["label"].startswith("<")
+
+
+def test_each_stage_reports_a_real_measured_duration(client) -> None:
+    """Measured, never animated. A progress bar that lies about where the time went
+    is worse than no progress bar."""
+    r = client.post("/api/requests/stream", json={"text": "a cleaning on Thursday afternoon"})
+    done = [d for e, d in _sse(r.text) if e == "stage"]
+
+    assert {d["stage"] for d in done} == {"extract", "verify", "reason", "explain"}
+    for d in done:
+        assert d["ms"] >= 0
+        assert "implementation" in d and "fallback_fired" in d
+
+
+def test_the_stream_ends_with_the_same_decision_the_plain_route_returns(client) -> None:
+    """Two entry points, one pipeline. If they could diverge, the streaming path
+    would be a second implementation to keep in step."""
+    stream = [d for e, d in _sse(
+        client.post("/api/requests/stream", json={"text": "a cleaning on Thursday afternoon"}).text
+    ) if e == "decision"]
+    assert len(stream) == 1
+    streamed = stream[0]
+
+    client.post("/api/session/reset")
+    plain = client.post(
+        "/api/requests", json={"text": "a cleaning on Thursday afternoon"}
+    ).json()
+
+    assert [o["candidate_id"] for o in streamed["offers"]] == [
+        o["candidate_id"] for o in plain["offers"]
+    ]
+    assert streamed["funnel"] == plain["funnel"]
+
+
+def test_a_blank_request_is_rejected_by_the_stream_too(client) -> None:
+    """The boundary is the boundary. A second route into the pipeline must not be a
+    way around the validation on the first."""
+    assert client.post("/api/requests/stream", json={"text": "   "}).status_code == 422

@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { api, type Decision, type Offer } from "@/lib/api";
+import { api, type Decision, type Offer, type StageEvent } from "@/lib/api";
 import { InterpretationStrip } from "@/components/InterpretationStrip";
 import { FunnelCounter } from "@/components/FunnelCounter";
 import { OfferCard } from "@/components/OfferCard";
 import { RejectionLedger } from "@/components/RejectionLedger";
+import { StageProgress } from "@/components/StageProgress";
 
 const EXAMPLES = [
   "Can I come in next Thursday after 3? Prefer Sarah if she's around.",
@@ -27,10 +28,23 @@ export default function Console() {
   const [decision, setDecision] = useState<Decision | null>(null);
   const [booked, setBooked] = useState<string | null>(null);
   const [confirmation, setConfirmation] = useState<string | null>(null);
+  const [stages, setStages] = useState<StageEvent[]>([]);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const submit = useMutation({
-    mutationFn: (t: string) => api.submit(t, "pat-000"),
+    mutationFn: (t: string) => {
+      // Clear the previous answer immediately: leaving the last decision on screen
+      // while a new one runs invites reading a stale card as the fresh one.
+      setDecision(null);
+      setStages([]);
+      return api.submitStream(t, "pat-000", (ev) =>
+        setStages((prev) =>
+          prev.some((s) => s.stage === ev.stage)
+            ? prev.map((s) => (s.stage === ev.stage ? ev : s))
+            : [...prev, ev],
+        ),
+      );
+    },
     onSuccess: (d) => {
       setDecision(d);
       setBooked(null);
@@ -118,6 +132,8 @@ export default function Console() {
           </button>
         ))}
       </div>
+
+      {submit.isPending && <StageProgress stages={stages} />}
 
       {submit.isError && (
         <p className="text-sm" style={{ color: "var(--warn)" }}>
