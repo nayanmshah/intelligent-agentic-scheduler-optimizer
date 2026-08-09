@@ -4,11 +4,12 @@
 > from an actual run against the committed dataset — nothing here is illustrative.
 >
 > **Before you start:** put an `ANTHROPIC_API_KEY` in `.env`, run `make demo`, and open
-> `http://127.0.0.1:8000`. The header must read **Live models** — and nothing about a
-> simulated clock. The app runs on **real time**; the seeded schedule covers
-> 2026-08-03 → 2026-08-28, which contains the demo date, and pre-flight fails loudly
-> if it ever does not. An amber **Simulated clock** pill means `SCHED_CLOCK=frozen`
-> is set — fine for CI, wrong for the demo.
+> `http://127.0.0.1:8000`. The header should show **no amber pill** — live models on
+> real time is the expected state and gets no badge. An amber pill is the exception
+> announcing itself: **Offline · fixtures (degraded)** means the key or network is
+> missing; **Simulated clock** means `SCHED_CLOCK=frozen` is set. Either one on demo
+> day means fix the environment first. `make preflight` says the same in the
+> terminal.
 >
 > If it says **Offline · fixtures (degraded)**, the key is missing or the network is
 > down. The demo still works — every request is still answered — but three of the four
@@ -342,7 +343,7 @@ Head-to-head vs naive first-available (FR-095)
 
 | Symptom | Cause | Do this |
 | :------ | :---- | :------ |
-| Header says **Offline · fixtures (degraded)** | no key, or no network | Check `.env`. If it cannot be fixed, say so and demo the degradation deliberately — it still answers every request |
+| An amber **Offline · fixtures (degraded)** pill appears | no key, or no network | Check `.env`. If it cannot be fixed, say so and demo the degradation deliberately — it still answers every request |
 | A request takes ~15s | three sequential model calls | Expected. Narrate the pipeline (§1); do not apologise for it |
 | One card reads plainer than the others | the faithfulness gate rejected that sentence | Working as designed — show it on the Traces screen (§6) |
 | Dates look wrong | Reading them against the real today | The dataset's today is **Monday 2026-08-10**, shown in the header |

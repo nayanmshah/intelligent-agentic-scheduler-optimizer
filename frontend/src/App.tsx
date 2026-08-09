@@ -73,31 +73,24 @@ function ReferenceBar() {
         </span>
       )}
 
-      {/* Which path answered (FR-105). Degradation is amber, never hidden. */}
-      <span
-        className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium"
-        style={
-          degraded
-            ? { background: "var(--warn-bg)", color: "var(--warn)" }
-            : { background: "rgba(80, 200, 175, 0.12)", color: "#7fd4c4" }
-        }
-        title={
-          degraded
-            ? "No model in use: answers come from committed fixtures and deterministic rules."
-            : "Extraction, verification and explanation are running against the live model."
-        }
-      >
+      {/* FR-105: which path answered is never a guess — but live models are the
+          expected state, and announcing the expected state is noise. Only the
+          EXCEPTION gets a badge: amber, when the deterministic fallbacks are
+          answering instead of the models. */}
+      {degraded && (
         <span
-          aria-hidden
-          className={
-            degraded
-              ? "inline-block h-1.5 w-1.5 rounded-full"
-              : "breathe inline-block h-1.5 w-1.5 rounded-full"
-          }
-          style={{ background: degraded ? "var(--warn)" : "#4ec9ab" }}
-        />
-        {degraded ? "Offline · fixtures (degraded)" : "Live models"}
-      </span>
+          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium"
+          style={{ background: "var(--warn-bg)", color: "var(--warn)" }}
+          title="No model in use: answers come from committed fixtures and deterministic rules."
+        >
+          <span
+            aria-hidden
+            className="inline-block h-1.5 w-1.5 rounded-full"
+            style={{ background: "var(--warn)" }}
+          />
+          Offline · fixtures (degraded)
+        </span>
+      )}
 
       {data?.opik_enabled === false && (
         <span className="text-xs" style={{ color: "var(--bar-soft)" }}>
