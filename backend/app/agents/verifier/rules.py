@@ -68,12 +68,93 @@ class RuleConstraintVerifier:
             outcome="proceed_with_flags" if flags else "proceed", flags=tuple(flags)
         )
 
+    #: Words a patient uses for damage or acute trouble. Paired with a reading of
+    #: routine hygiene, they are the one mismatch that must never depend on a model
+    #: being in the mood: the patient is understating an injury, and the practice
+    #: needs to know before the visit. The model still runs on top and catches the
+    #: phrasings this list does not have -- this is a floor, not a replacement.
+    _DAMAGE_WORDS = (
+        "fell off", "fell out", "came off", "came out", "broke", "broken", "chipped",
+        "cracked", "knocked out", "lost a filling", "lost my filling", "swollen",
+        "abscess", "pus", "bleeding",
+    )
+    #: Readings that mean "a routine clean", i.e. no repair happens at this visit.
+    _HYGIENE_TYPES = ("prophy_adult", "prophy_child", "perio_maint")
+    #: What a patient calls a routine visit in their own words.
+    _HYGIENE_WORDS = ("cleaning", "clean", "polish", "hygiene", "check-up", "checkup")
+
+    def _symptom_type_mismatch(self, c: RequestConstraints) -> Flag | None:
+        """FR-009. "My crown fell off, can I get a cleaning?", checked deterministically.
+
+        **Two directions, because the extractor resolves this request both ways.**
+        Sometimes it takes the patient at their word and reads *cleaning*, leaving
+        damage words contradicting the reading. Sometimes it infers the repair itself
+        and reads *crown seat* — no contradiction left, but now the operator is about
+        to book something the patient did not ask for, which they equally need told.
+        Only the first direction existed when this relied on the model, which is why
+        the warning went missing on runs where extraction was cleverer, not worse.
+
+        The model still runs on top and covers phrasings this word list does not have.
+        This is a floor, not a replacement.
+        """
+        text = c.request_text.lower()
+        reading_is_hygiene = c.appointment_type.value in self._HYGIENE_TYPES
+        hit = next((w for w in self._DAMAGE_WORDS if w in text), None)
+        asked_hygiene = any(w in text for w in self._HYGIENE_WORDS)
+        if hit is None:
+            return None
+
+        said = self._clause_around(c.request_text, hit)
+        if reading_is_hygiene:
+            return Flag(
+                code="SYMPTOM_TYPE_MISMATCH",
+                message=f"You said {said} — that needs a repair visit, not a cleaning.",
+            )
+        if asked_hygiene:
+            return Flag(
+                code="SYMPTOM_TYPE_MISMATCH",
+                message=(
+                    f"You asked for a cleaning, but you said {said} — "
+                    "these times fix that first."
+                ),
+            )
+        return None
+
+    @staticmethod
+    def _clause_around(text: str, needle: str) -> str:
+        """The patient's own clause, quoted back. A warning that names the thing
+        ("your crown fell off") is one an operator can read out; a warning about
+        "something broken" is a category, and categories do not end phone calls."""
+        lower = text.lower()
+        at = lower.find(needle)
+        start = max((lower.rfind(ch, 0, at) for ch in ",.;?!"), default=-1) + 1
+        end = min(
+            (i for i in (lower.find(ch, at) for ch in ",.;?!") if i != -1),
+            default=len(text),
+        )
+        clause = text[start:end].strip().rstrip(",")
+        words = clause.split()
+        if len(words) > 6:
+            # Centre on the damage phrase rather than taking a fixed end of the clause:
+            # "my front tooth chipped yesterday and I want a cleaning" should quote back
+            # "front tooth chipped", not the half about the cleaning.
+            lowered = [w.strip(",.;?!").lower() for w in words]
+            head = needle.split()[0]
+            at_word = next((i for i, w in enumerate(lowered) if head in w), 0)
+            span = len(needle.split())
+            clause = " ".join(words[max(0, at_word - 2) : at_word + span])
+        return f"your {clause[3:]}" if clause.lower().startswith("my ") else clause
+
     # -- world checks (FR-010) -------------------------------------------------
     def _world_checks(
         self, c: RequestConstraints, world: SeedBundle, now: datetime
     ) -> list[Flag]:
         out: list[Flag] = []
         window = c.date_range.value
+
+        mismatch = self._symptom_type_mismatch(c)
+        if mismatch is not None:
+            out.append(mismatch)
 
         # Defence in depth for the HTTP boundary's blank-text check (schemas.py):
         # the orchestrator is also callable directly, and a request with no words in

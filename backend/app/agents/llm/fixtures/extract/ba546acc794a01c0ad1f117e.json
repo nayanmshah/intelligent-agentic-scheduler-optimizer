@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.5,
+    "confidence": 0.3,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -52,7 +52,7 @@
     },
     "value": {
       "end_min": null,
-      "start_min": 720
+      "start_min": 1200
     }
   },
   "urgency": {

@@ -111,7 +111,7 @@ quality?*
 | Component | Verdict |
 | --------- | ------- |
 | **Extractor** | **Yes** — and it is measured. The rules fallback scores materially lower than the LLM on the golden set; the eval reports exactly which phrasings it misses. |
-| **Verifier** | **Yes, and it is now measured.** The rules catch what can be enumerated — a past date, a provider who does not exist, a credential mismatch. They cannot catch a *semantic* mismatch, because there is no list to check it against. Live, the model reads *"my crown fell off, can I get a cleaning?"* and returns "you mentioned a fallen-off crown, so you likely need a crown fitting or exam, not a cleaning." No lookup finds that. The rules still run underneath as the floor, so the model can add to the picture and never subtract from it. |
+| **Verifier** | **Yes, and it is now measured.** The rules catch what can be enumerated — a past date, a provider who does not exist, a credential mismatch. They cannot catch a *semantic* mismatch, because there is no list to check it against. Live, the model reads *"my crown fell off, can I get a cleaning?"* and returns "you mentioned a fallen-off crown, so you likely need a crown fitting or exam, not a cleaning." **The obvious lexical pairs are now a deterministic floor** (FR-009: damage words against a hygiene reading, and the inverse) because that particular warning should not depend on a model's mood — measured 11/12 without it, 12/12 with it. What the model still adds is everything the word list does not contain: the phrasings nobody thought to enumerate, which is the whole reason a list is not enough. The rules still run underneath as the floor, so the model can add to the picture and never subtract from it. |
 | **Explainer** | **Arguable.** Templates deliver roughly 90% of the value; the LLM buys naturalness and avoids combinatorial template explosion. The template always runs as fallback. |
 | **Reasoner** | **No** — it would be strictly worse. That is why it is not one. |
 
@@ -381,7 +381,7 @@ no-show-risk policy hook.
 | ILP / OR-tools | One request against a fixed schedule, not a global re-optimization. Exhaustive enumeration over hundreds of candidates is exact, sub-millisecond, and fully explainable |
 | Global schedule re-optimization | Moving already-booked patients is a consent problem before it is a math problem |
 | Patient self-scheduling | Different product, different liability surface |
-| Voice input | ✅ **Cut permanently.** Transcription adds a failure mode and zero decision quality; typed text exercises the same extraction path |
+| Voice input | ✅ **Shipped as a front door (FR-110)** — decision reversed. The original reasoning (transcription changes only how the text arrives) is exactly what made it safe: the browser transcribes into the request box, the operator confirms, and the pipeline receives text unchanged. Dictation never submits, so provenance still quotes a sentence a human agreed was said |
 | Streaming token UI, containerized app deploy, k8s, multi-tenancy | Infrastructure without product value at this stage |
 
 ---

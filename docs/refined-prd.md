@@ -1827,7 +1827,7 @@ verifies it.
 | Item | Status |
 | :--- | :----- |
 | **A section of the original product brief — "Building Blocks — Open Design Space" — was not captured in the source material available** | **Closed, non-blocking.** That section's own framing — *"no single right architecture… some directions worth considering, none required"* — makes its contents optional by construction, and every architectural decision it might have suggested has been made explicitly and with a recorded rationale in `docs/product-direction.md` and this PRD. If the missing content is recovered later, reconcile it against those decisions rather than re-opening them |
-| **Voice / speech input** (the original brief allows "text or speech") | **Closed — permanently cut ✅ DECIDED.** Adds a runtime failure mode for zero decision quality, since constraint extraction operates on text either way. Recorded with its rationale on the known-limitations page |
+| **Voice / speech input** (the original brief allows "text or speech") | **Closed — shipped ✅ DECIDED (reversed 2026-08-09).** Cut on the grounds that extraction operates on text either way; that is precisely what made it addable as a front door with no pipeline change. See FR-110, and `known-limitations.md` for what speech still costs |
 | **Bump candidates: MUST or STRETCH?** | **Closed** — see the §6 reconciliation note. Empty-tier escalation + emergency-hold unlock are MUST; bump *suggestions* are STRETCH |
 
 ---

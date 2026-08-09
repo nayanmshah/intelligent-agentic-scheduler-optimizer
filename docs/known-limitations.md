@@ -96,7 +96,7 @@ eliminate.
 
 ---
 
-## 5. Voice input is permanently cut
+## 5. Voice input — shipped, and what it costs
 
 > **Superseded 2026-08-09 — speech now ships (FR-110).** The reasoning below was right that
 > transcription only changes how the text arrives, and that is exactly what made it safe to add as
@@ -113,7 +113,7 @@ speech would only change how the text arrives.
 
 ## 6. Single timezone, and no DST day inside the seed window
 
-### The live verifier is not deterministic, and one test measures it
+### The live verifier is not deterministic — so the worst case got a floor
 
 `test_the_verifier_catches_a_symptom_treatment_mismatch` — *"my crown fell off, can I get a
 cleaning?"* — **failed once in 12 live runs** (11 passed, one release-check failure). The model
@@ -127,8 +127,23 @@ is a missing warning, never a wrong booking, and the deterministic rules floor s
 underneath. But a live test asserting model behaviour will flake, and pretending otherwise by
 retrying until green would be the dishonest fix. It is left as-is, and named here.
 
-*Demo note: this is the beat where a live run can visibly not do the thing. Say what it is if it
-happens — an unflagged mismatch is exactly the failure mode the rules floor exists to bound.*
+**Fixed for the case that matters most (FR-009).** Investigating the miss showed it was not the
+model being wrong but the *extractor* being cleverer: on those runs it read the repair itself
+(`crown_seat`), leaving no symptom/reading contradiction for the verifier to find — while the
+operator was still about to book something the patient had not asked for. Both directions now have
+a **deterministic floor**: damage words against a hygiene reading, and a patient who asked for a
+cleaning while the reading says repair. Re-measured **12/12** live. The model still runs on top and
+covers phrasings the word list does not have.
+
+A second live test — the one asserting the model, not the template, writes the reason lines —
+also failed once across these runs and passed on every retry. Same shape, same bounded
+consequence: the faithfulness gate rejecting model prose falls back to a template sentence that
+is correct but plainer. Live tests that assert model behaviour will flake; retrying until green
+would be the dishonest fix.
+
+What remains true: *other* semantic catches are still model-only and therefore still probabilistic.
+The floor covers the mismatch a practice would least like to depend on a model's mood; it is not a
+general symptom checker, and claiming otherwise would be the same overstatement in a new place.
 
 ### What dictation actually costs
 

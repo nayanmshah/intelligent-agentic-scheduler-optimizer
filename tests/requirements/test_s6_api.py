@@ -540,3 +540,44 @@ class TestVoiceIsAFrontDoor:
         """One flag, no rebuild -- the browser API is the one part of this product
         that fails for reasons the code cannot see."""
         assert client.get("/api/reference").json()["voice_input"] is True
+
+
+# ----------------------------------------------------------------- FR-081 ----
+class TestStabilityMeasuresWhatTheOperatorWouldSee:
+    """The indicator answers "would these three still be the recommendation?" — so it
+    has to replay the *selection*, diversity rule included, not a naive score sort."""
+
+    def test_the_replay_reproduces_the_offers_under_the_nominal_weights(self, client) -> None:
+        """The invariant that keeps the number honest. If the replay cannot reproduce
+        what was actually offered at the weights that produced it, every percentage it
+        reports afterwards is measuring a different question — which is exactly how the
+        indicator came to read 0%: the offer set is diversity-aware and the comparison
+        was against the top three by score, which disagree whenever slots tie."""
+        from app.api.policy import _reselect
+
+        client.post("/api/session/reset")
+        d = client.post("/api/requests", json={
+            "text": "Can I come in next Thursday after 3? Prefer Sarah if she's around.",
+            "patient_id": "pat-000",
+        }).json()
+        record = client.app.state.container.trace_store.decision(d["id"])
+        assert record.score_matrix is not None
+        settings = client.app.state.container.settings
+
+        replayed = _reselect(
+            record.score_matrix, record.effective_weights, settings.diversity_window_min
+        )
+        assert replayed == {o.candidate_id for o in record.offers}
+
+    def test_a_stable_recommendation_does_not_report_zero(self, client) -> None:
+        """A number that is structurally zero is worse than no number: it reads as a
+        measurement and carries none."""
+        client.post("/api/session/reset")
+        d = client.post("/api/requests", json={
+            "text": "Can I come in next Thursday after 3? Prefer Sarah if she's around.",
+            "patient_id": "pat-000",
+        }).json()
+        body = client.get("/api/policy/stability", params={"request_id": d["id"]}).json()
+        assert body["held_pct"] > 0
+        assert str(body["held_pct"]) in body["sentence"]
+        assert set(body["per_slot_pct"]) == {o["candidate_id"] for o in d["offers"]}

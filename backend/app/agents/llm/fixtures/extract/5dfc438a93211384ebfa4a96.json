@@ -38,7 +38,7 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.0,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -46,7 +46,7 @@
   },
   "request_text": "A filling on Wednesday late morning",
   "time_window": {
-    "confidence": 0.85,
+    "confidence": 0.8,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -56,11 +56,11 @@
     },
     "value": {
       "end_min": null,
-      "start_min": 1020
+      "start_min": 1080
     }
   },
   "urgency": {
-    "confidence": 0.5,
+    "confidence": 0.7,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,

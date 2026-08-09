@@ -8,43 +8,41 @@
   },
   "date_range": {
     "confidence": 0.85,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 89,
+      "start": 14,
+      "text": "next Thursday? Not sure if I mean this week or the next (Thursday the 13th)"
+    },
+    "value": {
+      "end": "2026-08-13",
+      "start": "2026-08-13"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
     "value": {
-      "end": "2026-08-21",
-      "start": "2026-08-17"
-    }
-  },
-  "exclusions": {
-    "confidence": 1.0,
-    "derived": false,
-    "derived_rule": null,
-    "span": {
-      "end": 47,
-      "start": 26,
-      "text": "I have PT on Tuesdays"
-    },
-    "value": {
       "dates": [],
       "provider_ids": [],
       "time_ranges": [],
-      "weekdays": [
-        1
-      ]
+      "weekdays": []
     }
   },
-  "patient_ref": "pat-000",
+  "patient_ref": null,
   "provider_preference": {
-    "confidence": 1.0,
+    "confidence": 0.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
     "value": null
   },
-  "request_text": "Whatever works next week, I have PT on Tuesdays",
+  "request_text": "Can I come in next Thursday? Not sure if I mean this week or the next (Thursday the 13th)",
   "time_window": {
-    "confidence": 1.0,
+    "confidence": 0.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -54,14 +52,10 @@
     }
   },
   "urgency": {
-    "confidence": 0.9,
-    "derived": false,
-    "derived_rule": null,
-    "span": {
-      "end": 14,
-      "start": 0,
-      "text": "Whatever works"
-    },
-    "value": "flexible"
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "routine"
   }
 }

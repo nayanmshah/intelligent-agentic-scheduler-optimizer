@@ -218,3 +218,68 @@ async def test_record_stores_the_instant_the_decision_actually_ran(container) ->
     )
     assert record.now == ran_at
     assert record.now != SETTINGS.reference_now, "the fixture must differ, or it proves nothing"
+
+
+# ----------------------------------------------------------------- FR-009 ----
+class TestSymptomTypeMismatchHasADeterministicFloor:
+    """The one warning a practice would least like to depend on a model's mood.
+
+    Measured at 11/12 on the live model alone. The misses were not the model being
+    wrong but the *extractor* being cleverer — reading the repair itself, which left
+    no symptom/reading contradiction for anyone to catch, while the operator was still
+    about to book something the patient had not asked for. Both directions now have a
+    deterministic floor; the model runs on top for phrasings the word list lacks.
+    """
+
+    async def _flags(self, extractor, world, text, forced_type=None):  # type: ignore[no-untyped-def]
+        c = await extract(extractor, text)
+        if forced_type is not None:
+            # RequestConstraints is a pydantic model; the project's own helper is what
+            # the verifier itself uses to swap a field.
+            from app.agents.verifier.rules import replace_field
+            from app.domain.request import FieldValue
+
+            c = replace_field(
+                c,
+                "appointment_type",
+                FieldValue(value=forced_type, confidence=0.9, derived=True, derived_rule="test"),
+            )
+        verdict = await RuleConstraintVerifier(SETTINGS.confidence_theta).verify(c, world, NOW)
+        return [f.code for f in verdict.flags]
+
+    @pytest.mark.parametrize(
+        "text",
+        [
+            "My crown fell off, can I get a cleaning?",
+            "tooth broke in half, just want a quick polish",
+            "I lost a filling, can I still come for my cleaning?",
+        ],
+    )
+    async def test_damage_words_against_a_hygiene_reading(self, extractor, world, text) -> None:
+        codes = await self._flags(extractor, world, text, forced_type="prophy_adult")
+        assert "SYMPTOM_TYPE_MISMATCH" in codes, text
+
+    async def test_the_other_direction_when_extraction_inferred_the_repair(
+        self, extractor, world
+    ) -> None:
+        """No contradiction left in the reading — and the operator still needs telling
+        that what is about to be booked is not what the patient asked for."""
+        codes = await self._flags(
+            extractor, world, "My crown fell off, can I get a cleaning?", forced_type="crown_seat"
+        )
+        assert "SYMPTOM_TYPE_MISMATCH" in codes
+
+    @pytest.mark.parametrize(
+        "text,forced",
+        [
+            ("Can I come in next Thursday after 3?", "prophy_adult"),  # ordinary request
+            ("My tooth broke, I need it fixed", "crown_prep"),         # words and reading agree
+            ("Time for my cleaning", "prophy_adult"),                  # no damage claimed
+        ],
+    )
+    async def test_it_stays_quiet_when_nothing_contradicts(
+        self, extractor, world, text, forced
+    ) -> None:
+        """A field that is always full is a field the operator learns to ignore."""
+        codes = await self._flags(extractor, world, text, forced_type=forced)
+        assert "SYMPTOM_TYPE_MISMATCH" not in codes, text

@@ -99,6 +99,13 @@ class ScoreMatrix:
 
     candidate_ids: tuple[str, ...]
     rows: tuple[tuple[float, float, float, float], ...]
+    #: ``(provider_id, day_ordinal, start_min, operatory_id)`` per row, aligned with
+    #: ``candidate_ids``. Present so the *selection* -- not a naive score sort -- can be
+    #: replayed under a different weight vector (FR-081). Without it the stability
+    #: measure compared the diversity-aware offer set against the top three by score,
+    #: which disagree by construction whenever the diversity rule fires or slots tie,
+    #: and the indicator read 0% for reasons that had nothing to do with stability.
+    keys: tuple[tuple[str, int, int, str], ...] = ()
     #: ``(provider_name, start_display)`` per row, aligned with ``candidate_ids``.
     #:
     #: Re-ranking under new weights can promote a candidate that was never in the

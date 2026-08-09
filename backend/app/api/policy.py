@@ -87,6 +87,46 @@ async def rerank(body: RerankRequest, request: Request) -> dict[str, Any]:
     }
 
 
+def _reselect(matrix: Any, w: Any, diversity_window_min: int, want: int = 3) -> set[str]:
+    """The three the operator would actually see under weight vector ``w``.
+
+    Replays `select.select_top3`'s greedy diversity pass rather than taking the top
+    three by score. Those two disagree by construction: the same provider at the same
+    minute in two rooms scores identically, and the diversity rule deliberately skips
+    a higher-scoring near-duplicate to avoid offering one option wearing three hats.
+    Comparing the offer set against a naive sort therefore reported 0% for reasons
+    that had nothing to do with the weights being unstable.
+    """
+    scores = matrix.scores_for(w)
+    keys = matrix.keys or ((("", 0, 0, ""),) * len(matrix.candidate_ids))
+    ranked = sorted(
+        zip(matrix.candidate_ids, scores, keys, strict=True),
+        # Score first, then FR-048's tiebreak prefix (earlier, then room) so the order
+        # is total and reproducible rather than dependent on list order.
+        key=lambda t: (-t[1], t[2][1], t[2][2], t[2][3]),
+    )
+    chosen: list[tuple[str, float, tuple[str, int, int, str]]] = []
+    for item in ranked:
+        if len(chosen) >= want:
+            break
+        _, _, (prov, day, start, _) = item
+        if any(
+            c[2][0] == prov and c[2][1] == day and abs(c[2][2] - start) < diversity_window_min
+            for c in chosen
+        ):
+            continue
+        chosen.append(item)
+    # Selection relaxes suppression rather than return fewer than three (select.py).
+    if len(chosen) < want:
+        picked = {c[0] for c in chosen}
+        for item in ranked:
+            if len(chosen) >= want:
+                break
+            if item[0] not in picked:
+                chosen.append(item)
+    return {c[0] for c in chosen}
+
+
 @router.get("/policy/stability")
 async def stability(request_id: str, request: Request) -> dict[str, Any]:
     """[FR-081] Converts "the weights are arbitrary" from an objection into a
@@ -104,28 +144,28 @@ async def stability(request_id: str, request: Request) -> dict[str, Any]:
         raise HTTPException(400, "no offers to test")
 
     rng = random.Random(s.stability_seed)
-    held = 0
+    exact = 0
     per_slot = dict.fromkeys(baseline, 0)
     for _ in range(s.stability_samples):
         w = Weights.normalised(tuple(rng.random() for _ in range(4)))  # type: ignore[arg-type]
-        scores = matrix.scores_for(w)
-        top = {
-            cid for cid, _ in sorted(
-                zip(matrix.candidate_ids, scores, strict=True), key=lambda kv: -kv[1]
-            )[:3]
-        }
+        top = _reselect(matrix, w, s.diversity_window_min)
         if top == baseline:
-            held += 1
+            exact += 1
         for cid in baseline & top:
             per_slot[cid] += 1
 
-    pct = round(100 * held / s.stability_samples)
+    pct = round(100 * exact / s.stability_samples)
+    weakest = round(100 * min(per_slot.values()) / s.stability_samples) if per_slot else 0
     return {
         "samples": s.stability_samples,
         "seed": s.stability_seed,
         "held_pct": pct,
         # Stated in words, not just a number -- that is the point of the indicator.
-        "sentence": f"These three stay in the top 3 across {pct}% of sampled weight vectors.",
+        "sentence": (
+            f"These three are what you would be offered under {pct}% of "
+            f"{s.stability_samples} random weight settings."
+        ),
+        "weakest_pct": weakest,
         "per_slot_pct": {
             cid: round(100 * n / s.stability_samples) for cid, n in per_slot.items()
         },

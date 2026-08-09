@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.5,
+    "confidence": 0.4,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -16,8 +16,8 @@
       "text": "tomorrow"
     },
     "value": {
-      "end": "2026-08-11",
-      "start": "2026-08-11"
+      "end": "2026-08-10",
+      "start": "2026-08-10"
     }
   },
   "exclusions": {
@@ -42,7 +42,7 @@
   },
   "request_text": "I need something first thing tomorrow, it's urgent.",
   "time_window": {
-    "confidence": 0.8,
+    "confidence": 0.85,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -61,8 +61,8 @@
     "derived_rule": null,
     "span": {
       "end": 50,
-      "start": 44,
-      "text": "urgent"
+      "start": 39,
+      "text": "it's urgent"
     },
     "value": "urgent"
   }

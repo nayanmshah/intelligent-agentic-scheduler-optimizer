@@ -100,6 +100,7 @@ def score_all(
     ids: list[str] = []
     rows: list[tuple[float, float, float, float]] = []
     labels: list[tuple[str, str]] = []
+    keys: list[tuple[str, int, int, str]] = []
     rationales: dict[str, Rationale] = {}
 
     for cand, ann in cs.in_tier():
@@ -136,10 +137,11 @@ def score_all(
 
         facts = fact_set(cand, repo, appointment_type, patient)
         labels.append((facts.provider_name, facts.start_display))
+        keys.append((cand.provider_id, cand.day.toordinal(), cand.start_min, cand.operatory_id))
         rationales[cand.candidate_id] = _rationale(values, effective, facts, caveats)
 
     matrix = ScoreMatrix(
-        candidate_ids=tuple(ids), rows=tuple(rows), labels=tuple(labels)
+        candidate_ids=tuple(ids), rows=tuple(rows), labels=tuple(labels), keys=tuple(keys)
     )
     for cid, score in zip(ids, matrix.scores_for(effective), strict=True):
         cs.ann(cid).score = round(score, 6)  # fixed precision: byte-identical output
