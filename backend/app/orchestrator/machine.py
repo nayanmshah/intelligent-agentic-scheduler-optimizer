@@ -12,6 +12,7 @@ else. All domain logic lives in the packages it calls.
 
 from __future__ import annotations
 
+import asyncio
 import uuid
 from dataclasses import dataclass
 from datetime import datetime
@@ -27,6 +28,11 @@ from app.domain.request import RequestConstraints
 from app.orchestrator.stages import run_stage
 from app.reasoner.hypotheses import run_fanout
 from app.trace.sink import FanOutTraceSink, Tracer
+
+
+async def _ready(value):  # type: ignore[no-untyped-def]
+    """An already-computed fallback, in the shape run_stage expects."""
+    return value
 
 
 @dataclass(frozen=True, slots=True)
@@ -73,46 +79,38 @@ class Orchestrator:
             if stage.fallback_fired:
                 fallbacks.append("extract")
 
-            # 2. VERIFY (against the world, never the schedule) ----------------
-            stage = await run_stage(
+            # 2. VERIFY, split in two (ADR-21). The deterministic floor answers
+            # everything the *reasoner* needs (hypotheses, world-validity flags) in
+            # under a millisecond; the model's semantic pass only ADDS flags, so it
+            # runs concurrently with reason+explain instead of gating them.
+            floor = await self.agents.rules_verifier.verify(constraints, self.world, now)
+            verify_task = asyncio.create_task(run_stage(
                 tracer, "verify",
                 primary=lambda: self.agents.verifier.verify(constraints, self.world, now),
-                fallback=lambda: self.agents.rules_verifier.verify(constraints, self.world, now),
+                fallback=lambda: _ready(floor),
                 timeout=s.timeout_verify,
                 implementation=self.agents.verifier.name,
-            )
-            verdict = stage.value
-            if stage.fallback_fired:
-                fallbacks.append("verify")
+            ))
 
             # 3. REASON -- deterministic, once per hypothesis, sharing Layer 0 --
-            with tracer.span("reason", hypotheses=len(verdict.hypotheses)) as span:
+            with tracer.span("reason", hypotheses=len(floor.hypotheses)) as span:
                 fan = run_fanout(
-                    self.reasoner, constraints, verdict.hypotheses, now, profile, rid
+                    self.reasoner, constraints, floor.hypotheses, now, profile, rid
                 )
                 span.attrs["shared_layer0"] = fan.shared_layer0
                 span.attrs["diverged"] = fan.diverged
 
-            # 4. DECIDE -- ask only when the answer would change what is offered --
-            if fan.diverged:
-                question = fan.question(verdict.hypotheses[0].field)
-                # The provisional offers are still on screen behind the question, so
-                # they still need readable reason lines.
-                provisional, gates = await explain_outcome(
-                    tracer, fan.resolved, self.agents.explainer
-                )
-                return self._record(
-                    rid, tracer, req, constraints, provisional, profile,
-                    fallbacks, verdict, question.text, gates,
-                    self.agents.llm_call_count() - calls_before,
-                )
-
-            # 5. EXPLAIN -- renders a Rationale and can reach nothing else -------
+            # 4+5. EXPLAIN, with the model verify landing in parallel ------------
             outcome, gates = await explain_outcome(tracer, fan.resolved, self.agents.explainer)
+            stage = await verify_task
+            verdict = stage.value
+            if stage.fallback_fired:
+                fallbacks.append("verify")
 
+            question = fan.question(floor.hypotheses[0].field).text if fan.diverged else None
             return self._record(
                 rid, tracer, req, constraints, outcome, profile, fallbacks, verdict,
-                None, gates, self.agents.llm_call_count() - calls_before,
+                question, gates, self.agents.llm_call_count() - calls_before,
             )
 
     def _record(

@@ -1,0 +1,69 @@
+{
+  "appointment_type": {
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 14,
+      "start": 6,
+      "text": "cleaning"
+    },
+    "value": "prophy_adult"
+  },
+  "date_range": {
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 24,
+      "start": 15,
+      "text": "Wednesday"
+    },
+    "value": {
+      "end": "2026-08-12",
+      "start": "2026-08-12"
+    }
+  },
+  "exclusions": {
+    "confidence": 0.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": null
+  },
+  "request_text": "Quick cleaning Wednesday early afternoon",
+  "time_window": {
+    "confidence": 0.75,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 40,
+      "start": 25,
+      "text": "early afternoon"
+    },
+    "value": {
+      "end_min": null,
+      "start_min": 1200
+    }
+  },
+  "urgency": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "routine"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "appointment_type": {
+    "confidence": 0.3,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "prophy_adult"
+  },
+  "date_range": {
+    "confidence": 0.95,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 39,
+      "start": 30,
+      "text": "Wednesday"
+    },
+    "value": {
+      "end": "2026-08-12",
+      "start": "2026-08-12"
+    }
+  },
+  "exclusions": {
+    "confidence": 1.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "dates": [],
+      "provider_ids": [],
+      "time_ranges": [],
+      "weekdays": []
+    }
+  },
+  "patient_ref": "pat-000",
+  "provider_preference": {
+    "confidence": 0.3,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 21,
+      "start": 3,
+      "text": "my usual hygienist"
+    },
+    "value": null
+  },
+  "request_text": "Is my usual hygienist free on Wednesday?",
+  "time_window": {
+    "confidence": 0.0,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": {
+      "end_min": null,
+      "start_min": null
+    }
+  },
+  "urgency": {
+    "confidence": 0.5,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "routine"
+  }
+}

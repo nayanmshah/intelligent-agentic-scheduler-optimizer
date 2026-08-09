@@ -1118,17 +1118,18 @@ entirely is *not* used: it is capped at `effort: high` or below, and it carries 
 Model is a **per-stage** setting, not a global one. The registry already selects implementations per
 stage, so per-stage model costs nothing structurally.
 
-| Stage | Model | Effort | Timeout | Measured p50 | Rationale |
-| :---- | :---- | :----- | :------ | -----------: | :-------- |
-| Extraction | `claude-opus-5` | `low` | 20 s | ~7.3 s | The only stage where model quality is visible in the output |
-| Verification | `claude-sonnet-5` | `low` | 12 s | ~4 s | Judgement about *wording*, over a deterministic floor that runs first. Nothing here needs the top tier |
-| Explanation | `claude-sonnet-5` | `low` | 15 s | ~5 s | One sentence from a supplied fact set, faithfulness-gated (FR-062) — a bad output is discarded rather than shipped |
+| Stage | Model | Timeout | Measured p50 | Rationale |
+| :---- | :---- | :------ | -----------: | :-------- |
+| Extraction | `claude-haiku-4-5` | 8 s | ~2.0 s | Quote-based slim schema (ADR-21). 89.6% vs Opus's 92.3% on labels already biased against every model — bought 3.4× the speed |
+| Verification | `claude-haiku-4-5` | 6 s | ~1.3 s | Caught 4/4 seeded symptom/treatment mismatches with the v2 prompt; runs in parallel, off the critical path |
+| Explanation | `claude-haiku-4-5` | 6 s | ~1.5 s | Identical faithfulness-gate pass rate to Sonnet (20/21) at half the latency — the gate is what makes the cheap model safe |
 
-> **The original budgets were 2.2 / 0.9 / 0.9 s and could not be met.** They were set
-> before the live path existed. Every live request timed out into the fallback, so the
-> ladder "worked" by never running the model — which is the most expensive kind of
-> passing test. The numbers above are the measured reality plus headroom; the honest
-> consequence is in `known-limitations.md` §12.
+> **Every stage was measured on Opus 5, Sonnet 5 and Haiku 4.5 before this table was
+> written** (54 live calls per finalist; `docs/latency-research.md`). Adaptive thinking
+> moved extraction by under 0.2 s and is not the lever; **output tokens are** — latency
+> tracked them almost linearly, which is why the wire schema shrank first and the model
+> second. One env var (`SCHED_MODEL_EXTRACT=claude-opus-5`) moves any stage back up a
+> tier for anyone who weighs the accuracy points differently.
 
 Each model id is a `Settings` field and forms part of that stage's fixture cache key (FR-006), so
 changing one is a config edit that invalidates only its own fixtures.
@@ -1166,14 +1167,14 @@ client = AsyncAnthropic(max_retries=0, timeout=settings.timeout_default)
 asserts it:
 
 ```
-extract 20 s  +  verify 12 s  +  explain 15 s  +  deterministic 0.3 s  +  overhead 0.2 s
-= 47.5 s worst case  <  50.0 s  (the configured ceiling)
+extract 8 s  +  max(verify 6 s, explain 6 s)  +  deterministic 0.3 s  +  overhead 0.2 s
+= 14.5 s worst case  <  15.0 s  (the configured ceiling)
 ```
 
-That ceiling is a **cap on the fallback ladder**, not a latency target. Typical is ~16 s;
-the ceiling exists so a hung stage degrades to its deterministic implementation instead
-of hanging the request. The original 5 s target from NFR-02 is not met and is restated
-as measured — see `known-limitations.md` §12 for what would actually close it.
+Verify and explain are **parallel** (ADR-21), so the ladder sums the slower of the two,
+not both. Each timeout is ~2× the stage's measured max, so the fallback fires on genuine
+trouble rather than on an ordinary tail. Typical end-to-end is **~3.9 s** against the
+original 5 s target of NFR-02 — met, three redesigns after it was first missed.
 
 ### 15.5 Structured output and the error ladder
 
@@ -1491,6 +1492,38 @@ proves the product still answers.
 **Rejected alternative:** keeping fixtures as the default and demoing live "when it
 matters". That is how the explainer stayed dead code, and it makes every claim about
 the agentic behaviour a promise rather than a demonstration.
+
+---
+
+### ADR-21 — Small model, small payload, parallel stages
+
+**Decision.** All three model stages run on Haiku 4.5; extraction uses a quote-based
+wire format (prompt v2) whose offsets and provenance are computed locally; the model
+verify runs concurrently with reason + explain instead of gating them.
+
+**Context.** The live pipeline shipped at ~15.9 s end to end. Measurement, not
+intuition, located the cost (54 live calls per configuration):
+
+| Lever | Finding |
+| :---- | :------ |
+| Adaptive thinking | < 0.2 s. Not the lever. |
+| Output tokens | **The lever.** 558 tokens → 6.6 s; 162 → 2.0 s, near-linear |
+| Wire schema | Emitting per-field meta objects (offsets, derived flags, rule names) doubled output for information computable locally — and model-emitted offsets disagreed with their own text often enough to be a real fallback source |
+| Model | Haiku ≈ 3× faster per stage; quality holds where a deterministic floor or gate bounds the damage |
+| Sequencing | The LLM verify only *adds* flags — hypotheses come from the rules floor — so it never needed to be on the critical path |
+
+**Result.** p50 **3.9 s**, max 4.9 s over the reference scenarios — 4× faster, and
+under NFR-02's original 5 s target. Extraction accuracy on the golden labels moved
+93.8% → ~90% (labels whose bias toward the rules extractor is documented in
+`known-limitations.md` §2/§11); the faithfulness-gate pass rate and the verifier's
+mismatch catch rate did not regress — the gate and the rules floor are what make the
+cheap model safe rather than merely cheap.
+
+**Rejected:** keeping Opus for extraction (5.4 s slim — the single biggest remaining
+cost for ~2.7 accuracy points on biased labels); hedged duplicate requests (tail
+collapsed to 3.6 s at n=54, not worth the complexity); speculative rules-first
+rendering (saves ~1.9 s of *perceived* wait at the cost of cards that can change
+underneath the operator — revisit only if sub-2 s becomes a requirement).
 
 ---
 

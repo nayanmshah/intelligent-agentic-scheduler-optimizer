@@ -59,29 +59,33 @@ class Settings(BaseSettings):
     explainer: str = "llm"  # llm | template
     reasoner: str = "deterministic"  # deterministic | naive
 
-    # -- models, per stage (ADR-15) ---------------------------------------------
-    model_extract: str = "claude-opus-5"
-    model_verify: str = "claude-sonnet-5"
-    model_explain: str = "claude-sonnet-5"
-    llm_effort: str = "low"
-    llm_max_tokens: int = 8192  # sized for thinking + output together [AR-02]
-    prompt_version: str = "v1"
+    # -- models, per stage (ADR-15, ADR-21) --------------------------------------
+    # Haiku everywhere, decided by measurement rather than deference (ADR-15's rule):
+    # per stage it is 2-4x faster than Sonnet/Opus with the same faithfulness-gate
+    # pass rate on explain (20/21 vs 20/21), a better mismatch catch rate on verify
+    # (2/2 vs 1/2), and 89.6% vs 92.3% extraction accuracy on labels already biased
+    # against every model (known-limitations §2, §11). One env var swaps any stage
+    # back up a tier for anyone who weighs those points differently.
+    model_extract: str = "claude-haiku-4-5"
+    model_verify: str = "claude-haiku-4-5"
+    model_explain: str = "claude-haiku-4-5"
+    llm_effort: str = "low"  # ignored by models without the parameter
+    llm_max_tokens: int = 4096
+    prompt_version: str = "v2"  # v2 = the quote-based slim wire format (ADR-21)
 
     # -- the timeout ladder ------------------------------------------------------
-    # Measured, not guessed: live extraction runs ~7.3s at p50 against this schema
-    # (six fields, each with a confidence and a verbatim span -- FR-003 is what makes
-    # the payload large, and the interpretation strip is why it is worth it).
+    # Sized from measured distributions (54 live calls each): extract p50 2.0s /
+    # max 3.6s, verify p50 1.3s, explain p50 1.5s. Each timeout is ~2x the observed
+    # max, so the fallback fires on genuine trouble rather than on an ordinary tail.
     #
-    # The original 2.2s budget was set before that measurement and could not be met,
-    # so every live request timed out into the fallback -- the ladder "worked" by
-    # never running the model. These are the numbers that let it actually run; the
-    # honest cost is in known-limitations.md §12.
-    timeout_extract: float = 20.0
-    timeout_verify: float = 12.0
-    timeout_explain: float = 15.0
+    # Verify and explain run in PARALLEL after the reasoner (ADR-21) -- the ladder
+    # sums extract + max(verify, explain), not all three.
+    timeout_extract: float = 8.0
+    timeout_verify: float = 6.0
+    timeout_explain: float = 6.0
     deterministic_budget: float = 0.3
     overhead_budget: float = 0.2
-    live_latency_ceiling: float = 50.0
+    live_latency_ceiling: float = 15.0
 
     # -- scheduling policy ------------------------------------------------------
     search_horizon_days: int = 14  # [A-09]
@@ -113,11 +117,14 @@ class Settings(BaseSettings):
 
     @property
     def timeout_ladder_total(self) -> float:
-        """Asserted against ``live_latency_ceiling`` by a test, not by inspection."""
+        """Asserted against ``live_latency_ceiling`` by a test, not by inspection.
+
+        Verify and explain run in parallel (ADR-21), so the worst case is the
+        slower of the two, not their sum.
+        """
         return (
             self.timeout_extract
-            + self.timeout_verify
-            + self.timeout_explain
+            + max(self.timeout_verify, self.timeout_explain)
             + self.deterministic_budget
             + self.overhead_budget
         )

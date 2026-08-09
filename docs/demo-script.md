@@ -13,9 +13,10 @@
 > Fix the key if you can; if you cannot, say so out loud and demo it as the resilience
 > story instead. **Do not let a degraded run pass as the live one.**
 >
-> **Each request takes 12–18 seconds.** That is three sequential model calls, and it is
-> real. Don't fill the silence apologising — narrate what is happening (§1 below), or
-> ask the room a question while it runs.
+> **Each request takes ~4 seconds**, and the stage list shows each agent finishing in
+> real time. If anyone asks: it was ~16 s until the pipeline was measured — the story
+> of getting it down (`docs/latency-research.md`) is itself worth two minutes with a
+> technical audience.
 
 **Keyboard.** `E` focuses the request box · `Enter` submits · `1` `2` `3` book that
 card · `R` resets the dataset. The front desk is a keyboard job; a mouse round-trip is
@@ -61,8 +62,7 @@ Can I come in next Thursday after 3? Prefer Sarah if she's around.
     with Nia, outside the days you asked about.
 ```
 
-**While it runs, narrate the pipeline** — the wait is the demo, not an interruption to
-it:
+**While it runs, narrate the stage list** — four seconds is enough to say this:
 
 > "Three model calls are happening in order. One is reading the request into typed
 > constraints, with a source span for every field. One is checking that reading against

@@ -215,44 +215,33 @@ practising schedulers, written before either extractor is looked at.
 
 ---
 
-## 12. The live path is slow, and it ships anyway
+## 12. Live latency: ~3.9 s typical, and how it got there
 
-NFR-02 originally targeted a sub-5-second answer. Measured against the real API, a full
-live request takes **~16 seconds**: roughly 7s to extract, 4s to verify, 5s to explain,
-in sequence because each stage needs the previous one's output.
+NFR-02's target is a sub-5-second answer; beyond that the operator opens the calendar
+anyway. The first live pipeline missed it badly — ~15.9 s — and the fix was measurement
+rather than optimism (`docs/latency-research.md`, ADR-21):
 
-| Stage | Model | p50 |
-| :---- | :---- | --: |
-| extract | `claude-opus-5` | ~7.3s |
-| verify | `claude-sonnet-5` | ~4s |
-| explain | `claude-sonnet-5` | ~5s |
+| | Before | After |
+| :-- | --: | --: |
+| extract | 7.3 s · Opus, 558-token payload | 2.0 s · Haiku, 162-token quote format |
+| verify | 4.0 s · Sonnet, on the critical path | 1.3 s · Haiku, **in parallel** |
+| explain | 5.0 s · Sonnet | 1.5 s · Haiku, in parallel with verify |
+| **end to end** | **~15.9 s** | **p50 3.9 s · max 4.9 s** |
 
-**Adaptive thinking is not the cause.** Disabling it moved extraction from 7.3s to
-7.2s. The cost is producing the response: six fields, each carrying a confidence, a
-derivation rule and a verbatim source span. FR-003's provenance requirement is what
-makes the payload large, and the interpretation strip is why it is worth paying for.
+Three findings carried it: adaptive thinking was **not** the cost (< 0.2 s); output
+tokens were (near-linear); and the LLM verify never needed to gate the reasoner, since
+hypotheses come from the deterministic floor.
 
-**Why it ships live regardless.** The alternative — defaulting to replayed fixtures —
-means the product's headline capability is the one thing nobody ever sees working, and
-"it would call a model in production" is a claim rather than a demonstration. The
-fallback ladder means the cost of the choice is bounded: a slow or failed call degrades
-to fixtures and then to rules rather than failing.
+**What was traded, stated plainly.** Extraction accuracy on the golden labels moved
+93.8% → ~91% (fixture measurement; the labels' bias toward the rules extractor is §2
+and §11 of this document — `time_window` carries most of the drop, largely the
+"afternoon starts at 12:00 or 13:00" convention). The faithfulness gate's pass rate and
+the verifier's catch rate did not regress. Any stage moves back up a model tier with
+one env var (`SCHED_MODEL_EXTRACT=claude-opus-5`), at ~3 s per request for extraction.
 
-**What would actually close it**, in the order worth trying:
-
-1. **Stream and render progressively.** The interpretation strip needs the date and
-   time, which arrive first. Showing the pipeline working also *demonstrates* the
-   agents rather than hiding them behind a spinner — the better answer twice over.
-2. **Split provenance off the critical path.** Extract the six values in one small
-   call; resolve spans in a second, after the strip has rendered.
-3. **Run rules first, model only on disagreement.** Rules answer in under a
-   millisecond and are right 96.3% of the time; spend the latency only where the two
-   differ.
-4. **Drop the verify call when every field is high-confidence.** It is the least
-   valuable of the three on an unambiguous request.
-
-None of these are implemented. The number is stated because a latency claim without a
-measurement is worth nothing, and this measurement does not support the original one.
+**Under 2 s** would need speculative rendering from the rules extraction while the
+model runs — rejected for now because cards that can change underneath the operator
+cost more trust than 2 s of visible, narrated progress buys.
 
 ---
 

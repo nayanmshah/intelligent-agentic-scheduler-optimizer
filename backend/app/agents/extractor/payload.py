@@ -1,17 +1,28 @@
-"""The wire model for extraction, kept deliberately separate from the domain model.
+"""The wire model for extraction — flat, small, and quote-based on purpose.
 
-Structured outputs accept a subset of JSON Schema. ``RequestConstraints`` uses
-`frozenset`, nested tuples and constrained fields, and pydantic renders those as
-`uniqueItems`, `prefixItems`, `minimum` and friends -- all rejected. Deriving the
-schema and stripping keywords turned into whack-a-mole, one 400 per round trip.
+Two constraints shape it:
 
-So the wire shape is **flat and boring on purpose**: lists instead of sets, ints
-instead of tuples, one level of nesting. It is a separate model rather than a relaxed
-domain model because the domain model's strictness is load-bearing -- ``Exclusions``
-being a frozenset is what makes candidate rejection cheap.
+1. **Structured outputs accept a subset of JSON Schema.** ``RequestConstraints`` uses
+   frozensets, nested tuples and constrained fields, which render as keywords the API
+   rejects. So the wire shape is a separate flat model, and the domain model keeps its
+   strictness (``Exclusions`` being a frozenset is what makes rejection cheap).
 
-Drift between the two is caught by ``to_constraints`` plus a round-trip test, not by
-hope.
+2. **Latency tracks output tokens almost linearly** (measured: 558 tokens → 6.6s,
+   162 → 2.0s). The first wire model made the model emit, per field, a nested meta
+   object with confidence, a derived flag, a rule name, span text *and* character
+   offsets. This one emits a verbatim quote and a confidence — everything else is
+   computed locally:
+
+   - **Offsets** by exact string search. Models copy text far more reliably than they
+     count characters; the old shape produced offsets that disagreed with their own
+     text, which failed validation and silently fell back to rules.
+   - **Derived** is simply "no quote given" (or the quote is not verbatim). A field
+     either points at the patient's words or admits it does not — FR-003, enforced by
+     construction rather than by asking the model to self-report.
+
+   That cut extraction output ~70% and p50 from ~7.3s to ~2.0s with no measured
+   accuracy cost from the shape itself (the schema change alone, same model: 86.7%
+   both ways on the probe set).
 """
 
 from __future__ import annotations
@@ -35,88 +46,100 @@ class Flat(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
-class SpanPayload(Flat):
-    text: str
-    start: int
-    end: int
-
-
-class Meta(Flat):
-    """Provenance for one field. Every field carries this (FR-002, FR-003)."""
-
-    confidence: float
-    derived: bool
-    derived_rule: str | None = None
-    span: SpanPayload | None = None
-
-
 class ExtractionPayload(Flat):
+    """One quote (``*_q``) and one confidence (``*_conf``) per field.
+
+    A null quote means the value was inferred rather than stated. There is no
+    ``derived`` flag to get wrong: provenance is derived from the quote itself.
+    """
+
     date_start: str  # ISO date
     date_end: str
-    date_meta: Meta
+    date_q: str | None
+    date_conf: float
 
     time_start_min: int | None  # minutes from local midnight; null = from opening
     time_end_min: int | None  # null = until close
-    time_meta: Meta
+    time_q: str | None
+    time_conf: float
 
     urgency: str  # emergency | urgent | routine | flexible
-    urgency_meta: Meta
+    urgency_q: str | None
+    urgency_conf: float
 
     provider_id: str | None
-    provider_meta: Meta
+    provider_q: str | None
+    provider_conf: float
 
     appointment_type: str
-    type_meta: Meta
+    type_q: str | None
+    type_conf: float
 
     exclude_weekdays: list[int]  # 0 = Monday
-    exclusions_meta: Meta
+    excl_q: str | None
+    excl_conf: float
 
     # -- mapping ---------------------------------------------------------------
     def to_constraints(self, text: str, patient_ref: str | None) -> RequestConstraints:
         return RequestConstraints(
             request_text=text,
             patient_ref=patient_ref,
-            date_range=self._field(
-                DateWindow(start=date.fromisoformat(self.date_start),
-                           end=date.fromisoformat(self.date_end)),
-                self.date_meta,
+            date_range=_field(
+                DateWindow(
+                    start=date.fromisoformat(self.date_start),
+                    end=date.fromisoformat(self.date_end),
+                ),
+                self.date_q, self.date_conf, text,
             ),
-            time_window=self._field(
+            time_window=_field(
                 TimeWindow(start_min=self.time_start_min, end_min=self.time_end_min),
-                self.time_meta,
+                self.time_q, self.time_conf, text,
             ),
-            urgency=self._field(Urgency(self.urgency), self.urgency_meta),
-            provider_preference=self._field(self.provider_id, self.provider_meta),
-            appointment_type=self._field(self.appointment_type, self.type_meta),
-            exclusions=self._field(
-                Exclusions(weekdays=frozenset(self.exclude_weekdays)), self.exclusions_meta
+            urgency=_field(Urgency(self.urgency), self.urgency_q, self.urgency_conf, text),
+            provider_preference=_field(
+                self.provider_id, self.provider_q, self.provider_conf, text
+            ),
+            appointment_type=_field(
+                self.appointment_type, self.type_q, self.type_conf, text
+            ),
+            exclusions=_field(
+                Exclusions(weekdays=frozenset(self.exclude_weekdays)),
+                self.excl_q, self.excl_conf, text,
             ),
         )
 
-    @staticmethod
-    def _field(value: object, meta: Meta) -> FieldValue:  # type: ignore[type-arg]
-        span = (
-            SourceSpan(text=meta.span.text, start=meta.span.start, end=meta.span.end)
-            if meta.span
-            else None
-        )
-        # A model that returns neither a span nor a derivation rule has told us
-        # nothing about provenance; treat that as derived rather than accept a field
-        # with no accountability.
-        derived = meta.derived or span is None
+
+def _field(value: object, quote: str | None, confidence: float, text: str) -> FieldValue:  # type: ignore[type-arg]
+    """Quote -> provenance, locally.
+
+    The span is accepted only if the quote occurs verbatim in the request, so
+    ``request_text[start:end] == span.text`` holds by construction (FR-003). A
+    paraphrase — the model quoting words the patient did not say — is treated as
+    *derived*, never as a fabricated span.
+    """
+    confidence = max(0.0, min(1.0, confidence))
+    if quote:
+        start = text.find(quote)
+        if start >= 0:
+            return FieldValue(
+                value=value,
+                confidence=confidence,
+                span=SourceSpan(text=quote, start=start, end=start + len(quote)),
+                derived=False,
+            )
         return FieldValue(
-            value=value,
-            confidence=meta.confidence,
-            span=None if derived else span,
-            derived=derived,
-            derived_rule=(meta.derived_rule or "model-did-not-cite-a-span") if derived else None,
+            value=value, confidence=confidence, span=None,
+            derived=True, derived_rule="quote-not-verbatim",
         )
+    return FieldValue(
+        value=value, confidence=confidence, span=None,
+        derived=True, derived_rule="model-inferred",
+    )
 
 
 def wire_schema() -> dict:  # type: ignore[type-arg]
     """Flat enough that no unsupported keyword can appear."""
-    schema = ExtractionPayload.model_json_schema()
-    return _tighten(schema)  # type: ignore[return-value]
+    return _tighten(ExtractionPayload.model_json_schema())  # type: ignore[return-value]
 
 
 def _tighten(node: object) -> object:

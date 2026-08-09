@@ -89,11 +89,13 @@ differently: the model is 7.4 points better at reading clinical intent from symp
 language, and worse at citing provenance for what it inferred. Full table and the
 convention bias in the same document.
 
-**A live request takes ~16 seconds** — ~7s extract, ~4s verify, ~5s explain, sequential
-because each stage needs the last one's output. That misses the original sub-5s target,
-and it ships live regardless: a demo of an agentic system that runs no agents is not a
-demo of an agentic system. The four routes that would actually close the gap are written
-down rather than hand-waved.
+**A live request takes ~3.9 s** (was ~15.9 s). Measured, then redesigned: latency
+tracks output tokens, so the extraction wire format shrank to verbatim quotes with
+offsets computed locally; every stage moved to Haiku 4.5 after per-stage benchmarks
+showed the faithfulness gate and the deterministic verify floor make the cheap model
+safe; and the semantic verify runs in parallel with reasoning and explanation, since
+hypotheses come from the deterministic floor. The research and the trade-offs are in
+`docs/latency-research.md` and ADR-21.
 
 ---
 
@@ -160,6 +162,7 @@ decision core · lint and types clean · zero known CVEs in either dependency tr
 | [`docs/product-direction.md`](docs/product-direction.md) | The decisions taken before the PRD, and why |
 | [`docs/development-plan.md`](docs/development-plan.md) | The ten build stages and their exit criteria |
 | [`docs/release-verification.md`](docs/release-verification.md) | What "it works" means here |
+| [`docs/latency-research.md`](docs/latency-research.md) | How 15.9 s became 3.9 s — measurements and trade-offs |
 | [`docs/qa-report.md`](docs/qa-report.md) | Coverage, defects found after development, traceability |
 | [`docs/security-review.md`](docs/security-review.md) | Findings, what was fixed, and what is accepted |
 

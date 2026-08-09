@@ -21,6 +21,13 @@ from typing import Any
 from app.config import Settings
 
 
+def _supports_effort(model: str) -> bool:
+    """Claude 4.6+ Opus/Sonnet/Fable take `effort` + adaptive thinking; Haiku 4.5
+    rejects both with a 400. Capability keyed on the family, not a version list,
+    so a model id bump does not silently start failing every call."""
+    return not model.startswith("claude-haiku")
+
+
 class LlmUnavailable(RuntimeError):
     """Raised so the orchestrator's fallback ladder handles it like any other
     stage failure. The operator sees nothing; the trace records it."""
@@ -85,18 +92,21 @@ class LlmClient:
         client = self._ensure()
         s = self.settings
         self.calls += 1
+        # Haiku rejects both `thinking` and `effort` with a 400. Measured before
+        # being dropped, not assumed away: adaptive thinking moved extraction p50 by
+        # under 0.2s on Opus, so nothing of value is lost on models without it.
+        kwargs: dict[str, Any] = {
+            "model": model,
+            "max_tokens": s.llm_max_tokens,
+            "system": [{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}],
+            "output_config": {"format": {"type": "json_schema", "schema": schema}},
+            "messages": [{"role": "user", "content": user}],
+        }
+        if _supports_effort(model):
+            kwargs["output_config"]["effort"] = s.llm_effort
+            kwargs["thinking"] = {"type": "adaptive"}
         try:
-            response = await client.with_options(timeout=timeout).messages.create(
-                model=model,
-                max_tokens=s.llm_max_tokens,
-                system=[{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}],
-                thinking={"type": "adaptive"},
-                output_config={
-                    "effort": s.llm_effort,
-                    "format": {"type": "json_schema", "schema": schema},
-                },
-                messages=[{"role": "user", "content": user}],
-            )
+            response = await client.with_options(timeout=timeout).messages.create(**kwargs)
         except Exception as exc:
             raise LlmUnavailable(str(exc)) from exc
 
