@@ -1,23 +1,23 @@
 {
   "appointment_type": {
-    "confidence": 0.5,
+    "confidence": 0.3,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
     "value": "prophy_adult"
   },
   "date_range": {
-    "confidence": 0.95,
+    "confidence": 0.7,
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 27,
-      "start": 14,
-      "text": "next Thursday"
+      "end": 72,
+      "start": 49,
+      "text": "Wednesday and next week"
     },
     "value": {
-      "end": "2026-08-13",
-      "start": "2026-08-13"
+      "end": "2026-08-19",
+      "start": "2026-08-12"
     }
   },
   "exclusions": {
@@ -34,28 +34,28 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.9,
+    "confidence": 0.2,
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 49,
-      "start": 37,
-      "text": "Prefer Sarah"
+      "end": 32,
+      "start": 27,
+      "text": "Nayan"
     },
-    "value": "prov-sarah"
+    "value": null
   },
-  "request_text": "Can I come in next Thursday after 3? Prefer Sarah if she's around.",
+  "request_text": "get me an appointment with Nayan at 3:00 p.m. on Wednesday and next week",
   "time_window": {
     "confidence": 0.95,
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 35,
-      "start": 28,
-      "text": "after 3"
+      "end": 45,
+      "start": 36,
+      "text": "3:00 p.m."
     },
     "value": {
-      "end_min": null,
+      "end_min": 900,
       "start_min": 900
     }
   },

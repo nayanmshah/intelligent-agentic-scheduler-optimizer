@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.5,
+    "confidence": 0.3,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -11,13 +11,13 @@
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 27,
-      "start": 14,
-      "text": "next Thursday"
+      "end": 42,
+      "start": 33,
+      "text": "Wednesday"
     },
     "value": {
-      "end": "2026-08-13",
-      "start": "2026-08-13"
+      "end": "2026-08-12",
+      "start": "2026-08-12"
     }
   },
   "exclusions": {
@@ -34,25 +34,25 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.9,
+    "confidence": 0.0,
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 49,
-      "start": 37,
-      "text": "Prefer Sarah"
+      "end": 28,
+      "start": 24,
+      "text": "Nyan"
     },
-    "value": "prov-sarah"
+    "value": null
   },
-  "request_text": "Can I come in next Thursday after 3? Prefer Sarah if she's around.",
+  "request_text": "get an appointment with Nyan for Wednesday 3:00 p.m.",
   "time_window": {
     "confidence": 0.95,
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 35,
-      "start": 28,
-      "text": "after 3"
+      "end": 52,
+      "start": 43,
+      "text": "3:00 p.m."
     },
     "value": {
       "end_min": null,
