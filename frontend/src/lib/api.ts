@@ -207,9 +207,13 @@ export const api = {
       "/api/policy/rerank",
       { method: "POST", body: JSON.stringify({ request_id: requestId, weights }) },
     ),
-  stability: (requestId: string) =>
+  stability: (requestId: string, w?: Record<string, number>) =>
     json<{ held_pct: number; sentence: string; samples: number; per_slot_pct: Record<string, number> }>(
-      `/api/policy/stability?request_id=${requestId}`,
+      `/api/policy/stability?request_id=${requestId}` +
+        (w
+          ? `&time_fit=${w.time_fit}&continuity=${w.continuity}` +
+            `&efficiency=${w.efficiency}&prime_time=${w.prime_time}`
+          : ""),
     ),
   traces: () => json<{ decisions: { id: string; trace_id: string; raw_text: string; offers: number; fallback_fired: string[]; question: string | null }[] }>("/api/traces"),
   trace: (traceId: string) =>

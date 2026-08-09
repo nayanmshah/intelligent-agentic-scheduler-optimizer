@@ -27,7 +27,13 @@ export default function Policy() {
   };
   const setWeights = setWeightsRaw;
   const [ranked, setRanked] = useState<
-    { provider_name: string | null; start_display: string | null; score: number; was_offered: boolean }[]
+    {
+      provider_name: string | null;
+      start_display: string | null;
+      room_name?: string;
+      score: number;
+      was_offered: boolean;
+    }[]
   >([]);
   const [elapsed, setElapsed] = useState<number | null>(null);
   const [stability, setStability] = useState<{ sentence: string; held_pct: number; samples: number } | null>(null);
@@ -53,7 +59,9 @@ export default function Policy() {
       setElapsed(performance.now() - t0);
       setRanked(r.ranked);
     });
-    api.stability(requestId).then(setStability);
+    // Recomputed against the weights on screen, so the figure and the list below it
+    // are always talking about the same three slots.
+    api.stability(requestId, effective).then(setStability);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requestId, JSON.stringify(effective)]);
 
@@ -151,6 +159,19 @@ export default function Policy() {
                 </span>
                 <span className="font-medium">
                   {r.provider_name ?? "—"} {r.start_display ?? ""}
+                  {/* Two rooms can hold the same hygienist at the same minute when the
+                      tier has nothing else left; without the room these read as one row
+                      printed twice. Shown only when it is actually ambiguous. */}
+                  {r.room_name &&
+                    ranked.filter(
+                      (o) =>
+                        o.provider_name === r.provider_name &&
+                        o.start_display === r.start_display,
+                    ).length > 1 && (
+                      <span className="ml-1.5 text-xs" style={{ color: "var(--ink-faint)" }}>
+                        {r.room_name}
+                      </span>
+                    )}
                 </span>
                 {/* Naming what the weighting *changed* is the point of this screen:
                     a row that was not in the original three is the evidence. */}

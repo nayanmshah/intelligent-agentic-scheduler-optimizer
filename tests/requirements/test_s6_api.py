@@ -564,9 +564,12 @@ class TestStabilityMeasuresWhatTheOperatorWouldSee:
         assert record.score_matrix is not None
         settings = client.app.state.container.settings
 
-        replayed = _reselect(
-            record.score_matrix, record.effective_weights, settings.diversity_window_min
-        )
+        replayed = {
+            cid
+            for cid, _ in _reselect(
+                record.score_matrix, record.effective_weights, settings.diversity_window_min
+            )
+        }
         assert replayed == {o.candidate_id for o in record.offers}
 
     def test_a_stable_recommendation_does_not_report_zero(self, client) -> None:
@@ -580,4 +583,71 @@ class TestStabilityMeasuresWhatTheOperatorWouldSee:
         body = client.get("/api/policy/stability", params={"request_id": d["id"]}).json()
         assert body["held_pct"] > 0
         assert str(body["held_pct"]) in body["sentence"]
+        assert set(body["per_slot_pct"]) == {o["candidate_id"] for o in d["offers"]}
+
+    def test_reranking_runs_the_same_selection_the_console_does(self, client) -> None:
+        """This screen used to take a naive top-three by score, so it disagreed with
+        both the console and the stability figure printed directly beneath it.
+
+        Note what is *not* asserted: that provider+minute never repeats. `select_top3`
+        relaxes its diversity rule in stages and, at the last stage, will return an
+        exact near-duplicate rather than offer fewer than three — so the screen can
+        legitimately show one hygienist at one minute in two rooms when the tier has
+        nothing else left. Asserting otherwise would pin behaviour the product does
+        not have. What must hold is that the rows are distinct candidates and that
+        this endpoint and the console answer the same question.
+        """
+        client.post("/api/session/reset")
+        d = client.post("/api/requests", json={
+            "text": "Can I come in next Thursday after 3? Prefer Sarah if she's around.",
+            "patient_id": "pat-000",
+        }).json()
+        for profile in ("general_practice", "production_first", "continuity_first"):
+            body = client.post("/api/policy/rerank", json={
+                "request_id": d["id"],
+                "weights": {"time_fit": 0.2, "continuity": 0.15,
+                            "efficiency": 0.3, "prime_time": 0.35}
+                if profile == "production_first" else
+                {"time_fit": 0.35, "continuity": 0.25, "efficiency": 0.25, "prime_time": 0.15},
+            }).json()
+            ids = [r["candidate_id"] for r in body["ranked"]]
+            assert len(ids) == len(set(ids)), f"{profile} repeated a candidate: {ids}"
+            assert all(r["room_name"] for r in body["ranked"]), (
+                "rows must name the room, or two genuinely different options at the "
+                "same minute are indistinguishable on screen"
+            )
+
+    def test_stability_is_measured_against_the_weights_on_screen(self, client) -> None:
+        """The figure sits directly above "Top 3 under these weights". Measuring the
+        *originally offered* three made it a constant printed over a list that had
+        visibly changed — the same number under every profile, which reads as broken
+        even though each number was individually correct."""
+        client.post("/api/session/reset")
+        d = client.post("/api/requests", json={
+            "text": "Can I come in next Thursday after 3? Prefer Sarah if she's around.",
+            "patient_id": "pat-000",
+        }).json()
+
+        def at(w):  # type: ignore[no-untyped-def]
+            return client.get("/api/policy/stability", params={"request_id": d["id"], **w}).json()
+
+        shipped = at({"time_fit": 0.35, "continuity": 0.25,
+                      "efficiency": 0.25, "prime_time": 0.15})
+        cornered = at({"time_fit": 0.24, "continuity": 0.0,
+                       "efficiency": 0.35, "prime_time": 0.41})
+        assert shipped["held_pct"] != cornered["held_pct"], (
+            "the figure did not move when the weights did"
+        )
+        # Zeroing an axis puts you at a corner of the weight space that random vectors
+        # never revisit: a low number there is the instrument working, not failing.
+        assert cornered["held_pct"] < shipped["held_pct"]
+
+    def test_omitting_weights_still_answers_for_the_offered_three(self, client) -> None:
+        """Older clients, and any caller that just wants the decision's own robustness."""
+        client.post("/api/session/reset")
+        d = client.post("/api/requests", json={
+            "text": "Can I come in next Thursday after 3? Prefer Sarah if she's around.",
+            "patient_id": "pat-000",
+        }).json()
+        body = client.get("/api/policy/stability", params={"request_id": d["id"]}).json()
         assert set(body["per_slot_pct"]) == {o["candidate_id"] for o in d["offers"]}

@@ -7,10 +7,13 @@ import Console from "@/routes/Console";
 import Policy from "@/routes/Policy";
 import Traces from "@/routes/Traces";
 
+//: Traces is deliberately absent from the nav. The screen and its replay endpoint
+//: still exist at /traces -- the in-process store is what proves Opik is optional and
+//: never on the critical path -- but observability is shown in Opik, where the nested
+//: spans, tag filters, datasets and experiments live. One surface per question.
 const NAV = [
   { to: "/", label: "Console" },
   { to: "/policy", label: "Policy" },
-  { to: "/traces", label: "Traces" },
 ] as const;
 
 /**

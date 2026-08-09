@@ -61,11 +61,11 @@ async def rerank(body: RerankRequest, request: Request) -> dict[str, Any]:
     except ValueError as exc:
         raise HTTPException(400, str(exc)) from exc   # all-zero is rejected (FR-078)
 
-    scores = record.score_matrix.scores_for(weights)
-    ranked = sorted(
-        zip(record.score_matrix.candidate_ids, scores, strict=True),
-        key=lambda kv: -kv[1],
-    )[:3]
+    # The same selection the console runs, diversity rule included -- not a naive
+    # top-three by score. Without it this screen showed the same provider at the same
+    # minute in two different rooms as two separate "options", and disagreed with the
+    # stability figure directly beneath it about what would actually be offered.
+    ranked = _reselect(record.score_matrix, weights, c.settings.diversity_window_min)
     # Labels come from the matrix, not from the original top three: re-ranking is
     # *supposed* to promote candidates that were not offered, and naming only the
     # first three rendered those rows as "83% --" on the one screen whose whole
@@ -77,6 +77,10 @@ async def rerank(body: RerankRequest, request: Request) -> dict[str, Any]:
             "score": round(score, 6),
             "provider_name": label[0] if label else None,
             "start_display": label[1] if label else None,
+            # The last relaxation stage can return the same hygienist at the same
+            # minute in two rooms. That is a real pair of options; without the room
+            # on screen it reads as the same row printed twice.
+            "room_name": _room_name(record, cid),
             "was_offered": any(o.candidate_id == cid for o in record.offers),
         }
 
@@ -87,7 +91,18 @@ async def rerank(body: RerankRequest, request: Request) -> dict[str, Any]:
     }
 
 
-def _reselect(matrix: Any, w: Any, diversity_window_min: int, want: int = 3) -> set[str]:
+def _room_name(record: Any, candidate_id: str) -> str:
+    matrix = record.score_matrix
+    keys = getattr(matrix, "keys", ()) or ()
+    try:
+        return keys[matrix.candidate_ids.index(candidate_id)][3]
+    except (ValueError, IndexError):
+        return ""
+
+
+def _reselect(
+    matrix: Any, w: Any, diversity_window_min: int, want: int = 3
+) -> list[tuple[str, float]]:
     """The three the operator would actually see under weight vector ``w``.
 
     Replays `select.select_top3`'s greedy diversity pass rather than taking the top
@@ -116,19 +131,40 @@ def _reselect(matrix: Any, w: Any, diversity_window_min: int, want: int = 3) -> 
         ):
             continue
         chosen.append(item)
-    # Selection relaxes suppression rather than return fewer than three (select.py).
+    # Selection relaxes suppression rather than return fewer than three -- but in
+    # *stages* (select.py). Naively re-adding whatever was suppressed hands back the
+    # exact near-duplicates the constraint exists to remove, which is how this screen
+    # came to show the same hygienist at the same minute twice.
     if len(chosen) < want:
         picked = {c[0] for c in chosen}
-        for item in ranked:
+        for window in (diversity_window_min // 2, 10, 0):
+            for item in ranked:
+                if len(chosen) >= want:
+                    break
+                cid, _, (prov, day, start, _) = item
+                if cid in picked:
+                    continue
+                clash = any(
+                    c[2][0] == prov and c[2][1] == day and abs(c[2][2] - start) < window
+                    for c in chosen
+                )
+                if not clash:
+                    chosen.append(item)
+                    picked.add(cid)
             if len(chosen) >= want:
                 break
-            if item[0] not in picked:
-                chosen.append(item)
-    return {c[0] for c in chosen}
+    return [(c[0], c[1]) for c in chosen]
 
 
 @router.get("/policy/stability")
-async def stability(request_id: str, request: Request) -> dict[str, Any]:
+async def stability(
+    request_id: str,
+    request: Request,
+    time_fit: float | None = None,
+    continuity: float | None = None,
+    efficiency: float | None = None,
+    prime_time: float | None = None,
+) -> dict[str, Any]:
     """[FR-081] Converts "the weights are arbitrary" from an objection into a
     measurement: the recommendation is robust to the weights, or it is not, and the
     number says which. Sampling is seeded so it is reproducible run to run."""
@@ -139,7 +175,20 @@ async def stability(request_id: str, request: Request) -> dict[str, Any]:
 
     s = c.settings
     matrix = record.score_matrix
-    baseline = {o.candidate_id for o in record.offers}
+
+    # Which three is this about? Whatever the sliders are showing. The figure sits
+    # directly above "Top 3 under these weights", so measuring the *originally
+    # offered* three made it read as a contradiction the moment anyone re-ranked --
+    # a constant number over a list that had visibly changed.
+    supplied = (time_fit, continuity, efficiency, prime_time)
+    if all(v is not None for v in supplied):
+        try:
+            here = Weights.normalised(supplied)  # type: ignore[arg-type]
+        except ValueError as exc:
+            raise HTTPException(400, str(exc)) from exc
+        baseline = {cid for cid, _ in _reselect(matrix, here, s.diversity_window_min)}
+    else:
+        baseline = {o.candidate_id for o in record.offers}
     if not baseline:
         raise HTTPException(400, "no offers to test")
 
@@ -148,7 +197,7 @@ async def stability(request_id: str, request: Request) -> dict[str, Any]:
     per_slot = dict.fromkeys(baseline, 0)
     for _ in range(s.stability_samples):
         w = Weights.normalised(tuple(rng.random() for _ in range(4)))  # type: ignore[arg-type]
-        top = _reselect(matrix, w, s.diversity_window_min)
+        top = {cid for cid, _ in _reselect(matrix, w, s.diversity_window_min)}
         if top == baseline:
             exact += 1
         for cid in baseline & top:
@@ -162,8 +211,7 @@ async def stability(request_id: str, request: Request) -> dict[str, Any]:
         "held_pct": pct,
         # Stated in words, not just a number -- that is the point of the indicator.
         "sentence": (
-            f"These three are what you would be offered under {pct}% of "
-            f"{s.stability_samples} random weight settings."
+            f"These three survive {pct}% of {s.stability_samples} random weight settings."
         ),
         "weakest_pct": weakest,
         "per_slot_pct": {

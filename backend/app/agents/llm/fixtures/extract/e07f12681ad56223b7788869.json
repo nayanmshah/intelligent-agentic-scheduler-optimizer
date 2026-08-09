@@ -1,31 +1,27 @@
 {
   "appointment_type": {
-    "confidence": 0.95,
-    "derived": false,
-    "derived_rule": null,
-    "span": {
-      "end": 9,
-      "start": 2,
-      "text": "filling"
-    },
-    "value": "filling_1s"
+    "confidence": 0.3,
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
+    "value": "prophy_adult"
   },
   "date_range": {
     "confidence": 0.95,
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 22,
-      "start": 13,
-      "text": "Wednesday"
+      "end": 44,
+      "start": 31,
+      "text": "next Thursday"
     },
     "value": {
-      "end": "2026-08-12",
-      "start": "2026-08-12"
+      "end": "2026-08-13",
+      "start": "2026-08-13"
     }
   },
   "exclusions": {
-    "confidence": 1.0,
+    "confidence": 0.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -44,19 +40,19 @@
     "span": null,
     "value": null
   },
-  "request_text": "A filling on Wednesday late morning",
+  "request_text": "can you give me an appointment next Thursday at 12:00 p.m.",
   "time_window": {
-    "confidence": 0.75,
+    "confidence": 0.95,
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 35,
-      "start": 23,
-      "text": "late morning"
+      "end": 58,
+      "start": 48,
+      "text": "12:00 p.m."
     },
     "value": {
       "end_min": null,
-      "start_min": 1080
+      "start_min": 720
     }
   },
   "urgency": {

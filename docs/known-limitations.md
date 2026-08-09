@@ -145,6 +145,25 @@ What remains true: *other* semantic catches are still model-only and therefore s
 The floor covers the mismatch a practice would least like to depend on a model's mood; it is not a
 general symptom checker, and claiming otherwise would be the same overstatement in a new place.
 
+### There is no learned vocabulary yet — and where it would have to live
+
+The system reads every request from scratch. It does not know that this practice says "first
+thing" for 8:00 while another means 7:30, or what a given patient means by "the usual". Adding
+that is the obvious next capability, and the constraint on it is not technical.
+
+**It must be per-practice and explicit, never per-operator and implicit.** The product's promise
+is that the same request produces the same answer whoever picks up the phone; a system that
+quietly learns one coordinator's private sense of "urgent" re-creates exactly the ad-hoc
+judgement it exists to replace, and does it invisibly. The shape that fits is a glossary the
+office manager can read, edit and veto — resolved before extraction, surfaced in the
+interpretation strip as a derived field with its source, under the same provenance rule as
+every other field.
+
+Most of the substrate is already here: patient context reaches the extractor, `WeightProfile` is
+already a per-practice artifact that can be fitted from data, and every operator override is
+captured with its reason because an override is a labelled counterexample. What is missing is the
+glossary itself and the resolution step — not the plumbing.
+
 ### What dictation actually costs
 
 Speech ships (FR-110), and three things about it are worth stating plainly rather than discovering
