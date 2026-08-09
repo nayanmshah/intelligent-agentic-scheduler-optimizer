@@ -28,6 +28,7 @@ from app.reasoner.tiers import TierOutcome
 
 _WHY = {r.code: r.why for r in RULES}
 _REASON_TO_RULE = {
+    RejectionReason.IN_THE_PAST: "not_in_the_past",
     RejectionReason.BEFORE_OPEN: "within_business_hours",
     RejectionReason.PAST_CLOSE: "within_business_hours",
     RejectionReason.BLOCKED_LUNCH: "not_overlapping_global_block",

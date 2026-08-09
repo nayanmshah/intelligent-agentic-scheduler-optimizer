@@ -143,6 +143,11 @@ def test_every_rejection_carries_exactly_one_cause(repo, index) -> None:
 def test_ladder_order_snapshot() -> None:
     """Reordering the ladder changes ledger causes, so it must be a visible diff."""
     assert ladder_snapshot() == (
+        # Rule 0 exists because the clock became real (system-clock default): a slot
+        # on today's date must start after now. First, because "already gone by" is
+        # the one honest cause for such a slot, and the first failing rule is the
+        # stated cause (FR-028).
+        (0, "not_in_the_past", "slot"),
         (1, "within_business_hours", "slot"),
         (2, "not_overlapping_global_block", "slot"),
         (3, "emergency_hold_locked", "slot"),
@@ -275,3 +280,48 @@ def test_enumeration_and_feasibility_stay_inside_the_budget(repo, index) -> None
     layer0(repo, index)
     elapsed_ms = (time.perf_counter() - t0) * 1000
     assert elapsed_ms < 150, f"enumeration + feasibility took {elapsed_ms:.0f}ms (NFR-06: <150ms)"
+
+
+# ----------------------------------------------------------------- rule 0 ----
+def test_a_slot_earlier_today_is_never_offered(repo, index) -> None:
+    """The bug the system-clock default exposed. With the reference frozen at 9:00
+    only one early hour could ever leak; at a 12:30 demo, "anything today?" offered
+    10:40. A slot on today's date must start after now — and the ledger names it in
+    words an operator can read out."""
+    from datetime import timedelta
+
+    from app.reasoner.ladder import RULES
+
+    noon = NOW + timedelta(hours=3, minutes=30)  # 12:30 on the reference Monday
+    result = run_layer0(
+        repo=repo, index=index, constraints=constraints(),
+        appointment_type=repo.seed.appointment_type("prophy_adult"),
+        location=repo.seed.locations[0], tz=zone(repo.seed.locations[0].timezone),
+        now=noon.date(), settings=SETTINGS, request_id="req-noon", now_dt=noon,
+    )
+    past, future_today = [], []
+    for cand, ann in result.candidates.pairs():
+        if cand.day != noon.date():
+            continue
+        if cand.start_min <= 12 * 60 + 30:
+            past.append((cand, ann))
+        else:
+            future_today.append((cand, ann))
+
+    assert past, "the grid contains no morning slots; the fixture proves nothing"
+    for cand, ann in past:
+        hhmm = f"{cand.start_min // 60}:{cand.start_min % 60:02d}"
+        assert ann.feasible is False, f"{hhmm} today was offerable at 12:30"
+        assert ann.rejection_reason is RejectionReason.IN_THE_PAST
+
+    # The control: the rule must not touch anything after now. Monday afternoon may
+    # be genuinely full in the seed (other rules reject it), so the property is
+    # "never rejected AS past", not "feasible".
+    assert future_today
+    for cand, ann in future_today:
+        assert ann.rejection_reason is not RejectionReason.IN_THE_PAST, (
+            f"a {cand.start_min // 60}:{cand.start_min % 60:02d} slot was called past at 12:30"
+        )
+    assert next(r for r in RULES if r.code == "not_in_the_past").why == (
+        "that time had already gone by today"
+    )

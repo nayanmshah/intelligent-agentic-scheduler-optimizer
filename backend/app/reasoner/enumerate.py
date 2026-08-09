@@ -21,7 +21,7 @@ from zoneinfo import ZoneInfo
 
 from app.config import Settings
 from app.data.repository import ScheduleRepository
-from app.data.timezone import to_instant
+from app.data.timezone import local_minute, to_instant
 from app.domain.candidate import Candidate, CandidateSet
 from app.domain.entities import AppointmentType, Location, Provider
 from app.domain.request import RequestConstraints
@@ -100,6 +100,11 @@ def run_layer0(
                 end_min = start_min + duration
 
                 slot = SlotCtx(
+                    now_min=(
+                        local_minute(now_dt, tz)
+                        if now_dt is not None and day == now
+                        else None
+                    ),
                     day=day,
                     start_min=start_min,
                     duration=duration,

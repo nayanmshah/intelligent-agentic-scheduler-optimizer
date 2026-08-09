@@ -45,10 +45,10 @@ make fixtures      # re-record LLM fixtures. Online, deliberate, once.
 **Requires** `uv` (pins Python 3.12) and Node 20+. An `ANTHROPIC_API_KEY` in `.env`
 enables the live path; nothing else is needed.
 
-**The dataset's today is Monday 2026-08-10**, shown in the header on every screen.
-`NOW` is injected rather than read from the system clock — the seed covers
-2026-08-03…2026-08-28, and *"next Thursday"* has to mean something fixed for the same
-request to produce the same answer twice.
+**The clock is real.** The app runs on today's date like any application should; the
+seeded schedule covers 2026-08-03 → 2026-08-28 and pre-flight fails loudly outside it.
+The clock is *injected*, so tests, evals and release checks pin `SCHED_CLOCK=frozen` —
+"next Thursday" means the same date on every CI run forever, while a demo runs on now.
 
 ---
 

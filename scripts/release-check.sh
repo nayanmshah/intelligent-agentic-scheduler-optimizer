@@ -40,7 +40,10 @@ if [ -z "${ANTHROPIC_API_KEY:-}" ] && [ -f "$ROOT/.env" ]; then
   export ANTHROPIC_API_KEY
 fi
 
-OFFLINE_ENV=(env -u ANTHROPIC_API_KEY PYTHONPATH="$ROOT/scripts/offline" SCHED_LLM_MODE=fixtures)
+# Frozen clock in BOTH phases: the release check must pass identically forever,
+# which a wall-clock dependency would break the day the seeded window slides past.
+# The shipped default stays "system" -- that is what the demo runs.
+OFFLINE_ENV=(env -u ANTHROPIC_API_KEY PYTHONPATH="$ROOT/scripts/offline" SCHED_LLM_MODE=fixtures SCHED_CLOCK=frozen)
 LOG_DIR="${LOG_DIR:-$ROOT/.release-check}"
 mkdir -p "$LOG_DIR"
 
@@ -76,9 +79,9 @@ for run in $(seq 1 "$RUNS"); do
   # ---- Phase B: the shipped configuration, live ----------------------------
   if [ -n "${ANTHROPIC_API_KEY:-}" ]; then
     run_step "live pipeline [shipped config]" "$L/live.log" \
-      env SCHED_LLM_MODE=live uv run pytest -q -m live tests/live
+      env SCHED_LLM_MODE=live SCHED_CLOCK=frozen uv run pytest -q -m live tests/live
     step "live preflight reports the model path"
-    if env SCHED_LLM_MODE=live uv run python -m app.cli.preflight 2>&1 \
+    if env SCHED_LLM_MODE=live SCHED_CLOCK=frozen uv run python -m app.cli.preflight 2>&1 \
          | tee "$L/preflight-live.log" | grep -qi "LIVE -- models in use"; then ok; else bad "preflight did not report live mode"; fi
   else
     printf '  %-46s\033[33mSKIPPED\033[0m no ANTHROPIC_API_KEY\n' "live pipeline [shipped config]"

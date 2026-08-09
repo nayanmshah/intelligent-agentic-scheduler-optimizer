@@ -111,7 +111,8 @@ class AppContainer:
         """What pre-flight reports. Any red item is named, never merely counted."""
         s = self.settings
         return {
-            "reference_now": s.reference_now.isoformat(),
+            "reference_now": self.clock.now().isoformat(),
+            "clock": s.clock,
             "llm_mode": s.llm_mode,
             "network": "offline" if s.offline else "live",
             "api_key_present": s.has_api_key,

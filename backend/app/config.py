@@ -35,7 +35,13 @@ class Settings(BaseSettings):
     # "frozen" pins NOW to the reference dataset (the demo default, and what makes
     # relative dates reproducible). "system" reads real time -- correct the moment
     # the schedule behind it is live rather than committed.
-    clock: str = "frozen"
+    # "system" reads the real clock — the default, because an ideal application does
+    # not carry a fixed date. It works whenever today falls inside the seeded window
+    # (2026-08-03..2026-08-28); pre-flight checks that and says so when it stops
+    # being true. "frozen" pins NOW to reference_now: the mode for tests, evals,
+    # fixtures and release checks, where "next Thursday" must mean the same date on
+    # every run forever.
+    clock: str = "system"
     reference_now: datetime = REFERENCE_NOW
     timezone: str = "America/Los_Angeles"
     seed_dir: Path = BACKEND_ROOT / "data" / "seed"

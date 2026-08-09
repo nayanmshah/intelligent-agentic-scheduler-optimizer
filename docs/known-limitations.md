@@ -106,6 +106,11 @@ speech would only change how the text arrives.
 
 ## 6. Single timezone, and no DST day inside the seed window
 
+The clock is **real by default** (`SCHED_CLOCK=system`); the injected-clock seam means
+frozen mode remains one env var for tests, evals and release checks, which pin it. The
+honest consequence: the app only finds appointments while today falls inside the seeded
+window, 2026-08-03 → 2026-08-28 — pre-flight fails with the remedy when it does not.
+
 The dataset is one location in `America/Los_Angeles`, and no DST transition falls
 between 2026-08-03 and 2026-08-28.
 

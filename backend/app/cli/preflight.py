@@ -78,7 +78,28 @@ def run_preflight(container: AppContainer | None = None) -> PreflightReport:
     s = c.settings
     r = PreflightReport()
 
-    r.add("reference clock", OK, s.reference_now.isoformat())
+    if s.clock == "system":
+        from datetime import date
+
+        from app.clock import SystemClock
+        from app.data.timezone import zone
+
+        # Through the clock abstraction, not date.today() -- FR-102's guard applies
+        # to pre-flight too, and pre-flight is not special.
+        today = SystemClock(zone(s.timezone)).now().date()
+        lo, hi = date(2026, 8, 3), date(2026, 8, 28)
+        if lo <= today <= hi:
+            r.add("clock", OK, f"system time, inside the dataset window ({lo} .. {hi})")
+        else:
+            # FAIL, not warn: every request would search days with no seeded
+            # schedule behind them and return nothing. The remedy is one env var.
+            r.add(
+                "clock", FAIL,
+                f"today ({today}) is outside the seeded window {lo} .. {hi} -- "
+                "every search will come back empty. Set SCHED_CLOCK=frozen.",
+            )
+    else:
+        r.add("clock", OK, f"frozen at {s.reference_now.isoformat()} (simulated)")
     # Live is the shipped default; fixtures are the fallback. The wording used to say
     # "LIVE -- opt-in", which was true when offline was the default and is now exactly
     # backwards -- and this line is the one an operator reads to know which is running.

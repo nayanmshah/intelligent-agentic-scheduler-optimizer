@@ -122,6 +122,10 @@ def test_the_header_reports_the_reference_clock_and_network_mode(client) -> None
     assert client.get("/api/health").json() == {"status": "ok"}
 
     ref = client.get("/api/reference").json()
+    # The suite pins SCHED_CLOCK=frozen (conftest), so the reference instant is the
+    # dataset's own timestamp. The shipped default is the system clock, and the UI
+    # shows a "Simulated clock" pill only in this mode.
+    assert ref["clock"] == "frozen"
     assert ref["reference_now"].startswith("2026-08-10")
     assert ref["network"] == "offline", "the demo path must not report itself as live"
 

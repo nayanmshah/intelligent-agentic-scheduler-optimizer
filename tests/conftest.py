@@ -32,3 +32,7 @@ os.environ["SCHED_EXPLAINER"] = "template"
 # ResourceWarning that `filterwarnings = ["error"]` correctly turns into a failure.
 # Tests that care about the sink construct one explicitly and point it at nothing.
 os.environ["SCHED_OPIK_ENABLED"] = "false"
+# The suite pins the frozen clock: golden labels resolve "next Thursday" against the
+# reference instant, and a suite that drifted with the wall clock would start
+# failing the day the seeded window slid past -- on nobody's change.
+os.environ["SCHED_CLOCK"] = "frozen"

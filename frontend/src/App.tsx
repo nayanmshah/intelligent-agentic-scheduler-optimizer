@@ -29,14 +29,12 @@ function ReferenceBar() {
     document.documentElement.dataset.presentation = presentation ? "on" : "off";
   }, [presentation]);
 
-  const now = data?.reference_now
-    ? new Date(data.reference_now).toLocaleString("en-US", {
-        weekday: "long", day: "numeric", month: "long", year: "numeric",
-        hour: "numeric", minute: "2-digit",
-      })
-    : "…";
-
   const degraded = data?.network === "offline";
+  // The clock is implicit: an application scheduling real days runs on today's
+  // date, and saying so would be noise. The one exception is the simulated clock
+  // (tests, CI, a demo outside the dataset window) — dates on screen are then NOT
+  // today's, and hiding that would be a lie worse than the clutter.
+  const simulated = data?.clock === "frozen";
 
   return (
     <header
@@ -60,13 +58,20 @@ function ReferenceBar() {
 
       <span aria-hidden className="h-5 w-px" style={{ background: "var(--bar-line)" }} />
 
-      {/* The dataset's "today" — every date on screen is relative to this. */}
-      <div className="flex items-baseline gap-2 text-sm">
-        <span className="label-caps" style={{ color: "var(--bar-soft)" }}>
-          Reference
+      {simulated && (
+        <span
+          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium"
+          style={{ background: "var(--warn-bg)", color: "var(--warn)" }}
+          title="The clock is pinned to the dataset's reference instant. Dates on screen are relative to it, not to today."
+        >
+          Simulated clock ·{" "}
+          {data?.reference_now
+            ? new Date(data.reference_now).toLocaleDateString("en-US", {
+                weekday: "short", month: "short", day: "numeric",
+              })
+            : "…"}
         </span>
-        <span className="font-medium">{now}</span>
-      </div>
+      )}
 
       {/* Which path answered (FR-105). Degradation is amber, never hidden. */}
       <span

@@ -4,8 +4,11 @@
 > from an actual run against the committed dataset — nothing here is illustrative.
 >
 > **Before you start:** put an `ANTHROPIC_API_KEY` in `.env`, run `make demo`, and open
-> `http://127.0.0.1:8000`. The header must read **Reference date: Monday, August 10,
-> 2026, 9:00 AM** and **Live models**.
+> `http://127.0.0.1:8000`. The header must read **Live models** — and nothing about a
+> simulated clock. The app runs on **real time**; the seeded schedule covers
+> 2026-08-03 → 2026-08-28, which contains the demo date, and pre-flight fails loudly
+> if it ever does not. An amber **Simulated clock** pill means `SCHED_CLOCK=frozen`
+> is set — fine for CI, wrong for the demo.
 >
 > If it says **Offline · fixtures (degraded)**, the key is missing or the network is
 > down. The demo still works — every request is still answered — but three of the four
@@ -32,8 +35,9 @@ dead air on a live call.
 > the practice was holding for restorative work. This turns that sentence into three
 > ranked options, each with a reason you can read aloud."
 
-Point at the header once: **the dataset's today is Monday the 10th.** Every date on
-screen is relative to that. Say it now and no one is confused later.
+Every date on screen is relative to *now*, like any real application — nothing to
+explain. (Demoing at 12–1 PM: morning slots are correctly gone; "anything today?"
+offers only times still ahead, and the ledger names the rest as already gone by.)
 
 The header also shows **Seat: Front desk**. That chip changes as you move between
 screens, so the audience can see which of the two jobs you are doing. If anyone asks:

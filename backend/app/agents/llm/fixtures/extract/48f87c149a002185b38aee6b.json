@@ -46,7 +46,7 @@
   },
   "request_text": "Any chance of a cleaning next Tuesday morning?",
   "time_window": {
-    "confidence": 0.75,
+    "confidence": 0.85,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -60,10 +60,10 @@
     }
   },
   "urgency": {
-    "confidence": 0.5,
+    "confidence": 0.7,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
-    "value": "flexible"
+    "value": "routine"
   }
 }

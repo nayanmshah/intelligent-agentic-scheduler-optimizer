@@ -43,6 +43,11 @@ class SlotCtx:
     operatory_free: bool
     operatory_free_with_turnover: bool
     unlocked_holds: bool
+    #: Minutes from local midnight of the *current instant* — set only when this slot
+    #: is on today's date, None otherwise. With a frozen 9:00 clock only one early
+    #: hour could ever leak, which is how offering a time that had already passed
+    #: stayed invisible until the clock became real.
+    now_min: int | None = None
 
     @property
     def end_min(self) -> int:
@@ -69,6 +74,15 @@ class Rule:
 
 
 # ---------------------------------------------------------------- slot rules --
+def _not_in_the_past(c: SlotCtx) -> RejectionReason | None:
+    """A slot on today's date must start after now. First in the ladder because
+    "that time has already gone by" is the one honest cause for such a slot, and the
+    first failing rule is the stated cause (FR-028)."""
+    if c.now_min is not None and c.start_min <= c.now_min:
+        return RejectionReason.IN_THE_PAST
+    return None
+
+
 def _within_business_hours(c: SlotCtx) -> RejectionReason | None:
     if c.start_min < c.open_min:
         return RejectionReason.BEFORE_OPEN
@@ -183,6 +197,8 @@ def _doctor_check(c: ProviderCtx) -> RejectionReason | None:
 
 # ------------------------------------------------------------------ the table --
 RULES: tuple[Rule, ...] = (
+    Rule(0, "not_in_the_past", "slot", frozenset(), _not_in_the_past,
+         "that time had already gone by today"),
     Rule(1, "within_business_hours", "slot", frozenset(), _within_business_hours,
          "the practice is closed then"),
     Rule(2, "not_overlapping_global_block", "slot", frozenset(), _not_overlapping_global_block,

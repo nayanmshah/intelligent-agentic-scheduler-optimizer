@@ -70,6 +70,8 @@ export type Decision = {
 
 export type Reference = {
   reference_now: string;
+  /** "system" (real time, the default) or "frozen" (pinned to the dataset). */
+  clock: string;
   network: string;
   llm_mode: string;
   opik_enabled: boolean;
