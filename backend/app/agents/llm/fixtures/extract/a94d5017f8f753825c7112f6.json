@@ -38,7 +38,7 @@
   },
   "request_text": "Afternoon works best for me",
   "time_window": {
-    "confidence": 0.85,
+    "confidence": 0.8,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -56,6 +56,6 @@
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
-    "value": "routine"
+    "value": "flexible"
   }
 }

@@ -74,6 +74,7 @@ class Orchestrator:
                 fallback=lambda: self.agents.rules_extractor.extract(req.text, req.patient, now),
                 timeout=s.timeout_extract,
                 implementation=self.agents.extractor.name,
+                model=s.model_extract,
             )
             constraints: RequestConstraints = stage.value
             if stage.fallback_fired:
@@ -90,6 +91,7 @@ class Orchestrator:
                 fallback=lambda: _ready(floor),
                 timeout=s.timeout_verify,
                 implementation=self.agents.verifier.name,
+                model=s.model_verify,
             ))
 
             # 3. REASON -- deterministic, once per hypothesis, sharing Layer 0 --

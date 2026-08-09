@@ -34,6 +34,8 @@ make check         # lint + types + structural guards
 make eval          # golden-set scorecard (fixtures: reproducible, free)
 make eval-live     # the same scorecard against the real API
 make release       # 3 cold starts with the network blocked (see below)
+make opik          # start the local Opik stack (traces + experiments UI)
+make opik-eval     # golden set as an Opik Dataset, scored as an Experiment
 make audit         # known-CVE scan over both dependency trees
 make coverage      # line coverage by module
 make mutants       # mutation testing over the decision core
@@ -163,6 +165,7 @@ decision core · lint and types clean · zero known CVEs in either dependency tr
 | [`docs/development-plan.md`](docs/development-plan.md) | The ten build stages and their exit criteria |
 | [`docs/release-verification.md`](docs/release-verification.md) | What "it works" means here |
 | [`docs/latency-research.md`](docs/latency-research.md) | How 15.9 s became 3.9 s — measurements and trade-offs |
+| [`docs/observability.md`](docs/observability.md) | Traces, datasets and experiments in Opik |
 | [`docs/qa-report.md`](docs/qa-report.md) | Coverage, defects found after development, traceability |
 | [`docs/security-review.md`](docs/security-review.md) | Findings, what was fixed, and what is accepted |
 

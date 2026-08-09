@@ -8,16 +8,20 @@
   },
   "date_range": {
     "confidence": 0.95,
-    "derived": true,
-    "derived_rule": "model-inferred",
-    "span": null,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 24,
+      "start": 15,
+      "text": "next week"
+    },
     "value": {
       "end": "2026-08-21",
       "start": "2026-08-17"
     }
   },
   "exclusions": {
-    "confidence": 1.0,
+    "confidence": 0.95,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -58,9 +62,9 @@
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 24,
+      "end": 14,
       "start": 0,
-      "text": "Whatever works next week"
+      "text": "Whatever works"
     },
     "value": "flexible"
   }

@@ -34,7 +34,7 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.0,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,

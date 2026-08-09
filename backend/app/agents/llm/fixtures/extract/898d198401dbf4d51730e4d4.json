@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.95,
+    "confidence": 1.0,
     "derived": false,
     "derived_rule": null,
     "span": {

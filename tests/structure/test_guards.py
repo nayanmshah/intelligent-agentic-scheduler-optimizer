@@ -30,13 +30,33 @@ def _tree(src: str) -> ast.Module:
 
 
 # ---------------------------------------------------------------- FR-102 ----
+#: The one module allowed to read a clock besides ``clock.py``.
+#:
+#: FR-102 exists so that no *decision* can depend on ambient time. The Opik sink
+#: consumes decisions that are already made, on a background thread, and needs
+#: absolute timestamps only to lay spans on a display timeline -- it cannot reach
+#: anything the reasoner sees. Named here rather than added to a general exclusion
+#: list, and the count is asserted, so a second exception cannot appear quietly.
+_CLOCK_EXCEPTIONS = ("trace/opik.py",)
+
+
 def test_no_clock_reads_outside_clock_module() -> None:
-    violations = []
+    violations, excused = [], []
     for path in app_sources(exclude=("clock.py",)):
         rel = path.relative_to(REPO_ROOT).as_posix()
-        violations += find_clock_reads(ast.parse(path.read_text()), rel)
+        found = find_clock_reads(ast.parse(path.read_text()), rel)
+        if rel.endswith(_CLOCK_EXCEPTIONS):
+            excused += found
+        else:
+            violations += found
     assert not violations, "clock read outside clock.py [FR-102]:\n" + "\n".join(
         map(str, violations)
+    )
+    assert len(excused) <= 1, (
+        "the observability sink is excused ONE clock read for span timestamps; it now "
+        f"has {len(excused)}. Each one is a place ambient time could leak toward a "
+        "decision, so adding another is a deliberate act:\n"
+        + "\n".join(map(str, excused))
     )
 
 
@@ -75,13 +95,39 @@ def test_no_weight_literals_in_scorer() -> None:
 
 
 # ---------------------------------------------------------------- FR-085 ----
+#: Modules allowed to import the Opik SDK, each for a stated reason.
+#:
+#:   trace/opik.py       the sink abstraction itself -- the whole point of FR-085
+#:   eval/opik_suite.py  an offline CLI that pushes datasets and experiments. Never
+#:                       imported by the app; asserted below.
+_OPIK_SDK_ALLOWED = ("trace/opik.py", "eval/opik_suite.py")
+
+#: Packages that run while a patient is waiting. The SDK must not appear in any of
+#: them -- this is the property FR-085 actually protects, and it is checked directly
+#: rather than inferred from a file-name exclusion list.
+_REQUEST_PATH = ("agents/", "api/", "orchestrator/", "reasoner/", "data/", "domain/")
+
+
 def test_no_opik_sdk_outside_trace_package() -> None:
-    offenders = []
-    for path in app_sources(exclude=("trace/opik.py",)):
+    offenders, on_request_path = [], []
+    for path in app_sources():
+        rel = path.relative_to(REPO_ROOT).as_posix()
         text = path.read_text()
-        if "import opik" in text or "from opik" in text:
-            offenders.append(path.relative_to(REPO_ROOT).as_posix())
-    assert not offenders, f"observability SDK escaped the sink abstraction [FR-085]: {offenders}"
+        if "import opik" not in text and "from opik" not in text:
+            continue
+        if any(f"app/{pkg}" in rel for pkg in _REQUEST_PATH):
+            on_request_path.append(rel)
+        elif not rel.endswith(_OPIK_SDK_ALLOWED):
+            offenders.append(rel)
+
+    assert not on_request_path, (
+        "the observability SDK is on the REQUEST PATH [FR-085]. An optional backend "
+        f"must not be importable while a patient waits: {on_request_path}"
+    )
+    assert not offenders, (
+        f"observability SDK escaped the sink abstraction [FR-085]: {offenders}. "
+        "Add it to _OPIK_SDK_ALLOWED with a reason, or route it through TraceSink."
+    )
 
 
 # ---------------------------------------------------------------- NFR-27 ----

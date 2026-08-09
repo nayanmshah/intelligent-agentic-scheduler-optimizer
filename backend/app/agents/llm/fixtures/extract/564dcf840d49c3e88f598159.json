@@ -1,17 +1,13 @@
 {
   "appointment_type": {
     "confidence": 0.85,
-    "derived": false,
-    "derived_rule": null,
-    "span": {
-      "end": 50,
-      "start": 0,
-      "text": "Swollen and sore since last night, need to be seen"
-    },
+    "derived": true,
+    "derived_rule": "model-inferred",
+    "span": null,
     "value": "limited_exam"
   },
   "date_range": {
-    "confidence": 0.7,
+    "confidence": 0.9,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -42,7 +38,7 @@
   },
   "request_text": "Swollen and sore since last night, need to be seen",
   "time_window": {
-    "confidence": 0.5,
+    "confidence": 0.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,

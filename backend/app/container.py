@@ -52,7 +52,11 @@ class AppContainer:
 
     @cached_property
     def opik(self) -> OpikTraceSink:
-        return OpikTraceSink(self.settings.opik_url, enabled=self.settings.opik_enabled)
+        return OpikTraceSink(
+            self.settings.opik_url,
+            enabled=self.settings.opik_enabled,
+            project=self.settings.opik_project,
+        )
 
     @cached_property
     def sink(self) -> FanOutTraceSink:
@@ -64,7 +68,11 @@ class AppContainer:
         """
         legs: list = [self.trace_store]
         if self.settings.opik_enabled:
-            legs.append(RedactingSink(self.opik, PhiRedactor()))
+            legs.append(
+                RedactingSink(self.opik, PhiRedactor())
+                if self.settings.opik_redact_phi
+                else self.opik
+            )
         return FanOutTraceSink(*legs)
 
     @cached_property

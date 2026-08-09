@@ -1,10 +1,14 @@
 {
   "appointment_type": {
-    "confidence": 0.0,
-    "derived": true,
-    "derived_rule": "model-inferred",
-    "span": null,
-    "value": "prophy_adult"
+    "confidence": 0.8,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 28,
+      "start": 0,
+      "text": "my tooth's been bothering me"
+    },
+    "value": "limited_exam"
   },
   "date_range": {
     "confidence": 0.5,
@@ -17,7 +21,7 @@
     }
   },
   "exclusions": {
-    "confidence": 1.0,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -30,15 +34,15 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.0,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
     "value": null
   },
-  "request_text": "Same time as last time with the same person",
+  "request_text": "my tooth's been bothering me",
   "time_window": {
-    "confidence": 0.0,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -48,10 +52,14 @@
     }
   },
   "urgency": {
-    "confidence": 0.5,
-    "derived": true,
-    "derived_rule": "model-inferred",
-    "span": null,
-    "value": "routine"
+    "confidence": 0.8,
+    "derived": false,
+    "derived_rule": null,
+    "span": {
+      "end": 28,
+      "start": 0,
+      "text": "my tooth's been bothering me"
+    },
+    "value": "urgent"
   }
 }

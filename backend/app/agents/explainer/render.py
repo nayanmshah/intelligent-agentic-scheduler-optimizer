@@ -53,6 +53,7 @@ async def explain_outcome(tracer, outcome: ReasonerOutcome, explainer):  # type:
     real constraint rather than one relaxed the moment it binds.
     """
     with tracer.span("explain", offers=len(outcome.offers)) as span:
+        span.attrs["model"] = getattr(explainer, "model_id", None)
         outcome = render_outcome(outcome)
         span.attrs["implementation"] = explainer.name
         if explainer.name == "template":

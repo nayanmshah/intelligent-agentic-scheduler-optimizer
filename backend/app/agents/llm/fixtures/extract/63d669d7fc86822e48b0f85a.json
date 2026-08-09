@@ -11,9 +11,9 @@
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 32,
+      "end": 40,
       "start": 24,
-      "text": "tomorrow"
+      "text": "tomorrow morning"
     },
     "value": {
       "end": "2026-08-11",
@@ -42,7 +42,7 @@
   },
   "request_text": "Any chance of something tomorrow morning?",
   "time_window": {
-    "confidence": 0.7,
+    "confidence": 0.85,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -51,7 +51,7 @@
       "text": "morning"
     },
     "value": {
-      "end_min": null,
+      "end_min": 720,
       "start_min": null
     }
   },
@@ -60,6 +60,6 @@
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
-    "value": "flexible"
+    "value": "routine"
   }
 }

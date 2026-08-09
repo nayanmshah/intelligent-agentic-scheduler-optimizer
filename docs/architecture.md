@@ -1014,16 +1014,53 @@ flowchart LR
 | :------- | :------- | :---------- |
 | Single abstraction | Every instrumentation call goes through `TraceSink`; a grep test asserts no Opik SDK import outside `trace/opik.py` | FR-085 |
 | In-process leg | Synchronous list append — microseconds. Always on, bounded (`maxlen=500` decisions) | FR-087 |
-| Opik leg | `queue.Queue(maxsize=1000)` drained by one daemon thread. Full queue drops and counts; any exception counts and is swallowed. **Never retried on the request path** | FR-089 |
+| Opik leg | `queue.Queue(maxsize=1000)` drained by one daemon thread. Full queue drops and counts; any exception counts and is swallowed. **Never retried on the request path**. Enabled by default; a missing container is a pre-flight WARN, never a failure | FR-089 |
+| Trace shape | **One Opik trace per decision, one child span per stage** — not a flat trace per span. Model stages are typed `llm` and carry the model id, so Opik's own cost and latency views work without being told anything extra | FR-086 |
 | Replay | Reads the in-process store only. Verified with the container runtime stopped | FR-087, NFR-10 |
 | Redaction | Configured **per sink**, not globally `[AR-06]` | FR-091 |
 
 **Why redaction is per-sink and not global.** The in-process store is the replay substrate and must
 retain raw request text for byte-identical replay (FR-088); the leak vector is the *external* sink.
-So `OpikTraceSink` is constructed with a `Redactor` and the in-process store is not. In v1.0 the
-redactor is `NoOpRedactor` (100% synthetic data), and `PhiRedactor` is implemented and unit-tested
-against a span containing patient identifiers and raw text — which is what FR-091 asks for: a hook
-that provably works, not a hook that exists.
+So the Opik leg is the one that carries a `Redactor` and the in-process store is not. In v1.0
+`opik_redact_phi` defaults **False** because the dataset is 100% synthetic — the same reasoning that
+makes `NoOpRedactor` the in-process default, and a trace whose input reads `[redacted]` is a trace
+nobody can debug from. `PhiRedactor` is implemented and unit-tested against both a span and a
+decision record; **any deployment carrying real patient text sets the flag True**, and because the
+redactor is derived from `Annotated[..., PHI]` on the domain model, flipping it is the whole change.
+
+### 13.1 Spans close before decisions do
+
+A stage span ends when the stage ends; the decision exists only after all of them. So the sink
+buffers spans by `trace_id` and assembles the Opik trace when the decision arrives — bounded to 64
+pending traces, oldest-first, because a request that errors before recording a decision would
+otherwise pin its spans forever.
+
+Absolute timestamps are reconstructed backwards from *now* using the measured durations. `Span`
+times with `perf_counter` deliberately (a clock read is a determinism hazard, FR-102), so the
+offsets are exact and only the origin is approximate — the right trade for a display timeline, and
+the single clock read the structural guard excuses by name.
+
+### 13.2 Datasets and experiments — the other half of the eval
+
+`make eval` prints a scorecard and returns an exit code: that is the **gate**, and it runs offline
+in two seconds. `make opik-eval` pushes the same 54 golden cases as an Opik **Dataset** and scores a
+run as an **Experiment** across five metrics:
+
+| Metric | What it measures | Requirement |
+| :----- | :--------------- | :---------- |
+| `extraction_accuracy` | per-field agreement with the labels, partial credit | FR-093 |
+| `top3_hit` | preferred slot appears in the offered three | FR-094 |
+| `schedule_quality` | orphan minutes created — the unbiased number | FR-095 |
+| `read_aloud` | reason lines a receptionist can say | FR-065 |
+| `faithful` | no offer asserts a booking; date and time echoed | FR-062 |
+
+Neither replaces the other. A terminal cannot answer *"did switching to Haiku help, and which cases
+moved?"* because that needs history; CI cannot depend on a container being up. Both read the same
+golden labels, so they cannot disagree about the facts.
+
+The experiment config records `llm_mode`, all three model ids, `prompt_version` and the **seed
+digest** (ADR-11), so a run is tied to the exact data it scored and two experiments are comparable
+only when they should be.
 
 Replay itself re-runs the deterministic pipeline from the stored extraction and asserts byte
 equality against the stored serialisation, rendering a field-level diff on mismatch (FR-088).

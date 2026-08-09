@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.3,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -42,7 +42,7 @@
   },
   "request_text": "Something on Wednesday afternoon",
   "time_window": {
-    "confidence": 0.7,
+    "confidence": 0.85,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -52,7 +52,7 @@
     },
     "value": {
       "end_min": null,
-      "start_min": 900
+      "start_min": null
     }
   },
   "urgency": {
@@ -60,6 +60,6 @@
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
-    "value": "routine"
+    "value": "flexible"
   }
 }

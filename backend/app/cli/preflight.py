@@ -57,6 +57,22 @@ class PreflightReport:
         return "\n".join(lines) + "\n"
 
 
+def _opik_reachable(url: str, timeout: float = 0.5) -> bool:
+    """A TCP connect, not an HTTP request: cheap, and it answers the only question
+    pre-flight has -- is anything listening? Loopback only, so this stays inside the
+    offline guard used by release verification."""
+    import socket
+    from urllib.parse import urlparse
+
+    parsed = urlparse(url if "//" in url else f"http://{url}")
+    host, port = parsed.hostname or "localhost", parsed.port or 80
+    try:
+        with socket.create_connection((host, port), timeout=timeout):
+            return True
+    except OSError:
+        return False
+
+
 def run_preflight(container: AppContainer | None = None) -> PreflightReport:
     c = container or build_container()
     s = c.settings
@@ -105,10 +121,15 @@ def run_preflight(container: AppContainer | None = None) -> PreflightReport:
         str(s.static_dir) if s.static_dir.exists() else "not built -- run `make frontend`",
     )
 
-    if s.opik_enabled:
-        r.add("observability", WARN, "enabled; optional and never on the request path")
-    else:
+    if not s.opik_enabled:
         r.add("observability", OK, "local trace store only")
+    elif _opik_reachable(s.opik_url):
+        r.add("observability", OK, f"Opik at {s.opik_url} -> project {s.opik_project!r}")
+    else:
+        # WARN, never FAIL. Opik is optional by construction (FR-089) and a missing
+        # container must not stop a demo -- but "I thought traces were being written"
+        # is exactly the surprise a pre-flight exists to prevent.
+        r.add("observability", WARN, f"enabled but unreachable at {s.opik_url}; traces stay local")
 
     r.add(
         "timeout ladder",

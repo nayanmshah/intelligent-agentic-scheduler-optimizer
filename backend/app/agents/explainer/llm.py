@@ -48,6 +48,8 @@ class LlmExplainer:
     def __init__(self, client: LlmClient, settings: Settings) -> None:
         self._client = client
         self._settings = settings
+        #: Surfaced on the trace span so Opik's cost and latency views work.
+        self.model_id = settings.model_explain
         self._prompt = (PROMPT_DIR / f"explain_{settings.prompt_version}.md").read_text(
             encoding="utf-8"
         )

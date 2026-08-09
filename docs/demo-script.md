@@ -273,6 +273,36 @@ If the network drops mid-demo, this screen is the recovery: the answers keep com
 
 ---
 
+## 6b · Opik — "and this is what it looks like at scale"
+
+Open **http://localhost:5173** (started with `make opik`). Two things are worth a
+minute each.
+
+**The trace list.** Every decision the demo just made, tagged. Filter by
+`fallback:extract` to see requests where a model call failed and the deterministic
+implementation answered; by `gate-fired` to see where the faithfulness gate rejected a
+sentence; by `asked-a-question` for the ambiguity cases.
+
+> "The in-process trace panel you just saw is the demo's own store. This is the same
+> data going somewhere a team would actually keep it. Open any trace and you get the
+> patient's words in, the offers out, the funnel counts, and four child spans — three
+> of them typed as LLM calls with the model and duration, so cost and latency views
+> come for free."
+
+**The experiments.** Under the `dental-scheduler-golden` dataset there are two runs of
+the same 54 cases — one live, one from committed fixtures — scored on five metrics.
+
+> "This is how you'd answer 'did switching models help?'. Same dataset, same metrics,
+> two configurations, per-case scores. The experiment config records the model ids,
+> the prompt version and the seed digest, so two runs are only comparable when they
+> actually should be."
+
+Worth naming the weakest metric yourself before anyone asks: `top3_hit` sits near 0.48
+because the preference label leans earliest-first. `schedule_quality` at 0.97 is the
+one measured from the schedule rather than from the ranker's own output.
+
+---
+
 ## 7 · Close on the numbers (`make eval`, in a second terminal)
 
 ```

@@ -27,3 +27,8 @@ os.environ.setdefault("SCHED_LLM_MODE", "fixtures")
 os.environ["SCHED_LLM_MODE"] = "fixtures"
 os.environ["SCHED_VERIFIER"] = "rules"
 os.environ["SCHED_EXPLAINER"] = "template"
+# Opik ships enabled, so without this the "offline, free" suite quietly opens sockets
+# to a container that may or may not be running — an external dependency, and a
+# ResourceWarning that `filterwarnings = ["error"]` correctly turns into a failure.
+# Tests that care about the sink construct one explicitly and point it at nothing.
+os.environ["SCHED_OPIK_ENABLED"] = "false"

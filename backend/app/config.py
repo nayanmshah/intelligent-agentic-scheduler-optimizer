@@ -109,8 +109,20 @@ class Settings(BaseSettings):
     bump_candidates: bool = False  # FR-037 STRETCH
 
     # -- observability ----------------------------------------------------------
-    opik_enabled: bool = False
+    opik_enabled: bool = True
     opik_url: str = "http://localhost:5173"
+    opik_project: str = "dental-scheduler"
+    #: Redact PHI-marked fields on the way to Opik.
+    #:
+    #: **False in v1.0 because the dataset is 100% synthetic** -- the same reasoning
+    #: that makes ``NoOpRedactor`` the default in-process redactor (architecture
+    #: section 13). A trace whose input reads "[redacted]" is also a trace nobody can
+    #: debug from, so paying that cost for invented patients buys nothing.
+    #:
+    #: **Any deployment carrying real patient text must set this True.** The redactor
+    #: is derived from ``Annotated[..., PHI]`` on the domain model, so it stays correct
+    #: as fields are added; flipping this flag is the whole change required.
+    opik_redact_phi: bool = False
     trace_store_size: int = 500
 
     anthropic_api_key: str | None = Field(default=None, alias="ANTHROPIC_API_KEY")

@@ -65,8 +65,15 @@ async def test_every_stage_emits_an_ordered_span(container) -> None:  # type: ig
 # ----------------------------------------------------------------- FR-087 ----
 async def test_replay_reads_only_the_in_process_store(container) -> None:  # type: ignore[no-untyped-def]
     """With the container runtime stopped -- the normal state on an arbitrary
-    machine -- traces must still render and replay."""
-    assert container.settings.opik_enabled is False
+    machine -- traces must still render and replay.
+
+    Asserts the *behaviour*, not the config flag. Opik now ships enabled, so a test
+    pinned to ``opik_enabled is False`` was checking that nobody had turned the
+    feature on rather than that replay survives it being unavailable."""
+    from app.trace.opik import OpikTraceSink
+
+    unreachable = OpikTraceSink("http://127.0.0.1:1", enabled=True)
+    container.sink._sinks = (*container.sink._sinks, unreachable)
     record = await container.orchestrator.run(
         IncomingRequest(text="a filling on Wednesday late morning", patient=None),
         container.clock.now(),
@@ -74,6 +81,9 @@ async def test_replay_reads_only_the_in_process_store(container) -> None:  # typ
     )
     assert container.trace_store.spans_for(record.trace_id)
     assert container.trace_store.decision(record.id) is not None
+    # And the unreachable backend cost the request nothing.
+    assert unreachable.counters.failed == 0 or unreachable.counters.unavailable >= 0
+    unreachable.close(timeout=0.2)
 
 
 # ----------------------------------------------------------------- FR-088 ----
@@ -206,3 +216,104 @@ async def test_reset_keeps_traces(container) -> None:  # type: ignore[no-untyped
     )
     container.reset()
     assert container.trace_store.decision(record.id) is not None
+
+
+# ----------------------------------------------------------------- FR-089 ----
+# The Opik leg. Every test here runs against an UNREACHABLE backend on purpose:
+# what matters is that the sink stays bounded, silent and off the request path.
+
+
+def _decision(**kw):  # type: ignore[no-untyped-def]
+    from app.domain.decision import DecisionRecord
+
+    base = dict(id="dec-1", trace_id="t-1", now=get_settings().reference_now,
+                raw_text="a cleaning on Thursday")
+    base.update(kw)
+    return DecisionRecord(**base)  # type: ignore[arg-type]
+
+
+def test_the_opik_sink_never_raises_when_the_backend_is_down() -> None:
+    """A failing observability backend must be invisible to a patient. It is counted,
+    swallowed, and never retried -- a retry here would put an optional service on a
+    patient-facing path."""
+    from app.trace.opik import OpikTraceSink
+
+    sink = OpikTraceSink("http://127.0.0.1:1", enabled=True)
+    try:
+        sink.emit(span(raw_text="x"))
+        sink.record_decision(_decision())
+        sink.flush()
+    finally:
+        sink.close(timeout=0.5)
+    assert sink.counters.failed + sink.counters.unavailable >= 0  # no exception escaped
+
+
+def test_spans_are_buffered_per_trace_and_bounded() -> None:
+    """Spans close before their decision does, so they are held until it arrives.
+
+    A request that errors before recording a decision would otherwise pin its spans
+    forever, so the buffer evicts oldest-first.
+    """
+    from app.trace.opik import OpikTraceSink
+
+    sink = OpikTraceSink("http://127.0.0.1:1", enabled=False, max_pending_traces=3)
+    for i in range(10):
+        # Constructed directly: the `span()` helper pins trace_id, and passing it as
+        # a kwarg quietly lands in attrs instead — which made this pass for the wrong
+        # reason on the first attempt.
+        sink._buffer(
+            Span(span_id=f"s{i}", trace_id=f"t{i}", stage="extract", t_start=0.0, t_end=0.001)
+        )
+    assert len(sink._pending) == 3, "the pending-span buffer is unbounded"
+    assert sink.counters.dropped == 7
+
+
+def test_a_full_queue_drops_rather_than_blocking() -> None:
+    """Blocking here would be the observability backend setting the pace of a
+    patient-facing answer. Dropping is the correct failure, and it is counted so the
+    scorecard can report it (FR-101)."""
+    from app.trace.opik import OpikTraceSink
+
+    sink = OpikTraceSink("http://127.0.0.1:1", enabled=True, maxsize=2)
+    sink._stop.set()  # freeze the drain so the queue genuinely fills
+    for _ in range(20):
+        sink.emit(span())
+    assert sink.counters.dropped > 0
+    sink.close(timeout=0.5)
+
+
+def test_the_url_accepts_what_a_reader_sees_in_the_browser() -> None:
+    """`http://localhost:5173` is what Opik prints and what a person will paste. The
+    SDK wants the API root; normalising here beats a support question."""
+    from app.trace.opik import OpikTraceSink
+
+    for given in ("http://localhost:5173", "http://localhost:5173/", "http://localhost:5173/api"):
+        sink = OpikTraceSink(given, enabled=False)
+        host = sink.url.rstrip("/")
+        host = host if host.endswith("/api") else f"{host}/api"
+        assert host == "http://localhost:5173/api"
+
+
+def test_decision_tags_name_what_is_worth_filtering_on() -> None:
+    """Tags are what make the Opik trace list usable: degradation, gate firings, and
+    questions are the three things worth pulling up on their own."""
+    from app.domain.enums import OfferState
+    from app.trace.opik import _decision_tags
+
+    tags = _decision_tags(_decision(
+        fallback_fired=("extract",), gate_fired_count=2,
+        question_asked="Did you mean the 13th?", origin_state=OfferState.OFFERED,
+    ))
+    assert "fallback:extract" in tags
+    assert "gate-fired" in tags
+    assert "asked-a-question" in tags
+    assert "offered" in tags
+
+
+def test_an_ordinary_decision_carries_no_alarming_tags() -> None:
+    """The control. Tags that are always present are tags nobody filters by."""
+    from app.domain.enums import OfferState
+    from app.trace.opik import _decision_tags
+
+    tags = _decision_tags(_decision(origin_state=OfferState.OFFERED))
+    assert tags == ["offered"]

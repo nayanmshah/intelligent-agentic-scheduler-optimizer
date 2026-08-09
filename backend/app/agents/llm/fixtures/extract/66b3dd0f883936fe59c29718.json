@@ -1,12 +1,12 @@
 {
   "appointment_type": {
-    "confidence": 0.75,
+    "confidence": 0.85,
     "derived": false,
     "derived_rule": null,
     "span": {
       "end": 28,
-      "start": 0,
-      "text": "My tooth's been bothering me"
+      "start": 3,
+      "text": "tooth's been bothering me"
     },
     "value": "limited_exam"
   },
@@ -16,8 +16,8 @@
     "derived_rule": null,
     "span": {
       "end": 41,
-      "start": 35,
-      "text": "Friday"
+      "start": 29,
+      "text": "since Friday"
     },
     "value": {
       "end": "2026-08-07",
@@ -60,9 +60,9 @@
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 41,
-      "start": 0,
-      "text": "My tooth's been bothering me since Friday"
+      "end": 28,
+      "start": 3,
+      "text": "tooth's been bothering me"
     },
     "value": "urgent"
   }

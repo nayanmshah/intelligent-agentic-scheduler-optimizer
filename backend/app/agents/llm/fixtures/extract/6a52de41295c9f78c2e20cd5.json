@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.9,
+    "confidence": 0.85,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -38,7 +38,7 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 1.0,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -46,7 +46,7 @@
   },
   "request_text": "Tuesday, and it's an emergency",
   "time_window": {
-    "confidence": 1.0,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -61,8 +61,8 @@
     "derived_rule": null,
     "span": {
       "end": 30,
-      "start": 13,
-      "text": "it's an emergency"
+      "start": 21,
+      "text": "emergency"
     },
     "value": "emergency"
   }

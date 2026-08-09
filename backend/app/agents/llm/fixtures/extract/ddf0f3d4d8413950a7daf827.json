@@ -52,7 +52,7 @@
     }
   },
   "urgency": {
-    "confidence": 0.5,
+    "confidence": 0.7,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,

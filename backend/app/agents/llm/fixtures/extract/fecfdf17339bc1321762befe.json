@@ -25,7 +25,7 @@
     }
   },
   "exclusions": {
-    "confidence": 0.0,
+    "confidence": 1.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -38,7 +38,7 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.0,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -46,7 +46,7 @@
   },
   "request_text": "Gum maintenance on Thursday afternoon",
   "time_window": {
-    "confidence": 0.75,
+    "confidence": 0.85,
     "derived": false,
     "derived_rule": null,
     "span": {

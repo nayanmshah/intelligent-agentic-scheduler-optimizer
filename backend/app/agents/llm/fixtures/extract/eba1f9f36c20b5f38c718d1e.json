@@ -1,6 +1,6 @@
 {
   "appointment_type": {
-    "confidence": 0.95,
+    "confidence": 0.99,
     "derived": false,
     "derived_rule": null,
     "span": {
@@ -38,7 +38,7 @@
   },
   "patient_ref": "pat-000",
   "provider_preference": {
-    "confidence": 0.5,
+    "confidence": 0.0,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -55,7 +55,7 @@
       "text": "morning"
     },
     "value": {
-      "end_min": 900,
+      "end_min": null,
       "start_min": null
     }
   },

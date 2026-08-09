@@ -1,9 +1,10 @@
-.PHONY: demo dev test test-live coverage mutants eval eval-live fit seed check audit preflight install frontend fixtures release clean
+.PHONY: demo dev test test-live coverage mutants eval eval-live opik opik-eval fit seed check audit preflight install frontend fixtures release clean
 
 UV      ?= uv
 PY      ?= $(UV) run python
 PORT    ?= 8000
 RUNS    ?= 3
+OPIK_HOME ?= $(HOME)/github/opik
 
 ## install --- sync the pinned toolchain (python 3.12 via uv)
 install:
@@ -46,6 +47,16 @@ eval: install
 eval-live: install
 	@test -n "$$ANTHROPIC_API_KEY" || { echo "  ANTHROPIC_API_KEY is not set"; exit 1; }
 	$(PY) -m app.eval.run --live
+
+## opik --- start the local Opik stack (traces + experiments UI)
+opik:
+	@cd $(OPIK_HOME) && ./opik.sh
+	@echo "  Opik UI: http://localhost:5173"
+
+## opik-eval --- push the golden set as an Opik Dataset and score it as an Experiment
+##   Comparable across runs, per-case, with the trace behind every score.
+opik-eval: install
+	$(PY) -m app.eval.opik_suite
 
 ## fit --- fit the weight vector to the golden labels (FR-098)
 fit: install

@@ -13,6 +13,7 @@ dependencies = [
 
 [project.optional-dependencies]
 llm = ["anthropic>=0.69"]
+obs = ["opik>=1.7"]
 eval = ["numpy>=2.1"]
 dev = [
     "pytest>=8.3",

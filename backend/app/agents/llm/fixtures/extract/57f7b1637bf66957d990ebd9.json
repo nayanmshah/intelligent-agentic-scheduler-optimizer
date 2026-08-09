@@ -4,9 +4,9 @@
     "derived": false,
     "derived_rule": null,
     "span": {
-      "end": 24,
+      "end": 40,
       "start": 0,
-      "text": "I think I need a filling"
+      "text": "I think I need a filling, there's a hole"
     },
     "value": "filling_1s"
   },
@@ -21,7 +21,7 @@
     }
   },
   "exclusions": {
-    "confidence": 1.0,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
@@ -52,7 +52,7 @@
     }
   },
   "urgency": {
-    "confidence": 0.6,
+    "confidence": 0.5,
     "derived": true,
     "derived_rule": "model-inferred",
     "span": null,
