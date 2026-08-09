@@ -1,4 +1,4 @@
-.PHONY: demo dev test eval fit seed check audit preflight install frontend fixtures release clean
+.PHONY: demo dev test coverage eval fit seed check audit preflight install frontend fixtures release clean
 
 UV      ?= uv
 PY      ?= $(UV) run python
@@ -47,6 +47,11 @@ seed: install
 ## preflight --- readiness report (NFR-12)
 preflight: install
 	$(PY) -m app.cli.preflight
+
+## coverage --- line coverage, so gaps are a number rather than an impression
+coverage: install
+	$(UV) run --with pytest-cov python -m pytest tests -q \
+		--cov=backend/app --cov-report=term-missing
 
 ## audit --- known-CVE scan over both dependency trees
 audit: install

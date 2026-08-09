@@ -11,11 +11,17 @@ import time
 
 import pytest
 
-from app.config import Settings
+from app.config import Settings, get_settings
 from app.container import AppContainer
+from app.domain.decision import DecisionRecord
 from app.orchestrator.machine import IncomingRequest
 from app.trace.opik import OpikTraceSink
-from app.trace.redaction import NoOpRedactor, PhiRedactor, RedactingSink
+from app.trace.redaction import (
+    REDACTED,
+    NoOpRedactor,
+    PhiRedactor,
+    RedactingSink,
+)
 from app.trace.sink import FanOutTraceSink, Span, Tracer
 
 
@@ -138,6 +144,42 @@ def test_redaction_applies_to_the_external_leg_only() -> None:
     assert local.spans_for("t")[0].attrs["raw_text"] == "my tooth is killing me"
     assert external.spans_for("t")[0].attrs["raw_text"] == "[redacted]"
     assert external.spans_for("t")[0].attrs["duration_ms"] == 3
+
+
+def test_a_decision_record_is_redacted_on_the_external_leg() -> None:
+    """The other half of FR-091, and the half that matters most.
+
+    ``PhiRedactor.span`` was tested; ``PhiRedactor.decision`` was not -- and the
+    decision record is what carries ``raw_text``, a patient describing a symptom, and
+    the extracted ``constraints`` that quote it verbatim. A coverage pass found the
+    gap behind a "PhiRedactor is unit-tested" claim that was only half true.
+    """
+    from app.trace.inprocess import InProcessTraceSink
+
+    local = InProcessTraceSink()
+    external = InProcessTraceSink()
+    fan = FanOutTraceSink(local, RedactingSink(external, PhiRedactor()))
+
+    record = DecisionRecord(
+        id="dec-1",
+        trace_id="t",
+        now=get_settings().reference_now,
+        raw_text="my tooth is killing me",
+    )
+    fan.record_decision(record)
+
+    kept = local.decision("dec-1")
+    sent = external.decision("dec-1")
+    assert kept is not None and sent is not None
+
+    assert kept.raw_text == "my tooth is killing me", "the replay substrate lost its text"
+    assert sent.raw_text == "[redacted]", "PHI reached the external sink"
+    assert sent.id == "dec-1", "redaction destroyed a non-PHI field"
+    assert sent.trace_id == "t"
+
+    # Every PHI-marked top-level field, not just the one this test names.
+    for field_name in {p.split(".")[0] for p in PhiRedactor().covered}:
+        assert getattr(sent, field_name, None) in (REDACTED, None), field_name
 
 
 def test_the_noop_redactor_is_the_v1_default() -> None:

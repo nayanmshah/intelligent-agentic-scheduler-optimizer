@@ -23,7 +23,7 @@ the data that would trigger them.
 
 from __future__ import annotations
 
-from datetime import date, datetime, time, timedelta
+from datetime import UTC, date, datetime, time, timedelta
 from zoneinfo import ZoneInfo
 
 MINUTES_PER_DAY = 24 * 60
@@ -102,7 +102,12 @@ def day_length_minutes(d: date, tz: ZoneInfo) -> int:
     """
     start = datetime.combine(d, time(0, 0)).replace(tzinfo=tz)
     nxt = datetime.combine(d + timedelta(days=1), time(0, 0)).replace(tzinfo=tz)
-    return int((nxt - start).total_seconds() // 60)
+    # The conversion to UTC is load-bearing, not decoration. Subtracting two aware
+    # datetimes that share a tzinfo makes Python ignore the offset entirely and do
+    # wall-clock arithmetic, so this returned 1440 for every day including the two it
+    # exists to describe -- the function written to stop a silent assumption was
+    # making it. Documented behaviour, and invisible without a DST day to test.
+    return int((nxt.astimezone(UTC) - start.astimezone(UTC)).total_seconds() // 60)
 
 
 def business_days(start: date, end_inclusive: date) -> list[date]:

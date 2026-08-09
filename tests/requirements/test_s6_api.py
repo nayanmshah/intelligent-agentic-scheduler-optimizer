@@ -122,3 +122,160 @@ def test_preflight_is_rerunnable_over_http_and_names_every_check(client) -> None
     for check in body["checks"]:
         assert check["name"] and check["status"]
     assert all(c["status"] == "ok" for c in body["checks"]), body["checks"]
+
+
+# ------------------------------------------------------------- mutations ----
+# The write endpoints were the thinnest-covered code in the repo (policy 27%,
+# requests 50%) and they are the ones that change state.
+
+
+def test_booking_an_offer_confirms_it_with_the_resolved_date(client) -> None:
+    """FR-073/R-04: the confirmation echoes the resolved date so the *patient*
+    catches a confidently-wrong one before they turn up on the wrong day."""
+    decision = submit(client, "Any chance of a cleaning next Tuesday morning?").json()
+    offer = decision["offers"][0]
+
+    r = client.post(
+        "/api/bookings",
+        json={"request_id": decision["id"], "candidate_id": offer["candidate_id"]},
+    )
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["status"] == "booked"
+    assert body["appointment_id"]
+    assert offer["date_display"] in body["confirmation"]
+    assert offer["start_display"] in body["confirmation"]
+
+
+def test_booking_the_same_slot_twice_is_refused_with_a_named_error(client) -> None:
+    """ADR-18/FR-069 over HTTP. The second attempt must lose loudly -- a silent
+    infeasible write is the failure this whole path exists to prevent."""
+    decision = submit(client, "a cleaning on Thursday afternoon").json()
+    offer = decision["offers"][0]
+    payload = {"request_id": decision["id"], "candidate_id": offer["candidate_id"]}
+
+    assert client.post("/api/bookings", json=payload).status_code == 200
+    second = client.post("/api/bookings", json=payload)
+    assert second.status_code == 409, second.text
+
+
+def test_booking_a_slot_that_was_never_offered_is_refused(client) -> None:
+    """Otherwise the API is a booking primitive with the reasoner as a suggestion,
+    and every constraint the ladder enforces becomes advisory."""
+    decision = submit(client, "a cleaning on Thursday afternoon").json()
+    r = client.post(
+        "/api/bookings",
+        json={"request_id": decision["id"], "candidate_id": "cand-never-offered"},
+    )
+    assert r.status_code == 400
+
+
+def test_booking_against_an_unknown_decision_404s(client) -> None:
+    r = client.post(
+        "/api/bookings", json={"request_id": "no-such-decision", "candidate_id": "x"}
+    )
+    assert r.status_code == 404
+
+
+def test_reset_restores_the_schedule_but_keeps_the_traces(client) -> None:
+    """FR-072. An evaluator resets the schedule and still needs to inspect a decision
+    made before the reset; coupling the two would destroy the audit trail."""
+    submit(client, "a cleaning on Thursday afternoon")
+    r = client.post("/api/session/reset")
+    assert r.status_code == 200
+    assert r.json()["traces_retained"] >= 1
+
+
+def test_changing_the_active_profile_changes_what_is_active(client) -> None:
+    before = client.get("/api/policy/profiles").json()
+    other = next(p["id"] for p in before["profiles"] if p["id"] != before["active"])
+
+    assert client.put("/api/policy/active", json={"id": other}).status_code == 200
+    assert client.get("/api/policy/profiles").json()["active"] == other
+
+    client.put("/api/policy/active", json={"id": before["active"]})
+
+
+def test_an_unknown_profile_is_refused_rather_than_silently_ignored(client) -> None:
+    """Silently keeping the old profile would mean the screen and the ranking
+    disagree about which policy is in force."""
+    r = client.put("/api/policy/active", json={"id": "not-a-profile"})
+    assert r.status_code >= 400
+
+
+def test_reranking_reorders_without_a_second_pipeline_run(client) -> None:
+    """ADR-06: axis values are weight-independent, so re-ranking is a dot product
+    over a matrix that already exists. Zero model calls, and fast enough to feel
+    instant while a slider moves (FR-079, NFR-04)."""
+    decision = submit(client, "Whatever works next week").json()
+
+    r = client.post(
+        "/api/policy/rerank",
+        json={
+            "request_id": decision["id"],
+            "weights": {
+                "time_fit": 0.05, "continuity": 0.9,
+                "efficiency": 0.05, "prime_time": 0.0,
+            },
+        },
+    )
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["llm_calls"] == 0
+    ranked = body["ranked"]
+    assert ranked
+
+    # Every row must be renderable. Re-ranking is *supposed* to promote candidates
+    # that were never offered, and naming only the original three rendered those rows
+    # as "83% --" on the one screen built for watching the order change.
+    for row in ranked:
+        assert row["provider_name"], f"unrenderable row: {row}"
+        assert row["start_display"], f"unrenderable row: {row}"
+
+    assert any(not row["was_offered"] for row in ranked), (
+        "this weighting promoted nothing new, so it does not exercise the bug"
+    )
+
+
+def test_rank_stability_is_reported_as_a_number(client) -> None:
+    """FR-081 turns "the weights are arbitrary" from an objection into a measurement.
+    Seeded, so the answer is the same run to run."""
+    decision = submit(client, "Whatever works next week").json()
+    r = client.get("/api/policy/stability", params={"request_id": decision["id"]})
+    assert r.status_code == 200, r.text
+    again = client.get("/api/policy/stability", params={"request_id": decision["id"]})
+    assert r.json() == again.json(), "stability sampling is not reproducible"
+
+
+# ---------------------------------------------------------------- traces ----
+# The replay *behaviour* is asserted at container level in test_s9_observability.
+# These cover the HTTP wrapper the Traces screen actually calls.
+
+
+def test_a_decision_can_be_replayed_byte_identically_over_http(client) -> None:
+    """FR-088. Replay re-runs the deterministic pipeline from the *stored* extraction
+    and from the NOW on the record, so it needs neither the network nor an assumption
+    about when the replay happens."""
+    decision = submit(client, "Can I come in next Thursday after 3?").json()
+
+    r = client.post(f"/api/traces/{decision['id']}/replay")
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["identical"] is True, body["diff"]
+
+
+def test_replaying_an_unknown_decision_404s(client) -> None:
+    assert client.post("/api/traces/no-such-decision/replay").status_code == 404
+
+
+def test_the_traces_list_and_span_detail_are_reachable(client) -> None:
+    """Degradation is silent to the operator and loud here, which only holds if the
+    screen can actually load."""
+    decision = submit(client, "a cleaning on Thursday afternoon").json()
+
+    listing = client.get("/api/traces").json()
+    assert any(d["id"] == decision["id"] for d in listing["decisions"])
+
+    spans = client.get(f"/api/traces/{decision['trace_id']}").json()
+    assert spans["spans"], "a decision produced no spans"
+    assert {s["stage"] for s in spans["spans"]} & {"extract", "verify", "reason"}

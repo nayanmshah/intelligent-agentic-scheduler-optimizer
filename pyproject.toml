@@ -20,6 +20,7 @@ dev = [
     # text arrives, so it is worth testing over real HTTP rather than by calling
     # the route functions directly.
     "httpx2>=0.1",
+    "pytest-cov>=6.0",
     "pytest-asyncio>=0.24",
     "hypothesis>=6.112",
     "mypy>=1.13",

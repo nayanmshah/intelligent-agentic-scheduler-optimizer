@@ -20,7 +20,9 @@ export default function Policy() {
   const [weights, setWeights] = useState<Record<string, number>>({
     time_fit: 0.35, continuity: 0.25, efficiency: 0.25, prime_time: 0.15,
   });
-  const [ranked, setRanked] = useState<{ provider_name: string | null; start_display: string | null; score: number }[]>([]);
+  const [ranked, setRanked] = useState<
+    { provider_name: string | null; start_display: string | null; score: number; was_offered: boolean }[]
+  >([]);
   const [elapsed, setElapsed] = useState<number | null>(null);
   const [stability, setStability] = useState<{ sentence: string; held_pct: number; samples: number } | null>(null);
 
@@ -112,9 +114,16 @@ export default function Policy() {
           <h2 className="mb-2 text-sm font-semibold">Top 3 under these weights</h2>
           <ol className="text-sm">
             {ranked.map((r, i) => (
-              <li key={i} className="flex gap-3 py-0.5">
+              <li key={i} className="flex items-baseline gap-3 py-0.5">
                 <span className="w-10 tabular-nums">{(r.score * 100).toFixed(0)}%</span>
                 <span>{r.provider_name ?? "—"} {r.start_display ?? ""}</span>
+                {/* Naming what the weighting *changed* is the point of this screen:
+                    a row that was not in the original three is the evidence. */}
+                {!r.was_offered && (
+                  <span className="text-[0.65rem]" style={{ color: "var(--ink-soft)" }}>
+                    newly promoted
+                  </span>
+                )}
               </li>
             ))}
           </ol>

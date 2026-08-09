@@ -98,8 +98,11 @@ The dataset is one location in `America/Los_Angeles`, and no DST transition fall
 between 2026-08-03 and 2026-08-28.
 
 Both assumptions are confined behind one conversion module (NFR-32) rather than
-diffused through the code, and **the DST fixtures already exist** — a spring-forward
-and a fall-back day are asserted even though neither is in the dataset. DST enters a
+diffused through the code, and **both transitions are asserted** even though neither
+falls in the dataset — see `tests/requirements/test_s2_write_path.py`. Those
+assertions were written during the QA pass and immediately found a real bug:
+`day_length_minutes` returned 1440 for every day, including the two it exists to
+describe ([`qa-report.md`](qa-report.md) QA-1). DST enters a
 14-day horizon twice a year in every zone; a spring-forward day contains an hour that
 does not exist and a fall-back day contains one that happens twice. That is the class
 of bug that is invisible until the Sunday morning it is not.

@@ -112,7 +112,17 @@ export const api = {
   setProfile: (id: string) =>
     json<{ active: string }>("/api/policy/active", { method: "PUT", body: JSON.stringify({ id }) }),
   rerank: (requestId: string, weights: Record<string, number>) =>
-    json<{ llm_calls: number; ranked: { candidate_id: string; score: number; provider_name: string | null; start_display: string | null }[] }>(
+    json<{
+      llm_calls: number;
+      ranked: {
+        candidate_id: string;
+        score: number;
+        provider_name: string | null;
+        start_display: string | null;
+        /** False when this weighting promoted a slot that was not originally offered. */
+        was_offered: boolean;
+      }[];
+    }>(
       "/api/policy/rerank",
       { method: "POST", body: JSON.stringify({ request_id: requestId, weights }) },
     ),

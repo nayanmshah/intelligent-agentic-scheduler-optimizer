@@ -66,19 +66,24 @@ async def rerank(body: RerankRequest, request: Request) -> dict[str, Any]:
         zip(record.score_matrix.candidate_ids, scores, strict=True),
         key=lambda kv: -kv[1],
     )[:3]
-    by_id = {o.candidate_id: o for o in record.offers}
+    # Labels come from the matrix, not from the original top three: re-ranking is
+    # *supposed* to promote candidates that were not offered, and naming only the
+    # first three rendered those rows as "83% --" on the one screen whose whole
+    # purpose is watching the order change.
+    def row(cid: str, score: float) -> dict[str, Any]:
+        label = record.score_matrix.label_for(cid) if record.score_matrix else None
+        return {
+            "candidate_id": cid,
+            "score": round(score, 6),
+            "provider_name": label[0] if label else None,
+            "start_display": label[1] if label else None,
+            "was_offered": any(o.candidate_id == cid for o in record.offers),
+        }
+
     return {
         "weights": weights.model_dump(),
         "llm_calls": 0,
-        "ranked": [
-            {
-                "candidate_id": cid,
-                "score": round(score, 6),
-                "start_display": by_id[cid].start_display if cid in by_id else None,
-                "provider_name": by_id[cid].provider_name if cid in by_id else None,
-            }
-            for cid, score in ranked
-        ],
+        "ranked": [row(cid, score) for cid, score in ranked],
     }
 
 

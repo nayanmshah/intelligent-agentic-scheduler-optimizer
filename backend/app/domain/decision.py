@@ -81,6 +81,20 @@ class ScoreMatrix:
 
     candidate_ids: tuple[str, ...]
     rows: tuple[tuple[float, float, float, float], ...]
+    #: ``(provider_name, start_display)`` per row, aligned with ``candidate_ids``.
+    #:
+    #: Re-ranking under new weights can promote a candidate that was never in the
+    #: original top three -- that is the entire point of the policy screen. Without a
+    #: label here the endpoint could only name the three it started with, and moving a
+    #: slider rendered rows as "83% --". A matrix that can rank a row must be able to
+    #: say what the row *is*.
+    labels: tuple[tuple[str, str], ...] = ()
+
+    def label_for(self, candidate_id: str) -> tuple[str, str] | None:
+        try:
+            return self.labels[self.candidate_ids.index(candidate_id)]
+        except (ValueError, IndexError):
+            return None
 
     def scores_for(self, w: Weights) -> tuple[float, ...]:
         a, b, c, d = w.as_row()
