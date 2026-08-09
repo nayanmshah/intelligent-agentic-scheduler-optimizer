@@ -244,3 +244,39 @@ design decision rather than a fallback.
 None of these are implemented. The number is stated because "we'd use the model live in
 production" is a claim that should come with a measurement, and this one does not
 currently support it.
+
+---
+
+## 13. Only one of the four roles carries a model in the demo
+
+The architecture is four agent roles, each behind a `Protocol` so the implementation is
+swappable by config (NFR-28). What actually runs on the demo path is narrower than
+"four agents" suggests, and it is worth saying before someone asks:
+
+| Role | Demo implementation | Model involved? |
+| :--- | :------------------ | :-------------- |
+| Intent Extractor | `fixtures(llm)` | **Yes** — real Claude output, recorded once and replayed |
+| Constraint Verifier | `rules` | No — and no LLM implementation exists at all |
+| Schedule Reasoner | deterministic | No — **by design**, this is the thesis |
+| Explainer | `template` | No — `LlmExplainer` is built and tested, but activates only in live mode |
+
+**The reasoner is not a gap.** "LLMs at the edges, arithmetic in the middle" is the
+product's central claim; a deterministic ranker is the feature.
+
+**The explainer is a mode difference, not a missing piece.** `LlmExplainer` and its
+five-check faithfulness gate exist and are tested. In fixture mode the template renders
+instead — and the template cannot hallucinate by construction, since it only
+interpolates facts the scorer emitted. A consequence worth knowing: **the faithfulness
+gate never fires during the demo**, because there is no generated prose to check.
+
+**The verifier is a real gap against NFR-28**, which asks every agent for two
+implementations. It has one. The reason is that its checks — is the date in the past?
+does this provider exist and hold this credential? — are lookups against a known world,
+where a model would add latency and a failure mode to answer *less* reliably. That is a
+defensible decision, but NFR-28 says "every agent" and this is an exception to it, so it
+is recorded here rather than left to be discovered. The `ConstraintVerifier` Protocol is
+in place, so the seam costs nothing to fill later.
+
+**What this means for the demo narration.** "Four agents, three of which can run without
+a model, and the one that decides never uses one" is accurate. "Four AI agents" is not,
+and will not survive the first follow-up question.

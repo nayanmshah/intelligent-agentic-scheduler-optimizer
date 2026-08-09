@@ -46,7 +46,12 @@ class Settings(BaseSettings):
     # -- agent implementations (ADR-03; one registry reads these) ---------------
     llm_mode: str = "fixtures"  # fixtures | live | rules
     extractor: str = "llm"  # llm | rules
-    verifier: str = "rules"  # llm | rules
+    # Rules only. The `ConstraintVerifier` Protocol admits an LLM implementation and
+    # none is built -- the checks it performs (is the date past? does this provider
+    # exist and hold this credential?) are lookups against the world, and a model
+    # would add latency and a failure mode to answer them less reliably. NFR-28 is
+    # therefore unmet for this one role, deliberately; see known-limitations.md §13.
+    verifier: str = "rules"
     explainer: str = "template"  # llm | template
     reasoner: str = "deterministic"  # deterministic | naive
 

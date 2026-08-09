@@ -83,7 +83,7 @@ extraction, not over the ranking.
 | # | Role | Implementation | Responsibility |
 | - | ---- | -------------- | -------------- |
 | 1 | **Intent Extractor** | LLM + deterministic fallback + cached fixtures | Request text + patient context → typed `RequestConstraints` (date range, time window, urgency, provider preference, appointment type, exclusions). **Every field carries a confidence and a verbatim source span from the request.** |
-| 2 | **Constraint Verifier / Clarifier** | Cheap LLM; rules offline | Does *not* see the schedule. Validates the extraction against the world: is the date in the past? does the provider exist and work at this location? is the type compatible with the stated symptom? is any low-confidence field one that would *change the answer*? Emits `proceed` / `proceed-with-flags` / `ask-one-question`. |
+| 2 | **Constraint Verifier / Clarifier** | Deterministic rules (no LLM implementation built — see below) | Does *not* see the schedule. Validates the extraction against the world: is the date in the past? does the provider exist and work at this location? is the type compatible with the stated symptom? is any low-confidence field one that would *change the answer*? Emits `proceed` / `proceed-with-flags` / `ask-one-question`. |
 | 3 | **Schedule Reasoner** | **Deterministic, zero LLM** | Enumerate candidates → apply hard constraints, retaining rejections with reasons → score across four axes plus doctor-check and prime-time → apply urgency gate → rank → generate counterfactuals. |
 | 4 | **Explainer** | LLM phrasing over scorer-emitted facts, template fallback, faithfulness gate | Sees only the score components the reasoner produced. Structurally cannot invent a reason it was not given. |
 
@@ -108,13 +108,18 @@ quality?*
 | Component | Verdict |
 | --------- | ------- |
 | **Extractor** | **Yes** — and it is measured. The rules fallback scores materially lower than the LLM on the golden set; the eval reports exactly which phrasings it misses. |
-| **Verifier** | **Yes** — it catches classes of error the extractor is structurally blind to. |
+| **Verifier** | **No, as built.** It catches classes of error the extractor is blind to, but every check it performs is a lookup against a known world — is this date past? does this provider hold this credential? A model would answer those with more latency and less reliability, so only the deterministic implementation exists. |
 | **Explainer** | **Arguable.** Templates deliver roughly 90% of the value; the LLM buys naturalness and avoids combinatorial template explosion. The template always runs as fallback. |
 | **Reasoner** | **No** — it would be strictly worse. That is why it is not one. |
 
-**Implementation seam:** every agent is a `Protocol` with two implementations, LLM and
-deterministic. The system runs fully offline by swapping implementations, and the evaluation
-harness quantifies exactly what is lost when it does.
+**Implementation seam:** every agent is a `Protocol`, and the extractor and explainer each have two
+implementations — LLM and deterministic — so the system runs fully offline by swapping them, and the
+evaluation harness quantifies exactly what is lost when it does.
+
+The verifier has **one**: the rules implementation, for the reason in the table above. That is an
+exception to NFR-28's "every agent", recorded in `known-limitations.md` §13 rather than papered
+over. The Protocol is in place, so the second implementation costs nothing to add if the checks ever
+stop being lookups.
 
 ---
 
