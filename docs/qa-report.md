@@ -4,7 +4,8 @@
 > check) had been green throughout, which is exactly why this pass was worth running:
 > a green gate measures what you thought to test.
 >
-> Reproduce with `make coverage`, `make check`, `make audit`, `make release`.
+> Reproduce with `make coverage`, `make mutants`, `make check`, `make audit`,
+> `make release`.
 
 ---
 
@@ -12,13 +13,18 @@
 
 | | Before | After |
 | :-- | --: | --: |
-| Tests | 134 | **164** |
+| Tests | 134 | **218** |
 | Line coverage | 74% | **78%** |
+| Mutation score (decision core) | 35.7% | **53.1%** |
 | Defects found | — | **5** (2 in shipped behaviour, 3 in verification) |
 
-The headline number moved four points, which understates it. The coverage that was
-missing was concentrated in the two places where a bug is *silent* — the write path and
-the timezone boundary — and both were documented as tested when they were not.
+Coverage moved four points, which understates it: the gaps were concentrated in the two
+places where a bug is *silent* — the write path and the timezone boundary — and both
+were documented as tested when they were not.
+
+The mutation score is the more honest measure, and the more uncomfortable one. At 74%
+line coverage the suite caught **35.7%** of deliberate corruptions to the ranking. That
+is what a green gate can hide.
 
 ---
 
@@ -115,8 +121,13 @@ Reproduce with `make coverage`.
 | `api/schemas.py` | — | **100%** | input validation |
 | **Total** | **74%** | **78%** | |
 
-The decision core was already strong and stayed there: `pipeline.py` 100%,
-`tiers.py` 100%, `gate.py` 100%, `compose.py` 99%, `enumerate.py` 98%, `axes.py` 97%.
+The decision core was already strong by this measure and stayed there: `pipeline.py`
+100%, `tiers.py` 100%, `gate.py` 100%, `compose.py` 99%, `enumerate.py` 98%, `axes.py`
+97%.
+
+That row is exactly why line coverage is not enough. Every one of those modules was
+near-100% covered and, before the mutation pass, largely unconstrained — `axes.py` at
+97% coverage caught 9.8% of mutations.
 
 **Remaining gaps, and why they are acceptable:**
 
@@ -151,6 +162,73 @@ worse than the honest 51.
 
 ---
 
+## Mutation testing
+
+> `make mutants` — ~2 minutes, 507 mutants across the decision core.
+
+Coverage says a line ran. Mutation testing asks whether a test would notice it being
+**wrong**. Each run corrupts one operator or constant — an inverted comparison, an
+off-by-one boundary, a swapped `and`/`or`, a dropped negation — and checks whether
+anything fails.
+
+The first answer was **35.7%**: nearly two-thirds of deliberate corruptions to the
+ranking survived, against 78% line coverage. The diagnosis is one sentence: **the suite
+asserted the pipeline's shape and almost never its arithmetic.** Three offers came
+back, each with four contributions and a reason line, whatever the numbers were.
+
+| Module | Before | After | What was missing |
+| :----- | -----: | ----: | :--------------- |
+| `select.py` | 17.4% | **52.2%** | *which* three slots — the diversity window, epsilon grouping, the tiebreak chain |
+| `scoring/axes.py` | 9.8% | **53.8%** | the piecewise time-fit curve, the continuity tiers, orphan-minute arithmetic |
+| `tiers.py` | 27.8% | **61.1%** | the 24h/72h boundaries, and that a routine request is never promoted by the clock |
+| **Overall** | **35.7%** | **53.1%** | |
+
+54 tests added, in three characterization suites. Two things they pin that nothing
+did before:
+
+- **The 24h and 72h tier boundaries**, which appear in the PRD, the architecture doc
+  and the demo script. They can now only change deliberately.
+- **Orphan-minute arithmetic** — the calculation behind the headline "11× fewer orphan
+  minutes" claim, which had survived mutation entirely. Booking flush at the front of a
+  free stretch orphans nothing; booking 20 minutes in strands 20 on each side. Both
+  sides of the bookable threshold are asserted.
+
+### The harness had two bugs of its own, and the first score was a lie
+
+Worth recording, because it is the same failure this whole report is about.
+
+1. **It reported 100%.** The work trees were missing `Makefile`, so the *baseline*
+   failed, so every mutant "failed" too and was scored as killed. The harness now
+   refuses to run unless the unmutated tree passes first — without that gate the number
+   is worthless, and it looked excellent.
+2. **The collector and the applier traversed in different orders**, so mutant *N* did
+   not correspond to site *N*. Every reported line number would have been wrong. A
+   mutation harness that lies about where the hole is, is worse than none.
+
+Both are fixed and the traversal alignment is self-checked.
+
+### Where it stands
+
+**53.1% is not a good score in absolute terms, and it is not claimed as one.** What
+changed is that the three modules deciding *what the operator sees* — the tier gate,
+the axis curves, the selection — went from mostly-unconstrained to roughly half.
+
+Remaining survivors, in priority order:
+
+| Module | Survivors | Why it matters |
+| :----- | --------: | :------------- |
+| `scoring/axes.py` | 61 | mostly `score_efficiency` composite and `score_prime_time` |
+| `ladder.py` | 38 | the feasibility rules — high value, and each needs a hand-built world |
+| `availability.py` | 35 | prefix-sum internals; partly equivalent mutants |
+| `scoring/compose.py` | 29 | the caveat/component selection introduced during S10 |
+
+**Not every survivor is a defect.** Some are equivalent mutants — a constant whose
+change cannot alter an observable outcome. Separating those from real gaps takes
+reading each one, which is the next increment rather than something to assert in
+advance.
+
+---
+
 ## Method
 
 - **Coverage measurement** — `pytest-cov` over the whole suite, read by module rather
@@ -173,5 +251,6 @@ worse than the honest 51.
 - **Cross-browser testing.** Chrome only.
 - **Accessibility audit.** Presentation Mode and AA contrast are in; full WCAG AA
   conformance is deferred and named in [`known-limitations.md`](known-limitations.md) §9.
-- **Mutation testing.** The most useful next step for this suite: it would say whether
-  164 tests actually constrain the behaviour or merely execute it.
+- **Equivalent-mutant triage.** 238 survivors remain; an unknown fraction cannot
+  change behaviour at all. Reading them is what turns 53.1% into an actionable number
+  rather than a target to game.

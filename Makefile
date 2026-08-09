@@ -1,4 +1,4 @@
-.PHONY: demo dev test coverage eval fit seed check audit preflight install frontend fixtures release clean
+.PHONY: demo dev test coverage mutants eval fit seed check audit preflight install frontend fixtures release clean
 
 UV      ?= uv
 PY      ?= $(UV) run python
@@ -52,6 +52,11 @@ preflight: install
 coverage: install
 	$(UV) run --with pytest-cov python -m pytest tests -q \
 		--cov=backend/app --cov-report=term-missing
+
+## mutants --- mutation testing over the decision core (~2 min)
+##   Coverage says a line ran. This asks whether a test would notice it being wrong.
+mutants: install
+	$(PY) scripts/mutate.py
 
 ## audit --- known-CVE scan over both dependency trees
 audit: install

@@ -32,6 +32,7 @@ make eval          # golden-set scorecard, with an exit code
 make release       # 3 cold starts with the network blocked (see below)
 make audit         # known-CVE scan over both dependency trees
 make coverage      # line coverage by module
+make mutants       # mutation testing over the decision core
 make fixtures      # re-record LLM fixtures. Online, deliberate, once.
 ```
 
@@ -131,8 +132,9 @@ the socket layer** — the server, the harness, the CLI. "Works offline" is enfo
 the harness, not asserted by the author, and the guard itself is verified to bite.
 See [`docs/release-verification.md`](docs/release-verification.md).
 
-164 tests at 78% line coverage · lint and types clean · zero known CVEs in either
-dependency tree (`make audit`) · determinism checked on every eval run.
+218 tests · 78% line coverage · 53.1% mutation score over the decision core · lint and
+types clean · zero known CVEs in either dependency tree (`make audit`) · determinism
+checked on every eval run.
 
 ---
 
