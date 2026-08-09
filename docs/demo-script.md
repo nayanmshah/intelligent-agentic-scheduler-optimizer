@@ -25,6 +25,12 @@ dead air on a live call.
 Point at the header once: **the dataset's today is Monday the 10th.** Every date on
 screen is relative to that. Say it now and no one is confused later.
 
+The header also shows **Seat: Front desk**. That chip changes as you move between
+screens, so the audience can see which of the two jobs you are doing. If anyone asks:
+it is a **label, not a login** — there is no authentication in v1.0, and the two screens
+are separated by role rather than by access control. Saying that up front is better
+than being asked at the end.
+
 ---
 
 ## 1 · The main line — "it understood, and it can show its work"
@@ -159,7 +165,8 @@ Note offer [2] volunteers that it uses after-school time. It didn't have to say 
 
 ## 5 · The policy screen — "consistency is the product"
 
-Navigate to **Policy**.
+Navigate to **Policy**. The seat chip changes to **Practice manager** — worth a beat,
+because the persona has just changed and it is the point of the next two minutes.
 
 **Say this:**
 

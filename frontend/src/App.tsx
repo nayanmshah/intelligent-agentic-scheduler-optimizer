@@ -2,6 +2,7 @@ import { Routes, Route, NavLink } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
+import { SeatIndicator } from "@/components/SeatIndicator";
 import Console from "@/routes/Console";
 import Policy from "@/routes/Policy";
 import Traces from "@/routes/Traces";
@@ -53,6 +54,9 @@ function ReferenceBar() {
           traces local
         </span>
       )}
+
+      {/* Which of the two jobs this screen is for. A label, never a login. */}
+      <SeatIndicator />
 
       <nav className="ml-auto flex items-center gap-3 text-xs">
         {NAV.map(({ to, label }) => (

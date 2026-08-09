@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import { ContributionBar } from "../ContributionBar";
 import { FunnelCounter } from "../FunnelCounter";
 import { InterpretationStrip } from "../InterpretationStrip";
+import { SeatIndicator } from "../SeatIndicator";
 import { StabilityIndicator } from "../StabilityIndicator";
 import type { Contribution, InterpretationField } from "@/lib/api";
 
@@ -82,5 +84,43 @@ describe("StabilityIndicator", () => {
     );
     expect(screen.getByText(/stay in the top 3/)).toBeInTheDocument();
     expect(screen.getByText("78%")).toBeInTheDocument();
+  });
+});
+
+describe("SeatIndicator", () => {
+  const at = (path: string) =>
+    render(
+      <MemoryRouter initialEntries={[path]}>
+        <SeatIndicator />
+      </MemoryRouter>,
+    );
+
+  it("names the seat the current screen belongs to", () => {
+    at("/");
+    expect(screen.getByText("Front desk")).toBeInTheDocument();
+  });
+
+  it("changes with the route, so the persona switch is visible during a walkthrough", () => {
+    at("/policy");
+    expect(screen.getByText("Practice manager")).toBeInTheDocument();
+  });
+
+  it("never implies a login, because there is no authentication to imply", () => {
+    // The whole risk of this component: an avatar or a "signed in as" reads as an
+    // access boundary, and v1.0 has none. It is a label for the demo, nothing more.
+    const { container } = at("/policy");
+    expect(container.textContent).not.toMatch(/sign(ed)?[ -]?in|log(ged)?[ -]?in|account|user/i);
+    expect(container.querySelector("img")).toBeNull();
+    expect(container.querySelector("button")).toBeNull();
+  });
+
+  it("states plainly that the split is by role, not by login", () => {
+    at("/");
+    expect(screen.getByTitle(/no authentication in v1\.0/i)).toBeInTheDocument();
+  });
+
+  it("renders nothing on a route with no seat", () => {
+    const { container } = at("/somewhere-else");
+    expect(container).toBeEmptyDOMElement();
   });
 });

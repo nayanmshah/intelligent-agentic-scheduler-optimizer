@@ -77,6 +77,12 @@ claim in its current state.
 authentication and no authorization in v1.0 — a deliberate non-goal, since it adds no
 decision quality at this scale.
 
+The header carries a **Seat: Front desk / Practice manager** label so the two jobs are
+legible during a walkthrough. It is deliberately styled as a label and not as an
+account: no avatar, no "signed in as", no user menu, and a tooltip that states there is
+no authentication. A component test asserts those absences, because an affordance that
+*looks* like a login is worse than none — it implies a boundary that is not there.
+
 **Any deployment beyond a single trusted workstation must add real authorization
 before the policy panel is exposed.** A front-desk user who can reach `/policy` and
 move the weights is precisely the consistency destruction this product exists to
